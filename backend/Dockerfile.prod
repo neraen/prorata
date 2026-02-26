@@ -1,0 +1,59 @@
+FROM php:8.4-fpm-alpine
+
+# Install system dependencies
+RUN apk add --no-cache \
+    bash \
+    git \
+    icu-dev \
+    libzip-dev \
+    zip \
+    unzip \
+    openssl
+
+# Install PHP extensions
+RUN docker-php-ext-install \
+    intl \
+    opcache \
+    pdo_mysql \
+    zip
+
+# Configure OPcache for production
+RUN echo "opcache.enable=1" >> /usr/local/etc/php/conf.d/opcache.ini && \
+    echo "opcache.memory_consumption=256" >> /usr/local/etc/php/conf.d/opcache.ini && \
+    echo "opcache.max_accelerated_files=20000" >> /usr/local/etc/php/conf.d/opcache.ini && \
+    echo "opcache.validate_timestamps=0" >> /usr/local/etc/php/conf.d/opcache.ini && \
+    echo "opcache.interned_strings_buffer=16" >> /usr/local/etc/php/conf.d/opcache.ini
+
+# Configure PHP for production
+RUN echo "expose_php=Off" >> /usr/local/etc/php/conf.d/security.ini && \
+    echo "display_errors=Off" >> /usr/local/etc/php/conf.d/security.ini && \
+    echo "log_errors=On" >> /usr/local/etc/php/conf.d/security.ini
+
+# Install Composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+# Set working directory
+WORKDIR /var/www/html
+
+# Copy composer files first for better caching
+COPY composer.json composer.lock ./
+
+# Install dependencies (no dev)
+RUN composer install --no-dev --no-scripts --no-autoloader --prefer-dist
+
+# Copy application code
+COPY . .
+
+# Generate optimized autoloader
+RUN composer dump-autoload --optimize --no-dev --classmap-authoritative
+
+# Create var directory and set permissions
+RUN mkdir -p var/cache var/log config/jwt && \
+    chown -R www-data:www-data var config/jwt
+
+# Cache warmup
+RUN php bin/console cache:warmup --env=prod || true
+
+EXPOSE 9000
+
+CMD ["php-fpm"]
