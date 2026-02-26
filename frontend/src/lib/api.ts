@@ -17,13 +17,14 @@ export function clearToken(): void {
 
 // API error handling
 export class ApiError extends Error {
-  constructor(
-    public status: number,
-    message: string,
-    public errors?: Record<string, string>
-  ) {
+  status: number
+  errors?: Record<string, string>
+
+  constructor(status: number, message: string, errors?: Record<string, string>) {
     super(message)
     this.name = 'ApiError'
+    this.status = status
+    this.errors = errors
   }
 }
 
@@ -280,10 +281,9 @@ export const expensesApi = {
     return apiFetch<void>(`/expenses/${id}`, { method: 'DELETE' })
   },
 
-  async getById(id: number): Promise<ApiExpense> {
+  async getById(_id: number): Promise<ApiExpense> {
     // We fetch the month's expenses and find the one we need
     // This is a workaround since backend doesn't have a single expense endpoint
-    // For now, we'll get it from the list
     throw new Error('Use list and filter instead')
   },
 }

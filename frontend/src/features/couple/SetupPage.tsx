@@ -15,7 +15,6 @@ export function SetupPage() {
   const [isJoining, setIsJoining] = useState(false)
   const [isInviting, setIsInviting] = useState(false)
   const [error, setError] = useState<string | null>(null)
-  const [showInviteForm, setShowInviteForm] = useState(false)
 
   if (!user) return null
 
@@ -118,7 +117,7 @@ export function SetupPage() {
     setError(null)
     try {
       await createCouple()
-      setShowInviteForm(true)
+      // Component will re-render with couple state and show invite form
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Erreur')
     } finally {

@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import type { User, Couple, CoupleMember, CoupleSettings } from './types'
+import type { User, Couple, CoupleSettings } from './types'
 import { authApi, coupleApi, getToken, clearToken, type ApiCouple, type ApiMember } from './api'
 
 // Convert API types to frontend types

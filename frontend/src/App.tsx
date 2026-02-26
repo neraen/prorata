@@ -2,6 +2,8 @@ import { Routes, Route } from 'react-router-dom'
 import { Providers } from './app/Providers'
 import { AuthGuard } from './app/AuthGuard'
 import { Layout } from './components/Layout'
+import { PWAUpdatePrompt } from './components/PWAUpdatePrompt'
+import { PWAInstallPrompt } from './components/PWAInstallPrompt'
 
 import { LoginPage } from './features/auth/LoginPage'
 import { RegisterPage } from './features/auth/RegisterPage'
@@ -54,6 +56,8 @@ function App() {
   return (
     <Providers>
       <AppRoutes />
+      <PWAUpdatePrompt />
+      <PWAInstallPrompt />
     </Providers>
   )
 }
