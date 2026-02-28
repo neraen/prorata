@@ -1,9 +1,5 @@
 import * as SecureStore from 'expo-secure-store'
-
-// Change this to your backend URL
-// For local development with Expo Go, use your computer's local IP
-// Example: http://192.168.1.10:8080/api
-const API_BASE_URL = 'http://localhost:8080/api'
+import { API_BASE_URL } from '../config'
 
 const TOKEN_KEY = 'prorata_token'
 

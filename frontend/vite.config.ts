@@ -11,6 +11,7 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.svg', 'apple-touch-icon.png', 'masked-icon.svg'],
       manifest: {
+        id: '/',
         name: 'Prorata - Gestion des dépenses de couple',
         short_name: 'Prorata',
         description: 'Gérez les dépenses de votre couple simplement avec calcul au prorata',
@@ -21,6 +22,8 @@ export default defineConfig({
         scope: '/',
         start_url: '/',
         categories: ['finance', 'lifestyle'],
+        lang: 'fr-FR',
+        dir: 'ltr',
         icons: [
           {
             src: 'pwa-64x64.png',
