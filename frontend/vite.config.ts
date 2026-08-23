@@ -1,7 +1,11 @@
+import { fileURLToPath } from 'node:url'
+import { resolve } from 'node:path'
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 import { VitePWA } from 'vite-plugin-pwa'
+
+const projectRoot = fileURLToPath(new URL('.', import.meta.url))
 
 export default defineConfig({
   plugins: [
@@ -84,7 +88,12 @@ export default defineConfig({
         ]
       },
       devOptions: {
-        enabled: true
+        enabled: true,
+        // By default the dev service worker is written to ./dev-dist, at the
+        // root of the project - which is a bind mount when running in Docker
+        // and is not always writable from the container. Keeping it inside
+        // node_modules avoids that, and keeps the build artifact out of the repo.
+        resolveTempFolder: () => resolve(projectRoot, 'node_modules/.vite-pwa-dev')
       }
     })
   ],

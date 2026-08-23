@@ -19,6 +19,21 @@ echo ""
 echo "Domain: $DOMAIN"
 echo ""
 
+# Create required directories
+mkdir -p nginx/ssl
+mkdir -p certbot/www
+mkdir -p certbot/conf
+
+# Generate self-signed cert if none exists (for initial startup)
+if [ ! -f nginx/ssl/fullchain.pem ]; then
+    echo "Generating temporary self-signed certificate..."
+    openssl req -x509 -nodes -newkey rsa:2048 \
+        -keyout nginx/ssl/privkey.pem \
+        -out nginx/ssl/fullchain.pem \
+        -days 30 \
+        -subj "/CN=$DOMAIN" 2>/dev/null
+fi
+
 # Pull latest code (if using git)
 if [ -d "../.git" ]; then
     echo "[1/7] Pulling latest code..."

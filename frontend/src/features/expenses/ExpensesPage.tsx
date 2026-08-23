@@ -144,6 +144,13 @@ export function ExpensesPage() {
                   <p className="text-sm text-text-muted">
                     {formatDate(expense.spentAt)} • {expense.paidBy.displayName}
                   </p>
+                  {expense.splitMode !== 'prorata' && (
+                    <Badge variant="neutral" className="mt-1">
+                      {expense.splitMode === 'equal'
+                        ? '50/50'
+                        : `Pour ${expense.chargedTo?.displayName ?? '—'}`}
+                    </Badge>
+                  )}
                 </div>
                 <p className="font-bold text-text text-lg">
                   <Money cents={expense.amountCents} />

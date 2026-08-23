@@ -11,6 +11,8 @@ import { SetupPage } from './features/couple/SetupPage'
 import { DashboardPage } from './features/dashboard/DashboardPage'
 import { ExpensesPage } from './features/expenses/ExpensesPage'
 import { ExpenseFormPage } from './features/expenses/ExpenseFormPage'
+import { PersonalPage } from './features/personal/PersonalPage'
+import { TransfersPage } from './features/transfers/TransfersPage'
 import { HistoryPage } from './features/history/HistoryPage'
 import { HistoryDetailPage } from './features/history/HistoryDetailPage'
 import { SettingsPage } from './features/settings/SettingsPage'
@@ -44,6 +46,8 @@ function AppRoutes() {
         <Route path="/expenses" element={<ExpensesPage />} />
         <Route path="/expenses/new" element={<ExpenseFormPage />} />
         <Route path="/expenses/:id/edit" element={<ExpenseFormPage />} />
+        <Route path="/personal" element={<PersonalPage />} />
+        <Route path="/transfers" element={<TransfersPage />} />
         <Route path="/history" element={<HistoryPage />} />
         <Route path="/history/:year/:month" element={<HistoryDetailPage />} />
         <Route path="/settings" element={<SettingsPage />} />

@@ -27,11 +27,18 @@ export function DashboardPage() {
     enabled: !!couple,
   })
 
+  const { data: overall } = useQuery({
+    queryKey: ['overall'],
+    queryFn: () => monthsApi.overall(),
+    enabled: !!couple,
+  })
+
   const closeMutation = useMutation({
     mutationFn: () => monthsApi.close(year, month),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['balance'] })
       queryClient.invalidateQueries({ queryKey: ['history'] })
+      queryClient.invalidateQueries({ queryKey: ['overall'] })
       showToast('Mois clôturé avec succès', 'success')
       setShowCloseModal(false)
     },
@@ -53,15 +60,20 @@ export function DashboardPage() {
   const percentA = memberA ? Math.round(memberA.weight * 100) : 50
   const percentB = 100 - percentA
 
+  const nameOf = (userId: number) => (userId === user.id ? user.name : partner.name)
+
   const getSettlementMessage = () => {
     if (!balance?.settlement || balance.settlement.amountCents === 0) {
       return "Vous êtes à l'équilibre"
     }
-    const fromUser = balance.settlement.fromUserId === user.id ? user : partner
-    const toUser = balance.settlement.toUserId === user.id ? user : partner
     const amount = Math.round(balance.settlement.amountCents / 100)
-    return `${fromUser.name} doit ${amount} € à ${toUser.name}`
+    return `${nameOf(balance.settlement.fromUserId)} doit ${amount} € à ${nameOf(balance.settlement.toUserId)}`
   }
+
+  // Cumulative position: every month added up, transfers already deducted
+  const overallSettlement = overall?.settlement
+  const overallMemberA = overall?.members.find((m) => m.userId === user.id)
+  const overallMemberB = overall?.members.find((m) => m.userId === partner.id)
 
   return (
     <div className="space-y-4">
@@ -93,6 +105,89 @@ export function DashboardPage() {
       <Card className="bg-accent/5 border-accent/20">
         <p className="text-text-muted text-sm mb-2">Solde de régularisation</p>
         <p className="text-2xl font-bold text-accent">{getSettlementMessage()}</p>
+      </Card>
+
+      {/* Position cumulée, tous mois confondus */}
+      <Card>
+        <div className="flex items-center justify-between mb-2">
+          <p className="font-semibold text-text">Où on en est</p>
+          <Link to="/transfers" className="text-accent text-sm font-medium">
+            Virements
+          </Link>
+        </div>
+
+        {!overallSettlement || overallSettlement.amountCents === 0 ? (
+          <p className="text-text-muted text-sm">
+            Tout est réglé : personne ne doit rien à l'autre.
+          </p>
+        ) : (
+          <>
+            <p className="text-text-muted text-sm">
+              {nameOf(overallSettlement.fromUserId)} doit à {nameOf(overallSettlement.toUserId)}
+            </p>
+            <p className="text-3xl font-bold text-accent">
+              <Money cents={overallSettlement.amountCents} />
+            </p>
+          </>
+        )}
+
+        <div className="mt-4 pt-4 border-t border-border grid grid-cols-2 gap-4 text-sm">
+          <div>
+            <p className="text-text-muted">Total dépensé</p>
+            <p className="font-medium">
+              <Money cents={overall?.totalCents ?? 0} />
+            </p>
+          </div>
+          <div>
+            <p className="text-text-muted">Déjà viré</p>
+            <p className="font-medium">
+              <Money cents={overall?.transfersTotalCents ?? 0} />
+            </p>
+          </div>
+          <div>
+            <p className="text-text-muted">{user.name} a avancé</p>
+            <p className="font-medium">
+              <Money cents={overallMemberA?.paidCents ?? 0} />
+            </p>
+          </div>
+          <div>
+            <p className="text-text-muted">{partner.name} a avancé</p>
+            <p className="font-medium">
+              <Money cents={overallMemberB?.paidCents ?? 0} />
+            </p>
+          </div>
+        </div>
+
+        {(overall?.months.length ?? 0) > 0 && (
+          <div className="mt-4 pt-4 border-t border-border space-y-2">
+            <p className="text-text-muted text-sm mb-1">Mois par mois</p>
+            {overall!.months.map((m) => {
+              const memberA = m.members.find((mb) => mb.userId === user.id)
+              const net = memberA?.netDeltaCents ?? 0
+              return (
+                <div key={`${m.year}-${m.month}`} className="flex items-center gap-2 text-sm">
+                  <span className="flex-1 text-text capitalize">
+                    {formatMonth(m.year, m.month)}
+                  </span>
+                  {m.transfersTotalCents > 0 && (
+                    <span className="text-text-muted text-xs">
+                      viré <Money cents={m.transfersTotalCents} />
+                    </span>
+                  )}
+                  <span
+                    className={`font-medium ${net > 0 ? 'text-success' : net < 0 ? 'text-danger' : 'text-text-muted'}`}
+                  >
+                    {net > 0 ? '+' : ''}
+                    <Money cents={net} />
+                  </span>
+                </div>
+              )
+            })}
+            <p className="text-text-muted text-xs pt-1">
+              Montant en faveur de {user.name} sur chaque mois, virements déduits.
+            </p>
+          </div>
+        )}
       </Card>
 
       {/* Barre de répartition */}
@@ -143,6 +238,23 @@ export function DashboardPage() {
             </p>
           </div>
         </div>
+
+        {/* Ce que le prorata ne couvre pas */}
+        {((balance?.equalTotalCents ?? 0) > 0 || (balance?.directTotalCents ?? 0) > 0) && (
+          <div className="mt-4 pt-4 border-t border-border text-sm space-y-1">
+            <p className="text-text-muted">Dont, hors prorata</p>
+            {(balance?.equalTotalCents ?? 0) > 0 && (
+              <p className="font-medium">
+                50/50 : <Money cents={balance!.equalTotalCents} />
+              </p>
+            )}
+            {(balance?.directTotalCents ?? 0) > 0 && (
+              <p className="font-medium">
+                À la charge d'un seul : <Money cents={balance!.directTotalCents} />
+              </p>
+            )}
+          </div>
+        )}
       </Card>
 
       {/* Clôturer */}

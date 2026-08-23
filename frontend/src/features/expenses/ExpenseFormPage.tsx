@@ -4,10 +4,9 @@ import { useForm, Controller } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import dayjs from 'dayjs'
 import { useAuthStore, useCoupleStore, useMonthStore, useToastStore } from '../../lib/stores'
 import { expensesApi } from '../../lib/api'
-import { CATEGORY_LABELS, CATEGORY_ICONS } from '../../lib/utils'
+import { CATEGORY_LABELS, CATEGORY_ICONS, SPLIT_MODE_HINTS, defaultDateInMonth } from '../../lib/utils'
 import type { ExpenseCategory } from '../../lib/types'
 import { Card, Button, Input, SegmentedControl, ConfirmModal } from '../../components/ui'
 
@@ -26,6 +25,8 @@ const schema = z.object({
   category: z.enum(['groceries', 'leisure', 'transport', 'housing', 'health', 'other']),
   spentAt: z.string().min(1, 'Date requise'),
   paidByUserId: z.number().min(1, 'Sélectionnez qui a payé'),
+  splitMode: z.enum(['prorata', 'equal', 'full']),
+  chargedToUserId: z.number().nullable(),
 })
 
 type FormData = z.infer<typeof schema>
@@ -58,6 +59,7 @@ export function ExpenseFormPage() {
     control,
     reset,
     watch,
+    setValue,
     formState: { errors, isSubmitting },
   } = useForm<FormData>({
     resolver: zodResolver(schema),
@@ -65,8 +67,10 @@ export function ExpenseFormPage() {
       title: '',
       amount: 0,
       category: 'groceries',
-      spentAt: dayjs().format('YYYY-MM-DD'),
+      spentAt: defaultDateInMonth(year, month),
       paidByUserId: user?.id || 0,
+      splitMode: 'prorata',
+      chargedToUserId: null,
     },
   })
 
@@ -78,9 +82,17 @@ export function ExpenseFormPage() {
         category: expense.category as ExpenseCategory,
         spentAt: expense.spentAt,
         paidByUserId: expense.paidBy.userId,
+        splitMode: expense.splitMode,
+        chargedToUserId: expense.chargedTo?.userId ?? null,
       })
     }
   }, [expense, reset])
+
+  // "Pour un seul" needs a bearer; anything else must clear it.
+  const splitPayload = (data: FormData) => ({
+    splitMode: data.splitMode,
+    chargedToUserId: data.splitMode === 'full' ? data.chargedToUserId : null,
+  })
 
   const createMutation = useMutation({
     mutationFn: (data: FormData) =>
@@ -91,6 +103,7 @@ export function ExpenseFormPage() {
         currency: 'EUR',
         spentAt: data.spentAt,
         paidByUserId: data.paidByUserId,
+        ...splitPayload(data),
       }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['expenses'] })
@@ -111,6 +124,7 @@ export function ExpenseFormPage() {
         category: data.category,
         spentAt: data.spentAt,
         paidByUserId: data.paidByUserId,
+        ...splitPayload(data),
       }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['expenses'] })
@@ -149,6 +163,8 @@ export function ExpenseFormPage() {
   if (isEdit && !expense) return <p>Dépense non trouvée</p>
 
   const amount = watch('amount')
+  const splitMode = watch('splitMode')
+  const chargedToUserId = watch('chargedToUserId')
 
   return (
     <div className="space-y-4">
@@ -254,6 +270,57 @@ export function ExpenseFormPage() {
               />
             )}
           />
+        </Card>
+
+        {/* Répartition */}
+        <Card>
+          <label className="block text-sm font-medium text-text-muted mb-3">
+            Répartition
+          </label>
+          <Controller
+            name="splitMode"
+            control={control}
+            render={({ field }) => (
+              <SegmentedControl
+                options={[
+                  { value: 'prorata', label: 'Prorata' },
+                  { value: 'equal', label: '50/50' },
+                  { value: 'full', label: 'Pour un seul' },
+                ]}
+                value={field.value}
+                onChange={(value) => {
+                  field.onChange(value)
+                  // Pre-select the most common case: the payer advanced it for the other one
+                  if (value === 'full' && !chargedToUserId) {
+                    setValue('chargedToUserId', partner.id)
+                  }
+                }}
+              />
+            )}
+          />
+          <p className="text-sm text-text-muted mt-3">{SPLIT_MODE_HINTS[splitMode]}</p>
+
+          {splitMode === 'full' && (
+            <div className="mt-4 pt-4 border-t border-border">
+              <label className="block text-sm font-medium text-text-muted mb-3">
+                À la charge de
+              </label>
+              <Controller
+                name="chargedToUserId"
+                control={control}
+                render={({ field }) => (
+                  <SegmentedControl
+                    options={[
+                      { value: user.id, label: user.name },
+                      { value: partner.id, label: partner.name },
+                    ]}
+                    value={field.value ?? partner.id}
+                    onChange={field.onChange}
+                  />
+                )}
+              />
+            </div>
+          )}
         </Card>
 
         {/* Actions */}

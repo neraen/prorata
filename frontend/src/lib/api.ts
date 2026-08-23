@@ -112,6 +112,9 @@ export interface ApiPaidBy {
   displayName: string
 }
 
+/** How a single expense is shared: couple prorata, strict 50/50, or fully on one member. */
+export type SplitMode = 'prorata' | 'equal' | 'full'
+
 export interface ApiExpense {
   id: number
   title: string
@@ -120,11 +123,72 @@ export interface ApiExpense {
   currency: string
   spentAt: string
   paidBy: ApiPaidBy
+  splitMode: SplitMode
+  chargedTo: ApiPaidBy | null
 }
 
 export interface ApiExpenseList {
   items: ApiExpense[]
   isClosed: boolean
+}
+
+export interface ApiTransfer {
+  id: number
+  fromUser: ApiPaidBy
+  toUser: ApiPaidBy
+  amountCents: number
+  currency: string
+  transferredAt: string
+  note: string | null
+}
+
+export interface ApiTransferList {
+  items: ApiTransfer[]
+}
+
+/** A personal expense is either one-off or comes back every month. */
+export type Recurrence = 'none' | 'monthly'
+
+export interface ApiPersonalExpense {
+  id: number
+  title: string
+  category: string
+  amountCents: number
+  currency: string
+  recurrence: Recurrence
+  startsOn: string
+  endsOn: string | null
+  /** Date it falls on for the month being displayed. */
+  occurredOn: string
+}
+
+/** A shared expense seen from one member's side. */
+export interface ApiSharedExpenseShare {
+  id: number
+  title: string
+  category: string
+  /** What the couple spent in total on this line. */
+  amountCents: number
+  /** What this member bears out of it. */
+  shareCents: number
+  currency: string
+  spentAt: string
+  splitMode: SplitMode
+  paidBy: ApiPaidBy
+}
+
+export interface ApiPersonalMonth {
+  year: number
+  month: number
+  currency: string
+  personal: ApiPersonalExpense[]
+  shared: ApiSharedExpenseShare[]
+  personalTotalCents: number
+  /** This member's share of the shared expenses. */
+  sharedTotalCents: number
+  /** personalTotalCents + sharedTotalCents. */
+  totalCents: number
+  recurringTotalCents: number
 }
 
 export interface ApiSettlement {
@@ -140,6 +204,13 @@ export interface ApiMemberBalance {
   targetCents: number
   paidCents: number
   deltaCents: number
+  prorataTargetCents: number
+  equalTargetCents: number
+  directTargetCents: number
+  transferredOutCents: number
+  transferredInCents: number
+  /** deltaCents once transfers are deducted: what is still owed to this member. */
+  netDeltaCents: number
 }
 
 export interface ApiBalance {
@@ -151,6 +222,37 @@ export interface ApiBalance {
   members: ApiMemberBalance[]
   settlement: ApiSettlement | null
   isClosed: boolean
+  prorataTotalCents: number
+  equalTotalCents: number
+  directTotalCents: number
+  transfersTotalCents: number
+}
+
+export interface ApiOverallMemberBalance {
+  userId: number
+  displayName: string
+  paidCents: number
+  targetCents: number
+  deltaCents: number
+  prorataTargetCents: number
+  equalTargetCents: number
+  directTargetCents: number
+  transferredOutCents: number
+  transferredInCents: number
+  netDeltaCents: number
+}
+
+export interface ApiOverallBalance {
+  currency: string
+  members: ApiOverallMemberBalance[]
+  settlement: ApiSettlement | null
+  totalCents: number
+  prorataTotalCents: number
+  equalTotalCents: number
+  directTotalCents: number
+  transfersTotalCents: number
+  /** Month-by-month detail, most recent first. */
+  months: ApiBalance[]
 }
 
 export interface ApiHistoryItem {
@@ -253,6 +355,8 @@ export const expensesApi = {
     currency: string
     spentAt: string
     paidByUserId: number
+    splitMode?: SplitMode
+    chargedToUserId?: number | null
   }): Promise<ApiExpense> {
     return apiFetch<ApiExpense>('/expenses', {
       method: 'POST',
@@ -269,6 +373,8 @@ export const expensesApi = {
       currency?: string
       spentAt?: string
       paidByUserId?: number
+      splitMode?: SplitMode
+      chargedToUserId?: number | null
     }
   ): Promise<ApiExpense> {
     return apiFetch<ApiExpense>(`/expenses/${id}`, {
@@ -288,10 +394,105 @@ export const expensesApi = {
   },
 }
 
+// Personal API — private to the current user, never visible to the partner
+export const personalApi = {
+  async month(year: number, month: number): Promise<ApiPersonalMonth> {
+    return apiFetch<ApiPersonalMonth>(`/personal/month?year=${year}&month=${month}`)
+  },
+
+  async create(data: {
+    title: string
+    category: string
+    amountCents: number
+    currency: string
+    recurrence: Recurrence
+    startsOn: string
+    endsOn?: string | null
+  }): Promise<ApiPersonalExpense> {
+    return apiFetch<ApiPersonalExpense>('/personal/expenses', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    })
+  },
+
+  async update(
+    id: number,
+    data: {
+      title?: string
+      category?: string
+      amountCents?: number
+      currency?: string
+      recurrence?: Recurrence
+      startsOn?: string
+      endsOn?: string | null
+      /** Set to drop the end date and let a monthly expense run again. */
+      clearEndsOn?: boolean
+    }
+  ): Promise<ApiPersonalExpense> {
+    return apiFetch<ApiPersonalExpense>(`/personal/expenses/${id}`, {
+      method: 'PUT',
+      body: JSON.stringify(data),
+    })
+  },
+
+  async delete(id: number): Promise<void> {
+    return apiFetch<void>(`/personal/expenses/${id}`, { method: 'DELETE' })
+  },
+}
+
+// Transfers API
+export const transfersApi = {
+  /** Omit the period to get every transfer ever recorded. */
+  async list(year?: number, month?: number): Promise<ApiTransferList> {
+    const query = year !== undefined && month !== undefined ? `?year=${year}&month=${month}` : ''
+    return apiFetch<ApiTransferList>(`/transfers${query}`)
+  },
+
+  async create(data: {
+    fromUserId: number
+    toUserId: number
+    amountCents: number
+    currency: string
+    transferredAt: string
+    note?: string | null
+  }): Promise<ApiTransfer> {
+    return apiFetch<ApiTransfer>('/transfers', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    })
+  },
+
+  async update(
+    id: number,
+    data: {
+      fromUserId?: number
+      toUserId?: number
+      amountCents?: number
+      currency?: string
+      transferredAt?: string
+      note?: string | null
+    }
+  ): Promise<ApiTransfer> {
+    return apiFetch<ApiTransfer>(`/transfers/${id}`, {
+      method: 'PUT',
+      body: JSON.stringify(data),
+    })
+  },
+
+  async delete(id: number): Promise<void> {
+    return apiFetch<void>(`/transfers/${id}`, { method: 'DELETE' })
+  },
+}
+
 // Months API
 export const monthsApi = {
   async balance(year: number, month: number): Promise<ApiBalance> {
     return apiFetch<ApiBalance>(`/months/balance?year=${year}&month=${month}`)
+  },
+
+  /** Cumulative position across every month, transfers deducted. */
+  async overall(): Promise<ApiOverallBalance> {
+    return apiFetch<ApiOverallBalance>('/months/overall')
   },
 
   async close(year: number, month: number): Promise<ApiBalance> {
