@@ -1,0 +1,68 @@
+services:
+  web:
+    build:
+      context: .
+      dockerfile: deploy/coolify/web.Dockerfile
+    restart: unless-stopped
+    expose:
+      - "80"
+    depends_on:
+      php:
+        condition: service_healthy
+    networks:
+      - app
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://127.0.0.1/healthz"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  php:
+    build:
+      context: .
+      dockerfile: deploy/coolify/php.Dockerfile
+    restart: unless-stopped
+    environment:
+      APP_ENV: prod
+      APP_DEBUG: "0"
+      APP_SECRET: ${APP_SECRET:?Set APP_SECRET in Coolify}
+      DATABASE_URL: ${DATABASE_URL:?Set the restored database internal URL}
+      JWT_SECRET_KEY: /run/prorata-jwt/private.pem
+      JWT_PUBLIC_KEY: /run/prorata-jwt/public.pem
+      JWT_PASSPHRASE: ${JWT_PASSPHRASE:?Set the existing JWT passphrase}
+      DEFAULT_URI: ${DEFAULT_URI:?Set the validation HTTPS URL}
+      CORS_ALLOW_ORIGIN: ${CORS_ALLOW_ORIGIN:?Set the allowed origin regex}
+      MAILER_DSN: "null://null"
+      MESSENGER_TRANSPORT_DSN: "doctrine://default?auto_setup=0"
+    volumes:
+      - type: bind
+        source: ${JWT_DIRECTORY:-/data/prorata-validation/jwt}
+        target: /run/prorata-jwt
+        read_only: true
+        bind:
+          create_host_path: false
+    networks:
+      - app
+      - database_access
+    healthcheck:
+      test: ["CMD", "php", "/usr/local/share/prorata-readiness.php"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 60s
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+networks:
+  app:
+  database_access:
+    external: true
+    name: ${DATABASE_NETWORK:-coolify}
