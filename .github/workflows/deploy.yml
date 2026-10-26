@@ -1,0 +1,83 @@
+name: Prorata CI and deployment
+
+on:
+  push:
+    branches: [master, codex/prorata-coolify]
+  pull_request:
+    branches: [master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  backend-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          extensions: intl, pdo_mysql, mbstring, dom, xml, xmlwriter, zip
+          coverage: none
+          tools: composer:v2
+      - run: composer install --no-interaction --prefer-dist --no-scripts
+        working-directory: backend
+      - run: vendor/bin/phpunit
+        working-directory: backend
+        env:
+          APP_ENV: test
+          APP_DEBUG: '1'
+      - run: python3 -m unittest discover -s scripts -p 'test_*.py'
+
+  docker-build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    strategy:
+      fail-fast: false
+      matrix:
+        service: [web, php]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Build production image
+        run: docker build --pull -f deploy/coolify/${{ matrix.service }}.Dockerfile .
+
+  deploy:
+    needs: [backend-tests, docker-build]
+    if: >-
+      github.ref == 'refs/heads/master' &&
+      github.event_name != 'pull_request' &&
+      vars.COOLIFY_AUTO_DEPLOY == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    concurrency:
+      group: prorata-production
+      cancel-in-progress: false
+    environment:
+      name: production
+      url: https://prorata.clement-silvestre.fr
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Deploy checked commit and wait for Coolify
+        run: |
+          latest=$(git ls-remote https://github.com/neraen/prorata.git refs/heads/master | cut -f1)
+          if [ "$latest" != "$DEPLOY_SHA" ]; then
+            echo "A newer commit exists on master; skipping this deployment."
+            exit 0
+          fi
+          python3 scripts/deploy_coolify.py
+        env:
+          COOLIFY_TOKEN: ${{ secrets.COOLIFY_TOKEN }}
+          DEPLOY_SHA: ${{ github.sha }}
+      - name: Check public HTTPS readiness
+        run: >-
+          curl --fail --silent --show-error --retry 12 --retry-all-errors
+          --retry-delay 5 --connect-timeout 10 --max-time 20
+          https://prorata.clement-silvestre.fr/healthz
