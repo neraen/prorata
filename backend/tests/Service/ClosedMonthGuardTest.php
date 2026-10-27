@@ -3,7 +3,6 @@
 namespace App\Tests\Service;
 
 use App\Entity\Couple;
-use App\Entity\MonthClosure;
 use App\Exception\MonthClosedException;
 use App\Repository\MonthClosureRepository;
 use App\Service\ClosedMonthGuard;
@@ -24,11 +23,10 @@ class ClosedMonthGuardTest extends TestCase
     public function testIsClosedReturnsTrueWhenClosed(): void
     {
         $couple = new Couple();
-        $closure = new MonthClosure();
 
-        $this->repository->method('findByMonth')
+        $this->repository->expects($this->once())->method('isClosed')
             ->with($couple, 2026, 1)
-            ->willReturn($closure);
+            ->willReturn(true);
 
         $this->assertTrue($this->guard->isClosed($couple, 2026, 1));
     }
@@ -37,9 +35,9 @@ class ClosedMonthGuardTest extends TestCase
     {
         $couple = new Couple();
 
-        $this->repository->method('findByMonth')
+        $this->repository->expects($this->once())->method('isClosed')
             ->with($couple, 2026, 2)
-            ->willReturn(null);
+            ->willReturn(false);
 
         $this->assertFalse($this->guard->isClosed($couple, 2026, 2));
     }
@@ -47,10 +45,9 @@ class ClosedMonthGuardTest extends TestCase
     public function testAssertNotClosedThrowsExceptionWhenClosed(): void
     {
         $couple = new Couple();
-        $closure = new MonthClosure();
 
-        $this->repository->method('findByMonth')
-            ->willReturn($closure);
+        $this->repository->expects($this->once())->method('isClosed')
+            ->willReturn(true);
 
         $this->expectException(MonthClosedException::class);
         $this->expectExceptionMessage('Month 1/2026 is already closed');
@@ -62,8 +59,8 @@ class ClosedMonthGuardTest extends TestCase
     {
         $couple = new Couple();
 
-        $this->repository->method('findByMonth')
-            ->willReturn(null);
+        $this->repository->expects($this->once())->method('isClosed')
+            ->willReturn(false);
 
         // Should not throw
         $this->guard->assertNotClosed($couple, 2026, 2);
