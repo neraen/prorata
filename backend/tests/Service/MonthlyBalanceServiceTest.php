@@ -11,21 +11,21 @@ use App\Repository\ExpenseRepository;
 use App\Repository\MonthClosureRepository;
 use App\Service\CoupleContextService;
 use App\Service\MonthlyBalanceService;
-use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
 
 class MonthlyBalanceServiceTest extends TestCase
 {
     private MonthlyBalanceService $service;
-    private ExpenseRepository&MockObject $expenseRepository;
-    private MonthClosureRepository&MockObject $monthClosureRepository;
-    private CoupleContextService&MockObject $coupleContextService;
+    private ExpenseRepository&Stub $expenseRepository;
+    private MonthClosureRepository&Stub $monthClosureRepository;
+    private CoupleContextService&Stub $coupleContextService;
 
     protected function setUp(): void
     {
-        $this->expenseRepository = $this->createMock(ExpenseRepository::class);
-        $this->monthClosureRepository = $this->createMock(MonthClosureRepository::class);
-        $this->coupleContextService = $this->createMock(CoupleContextService::class);
+        $this->expenseRepository = $this->createStub(ExpenseRepository::class);
+        $this->monthClosureRepository = $this->createStub(MonthClosureRepository::class);
+        $this->coupleContextService = $this->createStub(CoupleContextService::class);
 
         $this->service = new MonthlyBalanceService(
             $this->expenseRepository,
@@ -246,6 +246,7 @@ class MonthlyBalanceServiceTest extends TestCase
         $result = $this->service->calculateBalance($couple, 2026, 2);
 
         $this->assertEquals(0, $result->totalCents);
+        $this->assertSame('EUR', $result->currency);
         $this->assertEquals(0, $result->members[0]->targetCents);
         $this->assertEquals(0, $result->members[0]->paidCents);
         $this->assertEquals(0, $result->members[0]->deltaCents);

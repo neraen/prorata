@@ -32,7 +32,7 @@ class MonthlyBalanceService
 
         // Calculate totals
         $totalCents = array_sum(array_map(fn($e) => $e->getAmountCents(), $expenses));
-        $currency = $expenses[0]?->getCurrency() ?? 'EUR';
+        $currency = ($expenses[0] ?? null)?->getCurrency() ?? 'EUR';
 
         // Get ordered members
         $members = $this->coupleContextService->getMembers($couple);
