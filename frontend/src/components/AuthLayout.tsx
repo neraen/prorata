@@ -9,36 +9,32 @@ export function AuthLayout({ children }: AuthLayoutProps) {
   const isLogin = location.pathname === '/login'
 
   return (
-    <div className="min-h-screen flex flex-col">
-      {/* Header */}
-      <header className="flex items-center justify-between px-4 py-4">
-        <Link to="/login" className="text-xl font-bold text-accent">
+    <div className="flex min-h-screen flex-col bg-bg">
+      <header className="mx-auto flex h-16 w-full max-w-[480px] items-center justify-between px-5">
+        <Link to="/login" className="text-[22px] font-extrabold tracking-[-0.03em] text-ink">
           Prorata
         </Link>
-        <nav className="flex gap-2">
+        <nav className="flex gap-1 rounded-[14px] bg-segment-bg p-1">
           <Link
             to="/login"
-            className={`
-              px-4 py-2 rounded-[12px] text-sm font-medium transition-colors
-              ${isLogin ? 'bg-accent text-white' : 'text-text-muted hover:text-text'}
-            `}
+            className={`flex h-10 items-center rounded-[11px] px-4 text-[14px] ${
+              isLogin ? 'bg-surface font-bold text-ink shadow-segment' : 'font-semibold text-muted'
+            }`}
           >
             Connexion
           </Link>
           <Link
             to="/register"
-            className={`
-              px-4 py-2 rounded-[12px] text-sm font-medium transition-colors
-              ${!isLogin ? 'bg-accent text-white' : 'text-text-muted hover:text-text'}
-            `}
+            className={`flex h-10 items-center rounded-[11px] px-4 text-[14px] ${
+              !isLogin ? 'bg-surface font-bold text-ink shadow-segment' : 'font-semibold text-muted'
+            }`}
           >
             Inscription
           </Link>
         </nav>
       </header>
 
-      {/* Content */}
-      <main className="flex-1 flex items-center justify-center p-4">
+      <main className="mx-auto flex w-full max-w-[480px] flex-1 items-center justify-center px-5 pb-10">
         {children}
       </main>
     </div>

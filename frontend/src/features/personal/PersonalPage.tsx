@@ -1,33 +1,37 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useForm, Controller } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useAuthStore, useMonthStore, useToastStore } from '../../lib/stores'
 import { personalApi, type ApiPersonalExpense } from '../../lib/api'
-import { formatDate, CATEGORY_LABELS, CATEGORY_ICONS, defaultDateInMonth } from '../../lib/utils'
-import type { ExpenseCategory } from '../../lib/types'
 import {
-  Card,
-  Button,
-  Input,
-  Money,
-  MonthPicker,
+  CATEGORY_KEYS,
+  CATEGORY_LABELS,
+  categoryColors,
+  defaultDateInMonth,
+  formatDayShort,
+  formatMoney,
+} from '../../lib/utils'
+import {
+  CATEGORY_ICON_COMPONENTS,
+  ChevronLeftIcon,
+  PackageIcon,
+  PlusIcon,
+} from '../../components/icons'
+import {
   Badge,
-  SegmentedControl,
-  EmptyState,
-  Modal,
+  Button,
+  Card,
+  CategoryTile,
   ConfirmModal,
+  EmptyState,
+  Input,
+  Modal,
+  MonthMenu,
+  SegmentedControl,
 } from '../../components/ui'
-
-const CATEGORIES: ExpenseCategory[] = [
-  'groceries',
-  'leisure',
-  'transport',
-  'housing',
-  'health',
-  'other',
-]
 
 const schema = z.object({
   title: z.string().min(2, 'Le titre doit faire au moins 2 caractères'),
@@ -49,14 +53,21 @@ const emptyForm = (year: number, month: number): FormData => ({
   endsOn: '',
 })
 
+/**
+ * Personal expenses — private to the signed-in member.
+ *
+ * The redesign drops the Perso tab: this screen is reached from Réglages, and
+ * new personal expenses are created from the Commune/Perso segment of the add
+ * screen. Shared expenses can be folded in to answer "what does this month
+ * actually cost me".
+ */
 export function PersonalPage() {
   const user = useAuthStore((s) => s.user)
   const { year, month } = useMonthStore()
   const showToast = useToastStore((s) => s.show)
   const queryClient = useQueryClient()
+  const navigate = useNavigate()
 
-  // The toggle only changes what the page shows; the shared expenses themselves
-  // are untouched and still live on the couple side.
   const [includeShared, setIncludeShared] = useState(false)
   const [editing, setEditing] = useState<ApiPersonalExpense | null>(null)
   const [showForm, setShowForm] = useState(false)
@@ -101,7 +112,7 @@ export function PersonalPage() {
     reset({
       title: expense.title,
       amount: expense.amountCents / 100,
-      category: expense.category as ExpenseCategory,
+      category: expense.category as FormData['category'],
       recurrence: expense.recurrence,
       startsOn: expense.startsOn,
       endsOn: expense.endsOn ?? '',
@@ -133,9 +144,7 @@ export function PersonalPage() {
       showToast(editing ? 'Dépense perso modifiée' : 'Dépense perso ajoutée', 'success')
       closeForm()
     },
-    onError: (err) => {
-      showToast(err instanceof Error ? err.message : 'Erreur', 'error')
-    },
+    onError: (err) => showToast(err instanceof Error ? err.message : 'Erreur', 'error'),
   })
 
   const deleteMutation = useMutation({
@@ -155,74 +164,80 @@ export function PersonalPage() {
   if (!user) return null
 
   const recurrence = watch('recurrence')
-
   const personal = personalMonth?.personal ?? []
   const shared = personalMonth?.shared ?? []
   const personalTotal = personalMonth?.personalTotalCents ?? 0
   const sharedTotal = personalMonth?.sharedTotalCents ?? 0
   const displayedTotal = includeShared ? personalTotal + sharedTotal : personalTotal
-
   const isEmpty = personal.length === 0 && (!includeShared || shared.length === 0)
 
   return (
-    <div className="space-y-4">
-      <div className="flex items-center justify-between">
-        <h1 className="text-xl font-bold text-text">Perso</h1>
-        <MonthPicker />
+    <div className="flex flex-col gap-3.5">
+      {/* Titre */}
+      <div className="flex items-end justify-between gap-3">
+        <div className="flex min-w-0 items-center gap-1">
+          <button
+            type="button"
+            onClick={() => navigate('/settings')}
+            aria-label="Retour aux réglages"
+            className="-ml-2 flex h-11 w-9 items-center justify-center text-ink"
+          >
+            <ChevronLeftIcon size={22} />
+          </button>
+          <h1 className="text-[28px] font-extrabold tracking-[-0.03em]">Perso</h1>
+        </div>
+        <MonthMenu />
       </div>
 
       {/* Total */}
-      <Card>
-        <p className="text-text-muted text-sm mb-1">
-          {includeShared ? 'Ce que le mois me coûte' : 'Mes dépenses perso'}
-        </p>
-        <p className="text-3xl font-bold text-text">
-          <Money cents={displayedTotal} />
-        </p>
+      <div className="flex flex-col gap-5 rounded-[24px] bg-ink p-6 text-white">
+        <div className="flex flex-col gap-1.5">
+          <div className="text-[13px] font-semibold uppercase tracking-[0.08em] text-on-ink-muted">
+            {includeShared ? 'Ce que le mois me coûte' : 'Mes dépenses perso'}
+          </div>
+          <div className="text-[48px] font-extrabold leading-none tracking-[-0.04em]">
+            {formatMoney(displayedTotal)}
+          </div>
+        </div>
 
         {includeShared && (
-          <div className="mt-3 pt-3 border-t border-border flex gap-4 text-sm">
-            <span className="text-text-muted">
-              Perso <Money cents={personalTotal} className="text-text font-medium" />
+          <div className="flex gap-4 text-[13px] text-on-ink-muted">
+            <span>
+              Perso <strong className="text-white">{formatMoney(personalTotal)}</strong>
             </span>
-            <span className="text-text-muted">
-              Ma part du commun{' '}
-              <Money cents={sharedTotal} className="text-accent font-medium" />
+            <span>
+              Ma part du commun <strong className="text-white">{formatMoney(sharedTotal)}</strong>
             </span>
           </div>
         )}
 
         {(personalMonth?.recurringTotalCents ?? 0) > 0 && (
-          <p className="text-text-muted text-xs mt-2">
-            dont <Money cents={personalMonth!.recurringTotalCents} /> de dépenses récurrentes
-          </p>
+          <div className="text-[12px] text-on-ink-muted">
+            dont {formatMoney(personalMonth!.recurringTotalCents)} de dépenses récurrentes
+          </div>
         )}
-      </Card>
+      </div>
 
-      {/* Toggle */}
-      <Card className="flex items-center justify-between">
-        <div className="min-w-0 pr-3">
-          <p className="font-medium text-text">Inclure les dépenses communes</p>
-          <p className="text-sm text-text-muted">
-            Ajoute ma part des dépenses du couple au total.
-          </p>
+      {/* Inclure le commun */}
+      <Card radius="md" className="flex items-center justify-between gap-3">
+        <div className="min-w-0">
+          <p className="text-[15px] font-semibold">Inclure les dépenses communes</p>
+          <p className="text-[12px] text-muted">Ajoute ma part des dépenses du couple au total.</p>
         </div>
         <button
           type="button"
           role="switch"
           aria-checked={includeShared}
+          aria-label="Inclure les dépenses communes"
           onClick={() => setIncludeShared((on) => !on)}
-          className={`
-            relative shrink-0 w-12 h-7 rounded-full transition-colors duration-200
-            ${includeShared ? 'bg-accent' : 'bg-border'}
-          `}
+          className={`relative h-7 w-12 shrink-0 rounded-full transition-colors ${
+            includeShared ? 'bg-ink' : 'bg-track'
+          }`}
         >
           <span
-            className={`
-              absolute top-1 w-5 h-5 rounded-full bg-surface shadow-sm
-              transition-all duration-200
-              ${includeShared ? 'left-6' : 'left-1'}
-            `}
+            className={`absolute top-1 h-5 w-5 rounded-full bg-surface shadow-segment transition-all ${
+              includeShared ? 'left-6' : 'left-1'
+            }`}
           />
         </button>
       </Card>
@@ -230,141 +245,135 @@ export function PersonalPage() {
       {/* Liste */}
       {isEmpty ? (
         <EmptyState
-          icon="🙋"
+          icon={<PackageIcon size={24} strokeWidth={2} />}
           title="Aucune dépense perso"
-          description="Ajoutez vos dépenses à vous, ponctuelles ou tous les mois."
+          description="Ajoute tes dépenses à toi, ponctuelles ou tous les mois."
         />
       ) : (
-        <div className="space-y-3">
-          {personal.map((expense) => (
-            <Card
+        <Card padding="none" className="px-4">
+          {personal.map((expense, index) => (
+            <button
               key={`personal-${expense.id}`}
-              className="flex items-center gap-3 hover:shadow-md transition-shadow cursor-pointer"
+              type="button"
               onClick={() => openEdit(expense)}
+              className={`flex w-full items-center gap-3 py-3 text-left ${
+                index < personal.length - 1 || (includeShared && shared.length > 0)
+                  ? 'border-b border-track'
+                  : ''
+              }`}
             >
-              <span className="text-3xl">
-                {CATEGORY_ICONS[expense.category] || '💰'}
-              </span>
-              <div className="flex-1 min-w-0">
-                <p className="font-medium text-text truncate">{expense.title}</p>
-                <p className="text-sm text-text-muted">
-                  {formatDate(expense.occurredOn)} • {CATEGORY_LABELS[expense.category] ?? expense.category}
-                </p>
-                {expense.recurrence === 'monthly' && (
-                  <Badge variant="neutral" className="mt-1">
-                    ↻ Tous les mois
-                  </Badge>
-                )}
+              <CategoryTile category={expense.category} />
+              <div className="flex min-w-0 flex-1 flex-col gap-0.5">
+                <span className="truncate text-[15px] font-semibold">{expense.title}</span>
+                <span className="truncate text-[12px] text-muted">
+                  {formatDayShort(expense.occurredOn)} ·{' '}
+                  {CATEGORY_LABELS[expense.category] ?? expense.category}
+                </span>
               </div>
-              <p className="font-bold text-text text-lg">
-                <Money cents={expense.amountCents} />
-              </p>
-            </Card>
+              {expense.recurrence === 'monthly' && (
+                <Badge className="shrink-0 text-[12px]">Tous les mois</Badge>
+              )}
+              <span className="shrink-0 text-[15px] font-bold">
+                {formatMoney(expense.amountCents)}
+              </span>
+            </button>
           ))}
 
-          {/* Dépenses communes: autre couleur, non modifiables ici */}
+          {/* Part des dépenses communes — non modifiables ici */}
           {includeShared &&
-            shared.map((expense) => (
-              <Card
+            shared.map((expense, index) => (
+              <div
                 key={`shared-${expense.id}`}
-                className="flex items-center gap-3 bg-accent/5 border-accent/20"
+                className={`flex items-center gap-3 py-3 ${
+                  index < shared.length - 1 ? 'border-b border-track' : ''
+                }`}
               >
-                <span className="text-3xl">
-                  {CATEGORY_ICONS[expense.category] || '💰'}
-                </span>
-                <div className="flex-1 min-w-0">
-                  <p className="font-medium text-accent truncate">{expense.title}</p>
-                  <p className="text-sm text-text-muted">
-                    {formatDate(expense.spentAt)} • payé par {expense.paidBy.displayName}
-                  </p>
-                  <p className="text-xs text-text-muted mt-1">
-                    Commune · <Money cents={expense.amountCents} /> au total
-                  </p>
+                <CategoryTile category={expense.category} />
+                <div className="flex min-w-0 flex-1 flex-col gap-0.5">
+                  <span className="truncate text-[15px] font-semibold text-muted">
+                    {expense.title}
+                  </span>
+                  <span className="truncate text-[12px] text-muted">
+                    Commune · {formatMoney(expense.amountCents)} au total · payé par{' '}
+                    {expense.paidBy.displayName}
+                  </span>
                 </div>
-                <p className="font-bold text-accent text-lg">
-                  <Money cents={expense.shareCents} />
-                </p>
-              </Card>
+                <span className="shrink-0 text-[15px] font-bold text-muted">
+                  {formatMoney(expense.shareCents)}
+                </span>
+              </div>
             ))}
-        </div>
+        </Card>
       )}
 
-      {/* FAB */}
-      <button
-        type="button"
-        onClick={openCreate}
-        className="
-          fixed bottom-24 right-4 md:bottom-8 md:right-8
-          w-14 h-14 rounded-full bg-accent text-white
-          flex items-center justify-center text-2xl
-          shadow-lg hover:bg-accent-hover transition-colors
-        "
-        aria-label="Ajouter une dépense perso"
-      >
-        +
-      </button>
+      <Button variant="secondary" onClick={openCreate} className="gap-2">
+        <PlusIcon size={18} strokeWidth={2} />
+        Ajouter une dépense perso
+      </Button>
 
       <Modal
         isOpen={showForm}
         onClose={closeForm}
         title={editing ? 'Modifier la dépense perso' : 'Nouvelle dépense perso'}
       >
-        <form onSubmit={handleSubmit((data) => saveMutation.mutate(data))} className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-text-muted mb-2">Montant</label>
-            <div className="flex items-center gap-2">
-              <input
-                type="number"
-                step="0.01"
-                min="0"
-                {...register('amount', { valueAsNumber: true })}
-                className="flex-1 text-3xl font-bold text-text bg-transparent border-none outline-none"
-                placeholder="0"
-              />
-              <span className="text-2xl text-text-muted">€</span>
-            </div>
-            {errors.amount && <p className="text-sm text-danger mt-1">{errors.amount.message}</p>}
+        <form onSubmit={handleSubmit((data) => saveMutation.mutate(data))} className="flex flex-col gap-4">
+          <div className="flex items-baseline justify-center gap-1.5 py-2">
+            <input
+              type="number"
+              step="0.01"
+              min="0"
+              {...register('amount', { valueAsNumber: true })}
+              placeholder="0"
+              aria-label="Montant"
+              className="w-36 border-0 bg-transparent text-center text-[40px] font-extrabold tracking-[-0.04em] text-ink outline-none"
+            />
+            <span className="text-[24px] font-bold text-placeholder">€</span>
           </div>
+          {errors.amount && <p className="-mt-3 text-[13px] text-negative">{errors.amount.message}</p>}
 
           <Input
             label="Titre"
-            placeholder="Ex: Abonnement salle de sport"
+            placeholder="Ex. abonnement salle de sport"
             error={errors.title?.message}
             {...register('title')}
           />
 
-          <div>
-            <label className="block text-sm font-medium text-text-muted mb-2">Catégorie</label>
+          <div className="flex flex-col gap-1.5">
+            <span className="text-[13px] font-semibold text-muted">Catégorie</span>
             <Controller
               name="category"
               control={control}
               render={({ field }) => (
-                <div className="grid grid-cols-3 gap-2">
-                  {CATEGORIES.map((cat) => (
-                    <button
-                      key={cat}
-                      type="button"
-                      onClick={() => field.onChange(cat)}
-                      className={`
-                        p-2 rounded-[12px] text-center transition-all
-                        ${
-                          field.value === cat
-                            ? 'bg-accent text-white'
-                            : 'bg-background border border-border'
-                        }
-                      `}
-                    >
-                      <span className="text-xl block">{CATEGORY_ICONS[cat]}</span>
-                      <span className="text-xs">{CATEGORY_LABELS[cat]}</span>
-                    </button>
-                  ))}
+                <div className="no-scrollbar flex gap-2 overflow-x-auto">
+                  {CATEGORY_KEYS.map((key) => {
+                    const Glyph = CATEGORY_ICON_COMPONENTS[key]
+                    const isSelected = field.value === key
+                    return (
+                      <button
+                        key={key}
+                        type="button"
+                        onClick={() => field.onChange(key)}
+                        aria-pressed={isSelected}
+                        className={`flex h-11 shrink-0 items-center gap-2 rounded-full border pl-2.5 pr-3.5 text-[14px] ${
+                          isSelected
+                            ? 'border-ink bg-ink font-bold text-white'
+                            : 'border-border bg-surface font-semibold text-ink'
+                        }`}
+                      >
+                        <span className={isSelected ? 'text-white' : categoryColors(key).glyph}>
+                          <Glyph size={20} />
+                        </span>
+                        {CATEGORY_LABELS[key]}
+                      </button>
+                    )
+                  })}
                 </div>
               )}
             />
           </div>
 
-          <div>
-            <label className="block text-sm font-medium text-text-muted mb-2">Fréquence</label>
+          <div className="flex flex-col gap-1.5">
+            <span className="text-[13px] font-semibold text-muted">Fréquence</span>
             <Controller
               name="recurrence"
               control={control}
@@ -390,29 +399,24 @@ export function PersonalPage() {
 
           {recurrence === 'monthly' && (
             <Input
-              label="Jusqu'au (optionnel)"
+              label="Jusqu'au (facultatif)"
               type="date"
               error={errors.endsOn?.message}
               {...register('endsOn')}
             />
           )}
 
-          <div className="flex gap-3 pt-2">
+          <div className="flex gap-2.5">
             <Button type="button" variant="secondary" onClick={closeForm} className="flex-1">
               Annuler
             </Button>
             <Button type="submit" isLoading={saveMutation.isPending} className="flex-1">
-              {editing ? 'Modifier' : 'Ajouter'}
+              {editing ? 'Enregistrer' : 'Ajouter'}
             </Button>
           </div>
 
           {editing && (
-            <Button
-              type="button"
-              variant="danger"
-              onClick={() => setToDelete(editing.id)}
-              className="w-full"
-            >
+            <Button type="button" variant="danger" onClick={() => setToDelete(editing.id)}>
               Supprimer
             </Button>
           )}

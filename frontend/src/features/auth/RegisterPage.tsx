@@ -42,13 +42,13 @@ export function RegisterPage() {
     <AuthLayout>
       <Card className="w-full max-w-md" padding="lg">
         <div className="text-center mb-8">
-          <h1 className="text-2xl font-bold text-text mb-2">Créer un compte</h1>
-          <p className="text-text-muted">Rejoignez Prorata</p>
+          <h1 className="text-2xl font-bold text-ink mb-2">Créer un compte</h1>
+          <p className="text-muted">Rejoignez Prorata</p>
         </div>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           {error && (
-            <div className="p-3 rounded-[12px] bg-danger/10 text-danger text-sm text-center">
+            <div className="p-3 rounded-[12px] bg-negative-bg text-negative text-sm text-center">
               {error}
             </div>
           )}
@@ -82,9 +82,9 @@ export function RegisterPage() {
           </Button>
         </form>
 
-        <p className="text-center text-text-muted text-sm mt-6">
+        <p className="text-center text-muted text-sm mt-6">
           Déjà un compte ?{' '}
-          <Link to="/login" className="text-accent font-medium hover:underline">
+          <Link to="/login" className="text-clement-text font-medium hover:underline">
             Se connecter
           </Link>
         </p>

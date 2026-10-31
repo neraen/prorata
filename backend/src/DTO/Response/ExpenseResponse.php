@@ -13,6 +13,8 @@ class ExpenseResponse
     public string $currency;
     public string $spentAt;
     public PaidByResponse $paidBy;
+    public string $splitMode;
+    public ?PaidByResponse $chargedTo = null;
 
     public static function fromEntity(Expense $expense): self
     {
@@ -24,6 +26,10 @@ class ExpenseResponse
         $dto->currency = $expense->getCurrency();
         $dto->spentAt = $expense->getSpentAt()->format('Y-m-d');
         $dto->paidBy = PaidByResponse::fromEntity($expense->getPaidBy());
+        $dto->splitMode = $expense->getSplitMode()->value;
+        $dto->chargedTo = $expense->getChargedTo() !== null
+            ? PaidByResponse::fromEntity($expense->getChargedTo())
+            : null;
 
         return $dto;
     }

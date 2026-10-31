@@ -27,4 +27,12 @@ class ExpenseCreateRequest
 
     #[Assert\NotBlank(message: 'Payer user ID is required')]
     public int $paidByUserId = 0;
+
+    #[Assert\Choice(choices: ['prorata', 'equal', 'full'], message: 'Invalid split mode')]
+    public string $splitMode = 'prorata';
+
+    /**
+     * Required when splitMode is "full": the member bearing the whole expense.
+     */
+    public ?int $chargedToUserId = null;
 }

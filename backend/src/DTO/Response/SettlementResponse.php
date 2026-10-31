@@ -17,4 +17,13 @@ class SettlementResponse
 
         return $dto;
     }
+
+    public function toArray(): array
+    {
+        return [
+            'fromUserId' => $this->fromUserId,
+            'toUserId' => $this->toUserId,
+            'amountCents' => $this->amountCents,
+        ];
+    }
 }

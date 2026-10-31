@@ -1,29 +1,145 @@
 @import "tailwindcss";
 
+/* Plus Jakarta Sans — the one family of the app (OFL, see public/fonts/OFL.txt) */
+@font-face {
+  font-family: 'Plus Jakarta Sans';
+  src: url('/fonts/PlusJakartaSans-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Plus Jakarta Sans';
+  src: url('/fonts/PlusJakartaSans-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Plus Jakarta Sans';
+  src: url('/fonts/PlusJakartaSans-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Plus Jakarta Sans';
+  src: url('/fonts/PlusJakartaSans-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Plus Jakarta Sans';
+  src: url('/fonts/PlusJakartaSans-ExtraBold.ttf') format('truetype');
+  font-weight: 800;
+  font-display: swap;
+}
+
+/* Design tokens — values come straight from the handoff (tokens.css). */
 @theme {
-  --color-background: #F7F1EA;
-  --color-surface: #FFF8F2;
-  --color-accent: #E58B5A;
-  --color-accent-hover: #D47A4A;
-  --color-secondary: #E8A08A;
-  --color-text: #3B2F2A;
-  --color-text-muted: #7A665E;
-  --color-success: #3FAE7C;
-  --color-danger: #D96C6C;
-  --color-border: rgba(59, 47, 42, 0.10);
+  /* Surfaces */
+  --color-bg: #F5F5F1;
+  --color-surface: #FFFFFF;
+  --color-surface-sunken: #FAFAF8;
+  --color-segment-bg: #E9E8E2;
+  --color-segment-bg-alt: #F0EFEA;
+  --color-track: #EEEDE8;
+  --color-border: #E6E5DF;
+  --color-disabled: #DCDBD5;
 
-  --radius-card: 16px;
-  --radius-badge: 999px;
+  /* Texte */
+  --color-ink: #15171C;
+  --color-muted: #5E6270;
+  --color-placeholder: #8A8E99;
+  --color-nav-inactive: #6B6F7B;
+  --color-on-ink-muted: #B8BCC8;
+  --color-on-ink-border: #3A3D46;
+  --color-arrow-off: #B9B8B2;
 
-  --font-family-sans: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  /* Personnes */
+  --color-clement: #3B5BDB;
+  --color-clement-text: #2F4AC0;
+  --color-clement-tint: #E3E8FD;
+  --color-clement-select: #EEF1FD;
+  --color-clement-strong: #1E3A9E;
+  --color-laetitia: #E08A35;
+  --color-laetitia-solid: #C2671D;
+  --color-laetitia-text: #8F4A0E;
+  --color-laetitia-tint: #FCEBD9;
+  --color-laetitia-select: #FDF1E4;
+  --color-laetitia-strong: #7A3E0B;
+
+  /* Sémantique */
+  --color-positive: #1F7A4D;
+  --color-positive-bg: #E3F4EA;
+  --color-negative: #A3311C;
+  --color-negative-bg: #FBE7E3;
+
+  /* Catégories : couleur d'icône / fond de tuile */
+  --color-cat-courses: #1F7A4D;
+  --color-cat-courses-bg: #E6F2EC;
+  --color-cat-loisirs: #6A3FC1;
+  --color-cat-loisirs-bg: #EFE9FB;
+  --color-cat-transport: #1F5FA8;
+  --color-cat-transport-bg: #E3EEFB;
+  --color-cat-logement: #9A5414;
+  --color-cat-logement-bg: #FCEFE0;
+  --color-cat-sante: #A3283F;
+  --color-cat-sante-bg: #FBE7EA;
+  --color-cat-autres: #4A4E59;
+  --color-cat-autres-bg: #EEEDE8;
+
+  /* Ombres */
+  --shadow-segment: 0 1px 3px rgba(0, 0, 0, 0.08);
+  --shadow-fab: 0 8px 20px rgba(21, 23, 28, 0.25);
+
+  --font-sans: 'Plus Jakarta Sans', system-ui, sans-serif;
+}
+
+html {
+  background-color: var(--color-bg);
 }
 
 body {
-  background-color: var(--color-background);
-  color: var(--color-text);
-  font-family: var(--font-family-sans);
+  margin: 0;
+  background-color: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  /* Amounts must line up column to column across the whole app. */
+  font-variant-numeric: tabular-nums;
+  -webkit-font-smoothing: antialiased;
 }
 
 * {
   border-color: var(--color-border);
+}
+
+/* Horizontal chip rows scroll bare — no visible scrollbar. */
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* The tab bar sits on the home indicator; the content clears both. */
+.safe-bottom {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+input,
+button,
+select,
+textarea {
+  font-family: inherit;
+  font-variant-numeric: inherit;
+}
+
+input::placeholder {
+  color: var(--color-placeholder);
+}
+
+/* The custom keypad is the only amount input; keep taps from selecting digits. */
+.no-select {
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
 }

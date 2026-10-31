@@ -36,6 +36,16 @@ class Expense
     #[ORM\Column(length: 3)]
     private string $currency = 'EUR';
 
+    #[ORM\Column(length: 20, enumType: SplitMode::class, options: ['default' => 'prorata'])]
+    private SplitMode $splitMode = SplitMode::PRORATA;
+
+    /**
+     * Member bearing 100% of the expense. Only meaningful when splitMode is FULL.
+     */
+    #[ORM\ManyToOne(targetEntity: User::class)]
+    #[ORM\JoinColumn(nullable: true, onDelete: 'SET NULL')]
+    private ?User $chargedTo = null;
+
     #[ORM\Column(type: Types::DATE_IMMUTABLE)]
     private ?\DateTimeImmutable $spentAt = null;
 
@@ -125,6 +135,30 @@ class Expense
         return $this;
     }
 
+    public function getSplitMode(): SplitMode
+    {
+        return $this->splitMode;
+    }
+
+    public function setSplitMode(SplitMode $splitMode): static
+    {
+        $this->splitMode = $splitMode;
+
+        return $this;
+    }
+
+    public function getChargedTo(): ?User
+    {
+        return $this->chargedTo;
+    }
+
+    public function setChargedTo(?User $chargedTo): static
+    {
+        $this->chargedTo = $chargedTo;
+
+        return $this;
+    }
+
     public function getSpentAt(): ?\DateTimeImmutable
     {
         return $this->spentAt;
@@ -147,6 +181,21 @@ class Expense
         $this->createdAt = $createdAt;
 
         return $this;
+    }
+
+    /**
+     * The split actually applied.
+     *
+     * A "full" expense whose charged member is gone (deleted account) falls
+     * back to the prorata split rather than dropping out of the balance.
+     */
+    public function effectiveSplitMode(): SplitMode
+    {
+        if ($this->splitMode === SplitMode::FULL && $this->chargedTo === null) {
+            return SplitMode::PRORATA;
+        }
+
+        return $this->splitMode;
     }
 
     public function getYear(): int

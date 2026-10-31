@@ -41,13 +41,13 @@ export function LoginPage() {
     <AuthLayout>
       <Card className="w-full max-w-md" padding="lg">
         <div className="text-center mb-8">
-          <h1 className="text-2xl font-bold text-text mb-2">Bienvenue</h1>
-          <p className="text-text-muted">Connectez-vous pour continuer</p>
+          <h1 className="text-2xl font-bold text-ink mb-2">Bienvenue</h1>
+          <p className="text-muted">Connectez-vous pour continuer</p>
         </div>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           {error && (
-            <div className="p-3 rounded-[12px] bg-danger/10 text-danger text-sm text-center">
+            <div className="p-3 rounded-[12px] bg-negative-bg text-negative text-sm text-center">
               {error}
             </div>
           )}
@@ -73,9 +73,9 @@ export function LoginPage() {
           </Button>
         </form>
 
-        <p className="text-center text-text-muted text-sm mt-6">
+        <p className="text-center text-muted text-sm mt-6">
           Pas encore de compte ?{' '}
-          <Link to="/register" className="text-accent font-medium hover:underline">
+          <Link to="/register" className="text-clement-text font-medium hover:underline">
             Créer un compte
           </Link>
         </p>

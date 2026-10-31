@@ -47,12 +47,19 @@ class Couple
     #[ORM\OneToMany(targetEntity: CoupleInvite::class, mappedBy: 'couple', orphanRemoval: true)]
     private Collection $invites;
 
+    /**
+     * @var Collection<int, Transfer>
+     */
+    #[ORM\OneToMany(targetEntity: Transfer::class, mappedBy: 'couple', orphanRemoval: true)]
+    private Collection $transfers;
+
     public function __construct()
     {
         $this->members = new ArrayCollection();
         $this->expenses = new ArrayCollection();
         $this->closures = new ArrayCollection();
         $this->invites = new ArrayCollection();
+        $this->transfers = new ArrayCollection();
     }
 
     #[ORM\PrePersist]
@@ -200,6 +207,35 @@ class Couple
         if ($this->invites->removeElement($invite)) {
             if ($invite->getCouple() === $this) {
                 $invite->setCouple(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Transfer>
+     */
+    public function getTransfers(): Collection
+    {
+        return $this->transfers;
+    }
+
+    public function addTransfer(Transfer $transfer): static
+    {
+        if (!$this->transfers->contains($transfer)) {
+            $this->transfers->add($transfer);
+            $transfer->setCouple($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTransfer(Transfer $transfer): static
+    {
+        if ($this->transfers->removeElement($transfer)) {
+            if ($transfer->getCouple() === $this) {
+                $transfer->setCouple(null);
             }
         }
 

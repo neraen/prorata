@@ -22,4 +22,12 @@ class ExpenseUpdateRequest
     public ?string $spentAt = null;
 
     public ?int $paidByUserId = null;
+
+    #[Assert\Choice(choices: ['prorata', 'equal', 'full'], message: 'Invalid split mode')]
+    public ?string $splitMode = null;
+
+    /**
+     * Required when splitMode becomes "full". Ignored for the other modes.
+     */
+    public ?int $chargedToUserId = null;
 }

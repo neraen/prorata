@@ -11,25 +11,30 @@ interface ModalProps {
 
 export function Modal({ isOpen, onClose, title, children, actions }: ModalProps) {
   useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = 'hidden'
-    } else {
-      document.body.style.overflow = ''
-    }
+    document.body.style.overflow = isOpen ? 'hidden' : ''
     return () => {
       document.body.style.overflow = ''
     }
   }, [isOpen])
 
+  useEffect(() => {
+    if (!isOpen) return
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') onClose()
+    }
+    document.addEventListener('keydown', onKeyDown)
+    return () => document.removeEventListener('keydown', onKeyDown)
+  }, [isOpen, onClose])
+
   if (!isOpen) return null
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-      <div className="absolute inset-0 bg-text/30 backdrop-blur-sm" onClick={onClose} />
-      <div className="relative bg-surface rounded-[16px] shadow-lg w-full max-w-md p-6 animate-in fade-in zoom-in-95 duration-200">
-        <h2 className="text-lg font-semibold text-text mb-4">{title}</h2>
-        <div className="text-text-muted">{children}</div>
-        {actions && <div className="flex gap-3 mt-6">{actions}</div>}
+    <div className="fixed inset-0 z-50 flex items-end justify-center sm:items-center">
+      <div className="absolute inset-0 bg-ink/40" onClick={onClose} />
+      <div className="relative m-0 w-full max-w-[480px] rounded-t-[24px] border border-border bg-surface p-5 sm:m-4 sm:rounded-[24px]">
+        <h2 className="mb-4 text-[17px] font-bold text-ink">{title}</h2>
+        <div className="text-[14px] text-muted">{children}</div>
+        {actions && <div className="mt-6 flex gap-2.5">{actions}</div>}
       </div>
     </div>
   )
@@ -69,7 +74,7 @@ export function ConfirmModal({
             {cancelLabel}
           </Button>
           <Button
-            variant={variant}
+            variant={variant === 'danger' ? 'danger' : 'primary'}
             onClick={onConfirm}
             isLoading={isLoading}
             className="flex-1"
@@ -79,7 +84,7 @@ export function ConfirmModal({
         </>
       }
     >
-      <p>{message}</p>
+      <p className="leading-relaxed">{message}</p>
     </Modal>
   )
 }

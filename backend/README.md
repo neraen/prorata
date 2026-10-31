@@ -72,6 +72,8 @@ src/
 │   ├── AuthController.php
 │   ├── CoupleController.php
 │   ├── ExpenseController.php
+│   ├── PersonalExpenseController.php
+│   ├── TransferController.php
 │   └── MonthController.php
 ├── DTO/
 │   ├── Request/             # DTOs de requêtes avec validation
@@ -82,7 +84,11 @@ src/
 ├── Repository/              # Repositories Doctrine
 └── Service/                 # Services domaine
     ├── CoupleContextService.php
+    ├── ProrataWeightCalculator.php
     ├── MonthlyBalanceService.php
+    ├── ExpenseShareService.php
+    ├── OverallBalanceService.php
+    ├── PersonalMonthService.php
     ├── MonthClosureService.php
     └── ClosedMonthGuard.php
 ```
@@ -121,6 +127,34 @@ src/
 - `amountCents` (int > 0)
 - `currency` (default "EUR")
 - `spentAt` (date)
+- `splitMode` (enum: "prorata" | "equal" | "full", défaut "prorata")
+- `chargedTo` (FK User, nullable - obligatoire si `splitMode = "full"`)
+
+### PersonalExpense
+Dépense d'une seule personne, hors comptes du couple. Elle est **privée** (jamais
+visible par le partenaire) et n'entre jamais dans la balance du couple.
+
+Une dépense mensuelle est stockée une seule fois comme modèle plutôt que
+dupliquée chaque mois: elle s'applique de `startsOn` à `endsOn`.
+
+- `owner_id` (FK User)
+- `title`, `category`
+- `amountCents` (int > 0)
+- `currency` (default "EUR")
+- `recurrence` (enum: "none" | "monthly")
+- `startsOn` (date) - date de la dépense ponctuelle, ou premier mois si mensuelle
+- `endsOn` (date, nullable) - dernier mois d'une mensuelle; null = toujours active
+
+### Transfer
+Virement réellement effectué entre les deux membres pour se régulariser.
+
+- `couple_id` (FK)
+- `fromUser` (FK User)
+- `toUser` (FK User)
+- `amountCents` (int > 0)
+- `currency` (default "EUR")
+- `transferredAt` (date)
+- `note` (nullable)
 
 ### MonthClosure
 - `couple_id` (FK)
@@ -377,12 +411,22 @@ curl "http://localhost:8000/api/expenses?year=2026&month=2" \
       "paidBy": {
         "userId": 1,
         "displayName": "Clara"
-      }
+      },
+      "splitMode": "prorata",
+      "chargedTo": null
     }
   ],
   "isClosed": false
 }
 ```
+
+**Modes de répartition (`splitMode`):**
+
+| Valeur | Effet |
+|--------|-------|
+| `prorata` | Répartie selon le mode du couple (income / percentage / equal) |
+| `equal` | Coupée en deux, quel que soit le prorata |
+| `full` | Entièrement à la charge de `chargedToUserId` |
 
 #### POST /api/expenses
 Créer une dépense.
@@ -397,7 +441,26 @@ curl -X POST http://localhost:8000/api/expenses \
     "amountCents": 4500,
     "currency": "EUR",
     "spentAt": "2026-02-12",
-    "paidByUserId": 1
+    "paidByUserId": 1,
+    "splitMode": "prorata"
+  }'
+```
+
+Dépense entièrement à la charge de Julien, avancée par Clara:
+
+```bash
+curl -X POST http://localhost:8000/api/expenses \
+  -H "Authorization: Bearer YOUR_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "title": "Dentiste Julien",
+    "category": "health",
+    "amountCents": 8000,
+    "currency": "EUR",
+    "spentAt": "2026-02-12",
+    "paidByUserId": 1,
+    "splitMode": "full",
+    "chargedToUserId": 2
   }'
 ```
 
@@ -434,6 +497,146 @@ curl -X DELETE http://localhost:8000/api/expenses/1 \
 
 **Réponse 204:** No content
 
+### Personal
+
+Dépenses privées d'un membre. Toutes les requêtes sont scopées à l'utilisateur
+connecté: le partenaire ne voit jamais ces lignes, et elles ne touchent pas la
+balance du couple.
+
+#### GET /api/personal/month?year=2026&month=2
+Le mois vu du côté d'une personne: ses dépenses perso, plus sa part des dépenses
+communes, chacune avec son total.
+
+```bash
+curl "http://localhost:8000/api/personal/month?year=2026&month=2" \
+  -H "Authorization: Bearer YOUR_TOKEN"
+```
+
+**Réponse 200:**
+```json
+{
+  "year": 2026,
+  "month": 2,
+  "currency": "EUR",
+  "personal": [
+    {
+      "id": 1,
+      "title": "Salle de sport",
+      "category": "health",
+      "amountCents": 3500,
+      "currency": "EUR",
+      "recurrence": "monthly",
+      "startsOn": "2026-01-05",
+      "endsOn": null,
+      "occurredOn": "2026-02-05"
+    }
+  ],
+  "shared": [
+    {
+      "id": 12,
+      "title": "Courses",
+      "category": "groceries",
+      "amountCents": 10000,
+      "shareCents": 6000,
+      "currency": "EUR",
+      "spentAt": "2026-02-12",
+      "splitMode": "prorata",
+      "paidBy": { "userId": 2, "displayName": "Julien" }
+    }
+  ],
+  "personalTotalCents": 3500,
+  "sharedTotalCents": 6000,
+  "totalCents": 9500,
+  "recurringTotalCents": 3500
+}
+```
+
+- `occurredOn` est la date à laquelle la dépense tombe dans le mois demandé. Une
+  mensuelle garde son jour du mois, ramené au dernier jour si le mois est trop
+  court (un 31 devient le 28 en février).
+- `shareCents` est la part de ce membre sur cette ligne. La somme des
+  `shareCents` vaut exactement le `targetCents` du bilan mensuel: les deux vues
+  ne peuvent pas diverger d'un centime.
+
+#### POST /api/personal/expenses
+Créer une dépense perso, ponctuelle ou mensuelle.
+
+```bash
+curl -X POST http://localhost:8000/api/personal/expenses \
+  -H "Authorization: Bearer YOUR_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "title": "Salle de sport",
+    "category": "health",
+    "amountCents": 3500,
+    "currency": "EUR",
+    "recurrence": "monthly",
+    "startsOn": "2026-01-05"
+  }'
+```
+
+**Réponse 201:** Objet personal expense créé.
+
+#### PUT /api/personal/expenses/{id} / DELETE /api/personal/expenses/{id}
+Modifier ou supprimer une dépense perso. Sur un PUT, `clearEndsOn: true` retire
+la date de fin d'une mensuelle pour la relancer indéfiniment.
+
+Modifier une mensuelle vaut pour tous les mois, passés comme à venir. Pour
+arrêter une dépense sans réécrire l'historique, renseigner `endsOn`.
+
+### Transfers
+
+Les virements sont l'argent réellement versé d'un membre à l'autre. Ils viennent
+en déduction de ce qui est dû, sans jamais toucher aux totaux de dépenses.
+
+#### GET /api/transfers
+Lister les virements. Sans paramètre, tous les virements sont retournés;
+avec `year` et `month`, seulement ceux du mois.
+
+```bash
+curl "http://localhost:8000/api/transfers?year=2026&month=2" \
+  -H "Authorization: Bearer YOUR_TOKEN"
+```
+
+**Réponse 200:**
+```json
+{
+  "items": [
+    {
+      "id": 1,
+      "fromUser": { "userId": 2, "displayName": "Julien" },
+      "toUser": { "userId": 1, "displayName": "Clara" },
+      "amountCents": 20000,
+      "currency": "EUR",
+      "transferredAt": "2026-02-28",
+      "note": "régularisation février"
+    }
+  ]
+}
+```
+
+#### POST /api/transfers
+Enregistrer un virement.
+
+```bash
+curl -X POST http://localhost:8000/api/transfers \
+  -H "Authorization: Bearer YOUR_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "fromUserId": 2,
+    "toUserId": 1,
+    "amountCents": 20000,
+    "currency": "EUR",
+    "transferredAt": "2026-02-28",
+    "note": "régularisation février"
+  }'
+```
+
+**Réponse 201:** Objet transfer créé. HTTP 409 si le mois est clôturé.
+
+#### PUT /api/transfers/{id} / DELETE /api/transfers/{id}
+Modifier ou supprimer un virement, tant que son mois n'est pas clôturé.
+
 ### Months / Balance
 
 #### GET /api/months/balance?year=2026&month=2
@@ -459,7 +662,13 @@ curl "http://localhost:8000/api/months/balance?year=2026&month=2" \
       "weight": 0.6,
       "targetCents": 128400,
       "paidCents": 100000,
-      "deltaCents": -28400
+      "deltaCents": -28400,
+      "prorataTargetCents": 128400,
+      "equalTargetCents": 0,
+      "directTargetCents": 0,
+      "transferredOutCents": 0,
+      "transferredInCents": 0,
+      "netDeltaCents": -28400
     },
     {
       "userId": 2,
@@ -467,7 +676,13 @@ curl "http://localhost:8000/api/months/balance?year=2026&month=2" \
       "weight": 0.4,
       "targetCents": 85600,
       "paidCents": 114000,
-      "deltaCents": 28400
+      "deltaCents": 28400,
+      "prorataTargetCents": 85600,
+      "equalTargetCents": 0,
+      "directTargetCents": 0,
+      "transferredOutCents": 0,
+      "transferredInCents": 0,
+      "netDeltaCents": 28400
     }
   ],
   "settlement": {
@@ -475,9 +690,76 @@ curl "http://localhost:8000/api/months/balance?year=2026&month=2" \
     "toUserId": 2,
     "amountCents": 28400
   },
-  "isClosed": false
+  "isClosed": false,
+  "prorataTotalCents": 214000,
+  "equalTotalCents": 0,
+  "directTotalCents": 0,
+  "transfersTotalCents": 0
 }
 ```
+
+`deltaCents` est le déséquilibre brut du mois; `netDeltaCents` est ce qu'il en
+reste une fois les virements du mois déduits. C'est `netDeltaCents` qui alimente
+`settlement`.
+
+#### GET /api/months/overall
+Position cumulée sur tous les mois enregistrés, virements déduits. C'est la vue
+"où on en est": trois mois à 100 € de trop deviennent une créance de 300 €,
+moins ce qui a déjà été viré.
+
+```bash
+curl http://localhost:8000/api/months/overall \
+  -H "Authorization: Bearer YOUR_TOKEN"
+```
+
+**Réponse 200:**
+```json
+{
+  "currency": "EUR",
+  "members": [
+    {
+      "userId": 1,
+      "displayName": "Clara",
+      "paidCents": 600000,
+      "targetCents": 300000,
+      "deltaCents": 300000,
+      "prorataTargetCents": 300000,
+      "equalTargetCents": 0,
+      "directTargetCents": 0,
+      "transferredOutCents": 0,
+      "transferredInCents": 50000,
+      "netDeltaCents": 250000
+    },
+    {
+      "userId": 2,
+      "displayName": "Julien",
+      "paidCents": 0,
+      "targetCents": 300000,
+      "deltaCents": -300000,
+      "prorataTargetCents": 300000,
+      "equalTargetCents": 0,
+      "directTargetCents": 0,
+      "transferredOutCents": 50000,
+      "transferredInCents": 0,
+      "netDeltaCents": -250000
+    }
+  ],
+  "settlement": {
+    "fromUserId": 2,
+    "toUserId": 1,
+    "amountCents": 250000
+  },
+  "totalCents": 600000,
+  "prorataTotalCents": 600000,
+  "equalTotalCents": 0,
+  "directTotalCents": 0,
+  "transfersTotalCents": 50000,
+  "months": []
+}
+```
+
+`months` contient le détail mois par mois (même format que
+`/api/months/balance`), du plus récent au plus ancien.
 
 #### POST /api/months/close
 Clôturer un mois.
@@ -535,24 +817,62 @@ curl http://localhost:8000/api/months/2026/1 \
 
 Le service `MonthlyBalanceService` calcule le bilan mensuel:
 
-1. Récupère toutes les dépenses du mois
+1. Récupère toutes les dépenses et tous les virements du mois
 2. Calcule le total
 3. Détermine les poids selon le mode:
    - **equal:** 50/50
    - **income:** proportionnel aux revenus
    - **percentage:** selon les pourcentages définis
-4. Calcule la cible de chaque membre: `target = round(total * weight)`
+4. Regroupe les dépenses par `splitMode` et calcule la cible de chaque membre:
+   - `prorata`: `round(total_prorata * weight)`
+   - `equal`: `round(total_equal / 2)`
+   - `full`: la totalité pour le membre désigné
+   Chaque groupe est arrondi une seule fois, et le second membre reçoit le reste
+   du groupe: aucun centime ne se perd.
 5. Calcule ce que chaque membre a payé
 6. Calcule le delta: `delta = paid - target`
-7. Détermine le règlement:
-   - Si delta A > 0: B doit delta à A
-   - Si delta A < 0: A doit |delta| à B
-   - Si delta = 0: pas de règlement
+7. Déduit les virements du mois: `netDelta = delta + versé - reçu`
+8. Détermine le règlement à partir du `netDelta`:
+   - Si netDelta A > 0: B doit ce montant à A
+   - Si netDelta A < 0: A doit |netDelta| à B
+   - Si netDelta = 0: pas de règlement
+
+Une dépense `full` dont le membre désigné a disparu (compte supprimé) retombe
+sur le calcul prorata plutôt que de sortir du bilan.
+
+### Position cumulée
+
+`OverallBalanceService` additionne les bilans de tous les mois ayant une dépense,
+un virement ou une clôture. Les mois clôturés sont relus depuis leur snapshot,
+les autres sont recalculés. La somme des `netDelta` donne la position courante.
+
+Les snapshots écrits avant l'ajout des modes de répartition et des virements
+restent lisibles: ils sont interprétés comme des mois 100% prorata sans virement.
+
+### Ventilation par ligne (vue Perso)
+
+`ExpenseShareService` découpe chaque dépense commune pour dire ce qu'un membre
+porte, ligne par ligne. Le bilan mensuel n'arrondissant qu'une fois par groupe,
+un arrondi naïf par ligne ne retomberait pas dessus. Chaque groupe est donc
+alloué de façon cumulative: une ligne reçoit `round(cumul * poids)` moins ce qui
+a déjà été distribué. Les lignes somment ainsi exactement au `targetCents` du
+bilan — c'est vérifié par `ExpenseShareServiceTest`.
+
+`ProrataWeightCalculator` est la seule source des poids: le bilan mensuel et la
+ventilation par ligne y lisent tous les deux, ils ne peuvent pas diverger.
+
+### Dépenses perso
+
+`PersonalMonthService` assemble la vue Perso d'un mois. Les dépenses perso sont
+totalement étanches à la balance du couple: elles ne modifient ni les totaux, ni
+les parts, ni les règlements. Le seul lien est de lecture — la vue Perso affiche
+en plus la part que ce membre porte sur les dépenses communes.
 
 ### Clôture de mois
 
 - Une fois clôturé, le mois est figé (snapshot JSON)
-- Interdiction d'ajouter/modifier/supprimer des dépenses sur un mois clôturé (HTTP 409)
+- Interdiction d'ajouter/modifier/supprimer des dépenses **ou des virements** sur
+  un mois clôturé (HTTP 409)
 - La clôture est idempotente (re-clôturer retourne le snapshot existant)
 
 ## Tests

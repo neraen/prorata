@@ -1,42 +1,36 @@
-import { useState } from 'react'
-import { useForm, Controller } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { z } from 'zod'
+import { useMemo, useState } from 'react'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import dayjs from 'dayjs'
+import { monthsApi, transfersApi, type ApiTransfer } from '../../lib/api'
 import { useAuthStore, useCoupleStore, useMonthStore, useToastStore } from '../../lib/stores'
-import { transfersApi, monthsApi } from '../../lib/api'
-import { formatDate, defaultDateInMonth } from '../../lib/utils'
+import { defaultDateInMonth, formatDayHeader, formatMoney } from '../../lib/utils'
+import { ArrowLeftRightIcon, ArrowRightIcon, PlusIcon, TrashIcon } from '../../components/icons'
 import {
-  Card,
+  Avatar,
   Button,
-  Input,
-  Money,
-  SegmentedControl,
-  EmptyState,
-  Modal,
+  Card,
   ConfirmModal,
+  EmptyState,
+  Input,
+  Modal,
+  SegmentedControl,
 } from '../../components/ui'
-
-const schema = z.object({
-  amount: z.number().positive('Le montant doit être positif'),
-  fromUserId: z.number().min(1, 'Sélectionnez qui a versé'),
-  transferredAt: z.string().min(1, 'Date requise'),
-  note: z.string().max(255).optional(),
-})
-
-type FormData = z.infer<typeof schema>
 
 export function TransfersPage() {
   const user = useAuthStore((s) => s.user)
   const { couple, partner } = useCoupleStore()
-  // This page lists every transfer, but the date follows the month selected
-  // elsewhere in the app, so a settlement lands on the month being worked on.
+  // The form dates a new transfer inside the month being looked at elsewhere,
+  // so a settlement lands on the month it regularises.
   const { year, month } = useMonthStore()
   const showToast = useToastStore((s) => s.show)
   const queryClient = useQueryClient()
 
   const [showForm, setShowForm] = useState(false)
-  const [transferToDelete, setTransferToDelete] = useState<number | null>(null)
+  const [toDelete, setToDelete] = useState<number | null>(null)
+  const [amount, setAmount] = useState('')
+  const [fromUserId, setFromUserId] = useState<number>(user?.id ?? 0)
+  const [transferredAt, setTransferredAt] = useState(() => defaultDateInMonth(year, month))
+  const [note, setNote] = useState('')
 
   const { data: transferList } = useQuery({
     queryKey: ['transfers'],
@@ -50,33 +44,17 @@ export function TransfersPage() {
     enabled: !!couple,
   })
 
-  const {
-    register,
-    handleSubmit,
-    control,
-    reset,
-    formState: { errors, isSubmitting },
-  } = useForm<FormData>({
-    resolver: zodResolver(schema),
-    defaultValues: {
-      amount: 0,
-      fromUserId: user?.id ?? 0,
-      transferredAt: defaultDateInMonth(year, month),
-      note: '',
-    },
-  })
+  const transfers = useMemo(() => transferList?.items ?? [], [transferList])
 
-  const blankTransfer = () => ({
-    amount: 0,
-    fromUserId: user?.id ?? 0,
-    transferredAt: defaultDateInMonth(year, month),
-    note: '',
-  })
-
-  const openForm = () => {
-    reset(blankTransfer())
-    setShowForm(true)
-  }
+  const days = useMemo(() => {
+    const byDay = new Map<string, ApiTransfer[]>()
+    for (const transfer of transfers) {
+      const existing = byDay.get(transfer.transferredAt)
+      if (existing) existing.push(transfer)
+      else byDay.set(transfer.transferredAt, [transfer])
+    }
+    return [...byDay.entries()].sort(([a], [b]) => (a < b ? 1 : -1))
+  }, [transfers])
 
   const invalidate = () => {
     queryClient.invalidateQueries({ queryKey: ['transfers'] })
@@ -84,25 +62,30 @@ export function TransfersPage() {
     queryClient.invalidateQueries({ queryKey: ['overall'] })
   }
 
+  const resetForm = () => {
+    setAmount('')
+    setFromUserId(user?.id ?? 0)
+    setTransferredAt(defaultDateInMonth(year, month))
+    setNote('')
+  }
+
   const createMutation = useMutation({
-    mutationFn: (data: FormData) =>
+    mutationFn: () =>
       transfersApi.create({
-        fromUserId: data.fromUserId,
-        toUserId: data.fromUserId === user!.id ? partner!.id : user!.id,
-        amountCents: Math.round(data.amount * 100),
+        fromUserId,
+        toUserId: fromUserId === user!.id ? partner!.id : user!.id,
+        amountCents: Math.round(Number(amount.replace(',', '.')) * 100),
         currency: 'EUR',
-        transferredAt: data.transferredAt,
-        note: data.note || null,
+        transferredAt,
+        note: note.trim() || null,
       }),
     onSuccess: () => {
       invalidate()
       showToast('Virement enregistré', 'success')
       setShowForm(false)
-      reset(blankTransfer())
+      resetForm()
     },
-    onError: (err) => {
-      showToast(err instanceof Error ? err.message : 'Erreur', 'error')
-    },
+    onError: (err) => showToast(err instanceof Error ? err.message : 'Erreur', 'error'),
   })
 
   const deleteMutation = useMutation({
@@ -110,162 +93,178 @@ export function TransfersPage() {
     onSuccess: () => {
       invalidate()
       showToast('Virement supprimé', 'success')
-      setTransferToDelete(null)
+      setToDelete(null)
     },
     onError: (err) => {
       showToast(err instanceof Error ? err.message : 'Erreur', 'error')
-      setTransferToDelete(null)
+      setToDelete(null)
     },
   })
 
   if (!couple || !user || !partner) return null
 
-  const transfers = transferList?.items ?? []
+  /** Standing position across every month, transfers already deducted. */
+  const netSelf = overall?.members.find((m) => m.userId === user.id)?.netDeltaCents ?? 0
+  const dueCents = Math.abs(netSelf)
+  const isSettled = dueCents === 0
+  const creditor = netSelf > 0 ? user : partner
+  const debtor = netSelf > 0 ? partner : user
 
-  const settlement = overall?.settlement
-  const remainingMessage = () => {
-    if (!settlement || settlement.amountCents === 0) {
-      return 'Tout est réglé entre vous.'
-    }
-    const from = settlement.fromUserId === user.id ? user.name : partner.name
-    const to = settlement.toUserId === user.id ? user.name : partner.name
-    return `${from} doit encore verser à ${to}`
-  }
+  const amountCents = Math.round(Number(amount.replace(',', '.') || '0') * 100)
 
   return (
-    <div className="space-y-4">
-      <div className="flex items-center justify-between">
-        <h1 className="text-xl font-bold text-text">Virements</h1>
-        <Button onClick={openForm}>Ajouter</Button>
+    <div className="flex flex-col gap-4">
+      <div className="flex h-12 items-center justify-between">
+        <h1 className="text-[28px] font-extrabold tracking-[-0.03em]">Virements</h1>
+        <button
+          type="button"
+          onClick={() => {
+            resetForm()
+            setShowForm(true)
+          }}
+          aria-label="Ajouter un virement"
+          className="flex h-11 w-11 items-center justify-center rounded-[14px] border border-border bg-surface text-ink"
+        >
+          <PlusIcon size={20} strokeWidth={2} />
+        </button>
       </div>
 
-      {/* Reste à verser */}
-      <Card className="bg-accent/5 border-accent/20">
-        <p className="text-text-muted text-sm mb-1">Reste à verser</p>
-        <p className="text-lg font-semibold text-text">{remainingMessage()}</p>
-        {settlement && settlement.amountCents > 0 && (
-          <p className="text-3xl font-bold text-accent mt-1">
-            <Money cents={settlement.amountCents} />
-          </p>
+      {/* Position cumulée */}
+      <div className="flex flex-col gap-5 rounded-[24px] bg-ink p-6 text-white">
+        <div className="flex flex-col gap-1.5">
+          <div className="text-[13px] font-semibold uppercase tracking-[0.08em] text-on-ink-muted">
+            {isSettled ? 'Tous mois confondus' : 'Reste à verser'}
+          </div>
+          <div className="text-[48px] font-extrabold leading-none tracking-[-0.04em]">
+            {isSettled ? 'Tout est réglé' : formatMoney(dueCents)}
+          </div>
+        </div>
+        {!isSettled && (
+          <div className="flex items-center gap-2.5 text-[15px] font-semibold">
+            <Avatar name={debtor.name} isSelf={debtor.id === user.id} size={32} />
+            <span>{debtor.name}</span>
+            <span className="text-on-ink-muted">
+              <ArrowRightIcon size={20} />
+            </span>
+            <Avatar name={creditor.name} isSelf={creditor.id === user.id} size={32} />
+            <span>{creditor.name}</span>
+          </div>
         )}
-      </Card>
+      </div>
 
-      {/* Historique */}
-      {transfers.length === 0 ? (
+      {days.length === 0 ? (
         <EmptyState
-          icon="🏦"
+          icon={<ArrowLeftRightIcon size={24} />}
           title="Aucun virement"
-          description="Enregistrez ici l'argent que vous vous êtes réellement versé."
+          description="Enregistre ici l'argent que vous vous êtes réellement versé."
         />
       ) : (
-        <div className="space-y-3">
-          {transfers.map((transfer) => (
-            <Card key={transfer.id} className="flex items-center gap-3">
-              <span className="text-3xl">🏦</span>
-              <div className="flex-1 min-w-0">
-                <p className="font-medium text-text truncate">
-                  {transfer.fromUser.displayName} → {transfer.toUser.displayName}
-                </p>
-                <p className="text-sm text-text-muted">
-                  {formatDate(transfer.transferredAt)}
-                  {transfer.note ? ` • ${transfer.note}` : ''}
-                </p>
-              </div>
-              <p className="font-bold text-text text-lg">
-                <Money cents={transfer.amountCents} />
-              </p>
-              <button
-                type="button"
-                onClick={() => setTransferToDelete(transfer.id)}
-                className="text-text-muted hover:text-danger px-2 text-lg"
-                aria-label="Supprimer le virement"
-              >
-                ×
-              </button>
+        days.map(([date, items]) => (
+          <div key={date} className="flex flex-col gap-2">
+            <div className="px-1 pt-1.5 text-[13px] font-semibold text-muted">
+              {formatDayHeader(date)}
+            </div>
+            <Card padding="none" className="px-4">
+              {items.map((transfer, index) => (
+                <div
+                  key={transfer.id}
+                  className={`flex items-center gap-3 py-3 ${
+                    index < items.length - 1 ? 'border-b border-track' : ''
+                  }`}
+                >
+                  <Avatar
+                    name={transfer.fromUser.displayName}
+                    isSelf={transfer.fromUser.userId === user.id}
+                    size={36}
+                  />
+                  <div className="flex min-w-0 flex-1 flex-col gap-0.5">
+                    <span className="truncate text-[15px] font-semibold">
+                      {transfer.fromUser.displayName} → {transfer.toUser.displayName}
+                    </span>
+                    {transfer.note && (
+                      <span className="truncate text-[12px] text-muted">{transfer.note}</span>
+                    )}
+                  </div>
+                  <span className="shrink-0 text-[15px] font-bold">
+                    {formatMoney(transfer.amountCents)}
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => setToDelete(transfer.id)}
+                    aria-label="Supprimer le virement"
+                    className="shrink-0 p-1 text-placeholder"
+                  >
+                    <TrashIcon size={18} />
+                  </button>
+                </div>
+              ))}
             </Card>
-          ))}
-        </div>
+          </div>
+        ))
       )}
 
-      <Modal
-        isOpen={showForm}
-        onClose={() => setShowForm(false)}
-        title="Nouveau virement"
-      >
-        <form
-          onSubmit={handleSubmit((data) => createMutation.mutate(data))}
-          className="space-y-4"
-        >
-          <div>
-            <label className="block text-sm font-medium text-text-muted mb-2">Montant</label>
-            <div className="flex items-center gap-2">
-              <input
-                type="number"
-                step="0.01"
-                min="0"
-                {...register('amount', { valueAsNumber: true })}
-                className="flex-1 text-3xl font-bold text-text bg-transparent border-none outline-none"
-                placeholder="0"
-              />
-              <span className="text-2xl text-text-muted">€</span>
-            </div>
-            {errors.amount && (
-              <p className="text-sm text-danger mt-1">{errors.amount.message}</p>
-            )}
+      <Modal isOpen={showForm} onClose={() => setShowForm(false)} title="Nouveau virement">
+        <div className="flex flex-col gap-4">
+          <div className="flex items-baseline justify-center gap-1.5 py-2">
+            <input
+              type="text"
+              inputMode="decimal"
+              value={amount}
+              onChange={(event) => setAmount(event.target.value.replace(/[^\d,.]/g, ''))}
+              placeholder="0"
+              aria-label="Montant"
+              className="w-32 border-0 bg-transparent text-center text-[40px] font-extrabold tracking-[-0.04em] text-ink outline-none"
+            />
+            <span className="text-[24px] font-bold text-placeholder">€</span>
           </div>
 
-          <div>
-            <label className="block text-sm font-medium text-text-muted mb-2">Versé par</label>
-            <Controller
-              name="fromUserId"
-              control={control}
-              render={({ field }) => (
-                <SegmentedControl
-                  options={[
-                    { value: user.id, label: user.name },
-                    { value: partner.id, label: partner.name },
-                  ]}
-                  value={field.value}
-                  onChange={field.onChange}
-                />
-              )}
-            />
-          </div>
+          <SegmentedControl
+            options={[
+              { value: user.id, label: user.name },
+              { value: partner.id, label: partner.name },
+            ]}
+            value={fromUserId}
+            onChange={setFromUserId}
+          />
+          <p className="-mt-2 text-[12px] text-muted">
+            Versé par {fromUserId === user.id ? user.name : partner.name}
+          </p>
 
           <Input
             label="Date"
             type="date"
-            error={errors.transferredAt?.message}
-            {...register('transferredAt')}
+            value={transferredAt}
+            max={dayjs().format('YYYY-MM-DD')}
+            onChange={(event) => setTransferredAt(event.target.value)}
           />
 
           <Input
-            label="Note (optionnel)"
-            placeholder="Ex: régularisation janvier"
-            error={errors.note?.message}
-            {...register('note')}
+            label="Note (facultatif)"
+            placeholder="Ex. régularisation octobre"
+            value={note}
+            onChange={(event) => setNote(event.target.value)}
           />
 
-          <div className="flex gap-3 pt-2">
-            <Button
-              type="button"
-              variant="secondary"
-              onClick={() => setShowForm(false)}
-              className="flex-1"
-            >
+          <div className="flex gap-2.5">
+            <Button variant="secondary" onClick={() => setShowForm(false)} className="flex-1">
               Annuler
             </Button>
-            <Button type="submit" isLoading={isSubmitting || createMutation.isPending} className="flex-1">
+            <Button
+              onClick={() => createMutation.mutate()}
+              disabled={amountCents <= 0}
+              isLoading={createMutation.isPending}
+              className="flex-1"
+            >
               Enregistrer
             </Button>
           </div>
-        </form>
+        </div>
       </Modal>
 
       <ConfirmModal
-        isOpen={transferToDelete !== null}
-        onClose={() => setTransferToDelete(null)}
-        onConfirm={() => deleteMutation.mutate(transferToDelete!)}
+        isOpen={toDelete !== null}
+        onClose={() => setToDelete(null)}
+        onConfirm={() => deleteMutation.mutate(toDelete!)}
         isLoading={deleteMutation.isPending}
         title="Supprimer le virement"
         message="Cette action est irréversible."

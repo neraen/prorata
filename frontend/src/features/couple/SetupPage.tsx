@@ -26,15 +26,15 @@ export function SetupPage() {
           <Card className="w-full max-w-md" padding="lg">
             <div className="text-center mb-8">
               <span className="text-5xl mb-4 block">🎉</span>
-              <h1 className="text-2xl font-bold text-text mb-2">Invitation envoyée !</h1>
-              <p className="text-text-muted">
+              <h1 className="text-2xl font-bold text-ink mb-2">Invitation envoyée !</h1>
+              <p className="text-muted">
                 Partagez ce code avec votre partenaire
               </p>
             </div>
 
-            <div className="bg-accent/10 rounded-[16px] p-6 text-center mb-6">
-              <p className="text-sm text-text-muted mb-2">Code d'invitation</p>
-              <p className="text-xl font-bold text-accent tracking-wider break-all">
+            <div className="bg-surface-sunken rounded-[16px] p-6 text-center mb-6">
+              <p className="text-sm text-muted mb-2">Code d'invitation</p>
+              <p className="text-xl font-bold text-clement-text tracking-wider break-all">
                 {inviteToken}
               </p>
             </div>
@@ -50,7 +50,7 @@ export function SetupPage() {
               Copier le code
             </Button>
 
-            <p className="text-center text-text-muted text-sm mt-6">
+            <p className="text-center text-muted text-sm mt-6">
               En attente de votre partenaire...
             </p>
           </Card>
@@ -64,14 +64,14 @@ export function SetupPage() {
         <Card className="w-full max-w-md" padding="lg">
           <div className="text-center mb-8">
             <span className="text-5xl mb-4 block">💌</span>
-            <h1 className="text-2xl font-bold text-text mb-2">Inviter votre partenaire</h1>
-            <p className="text-text-muted">
+            <h1 className="text-2xl font-bold text-ink mb-2">Inviter votre partenaire</h1>
+            <p className="text-muted">
               Entrez l'email de votre partenaire pour l'inviter
             </p>
           </div>
 
           {error && (
-            <div className="p-3 rounded-[12px] bg-danger/10 text-danger text-sm text-center mb-4">
+            <div className="p-3 rounded-[12px] bg-negative-bg text-negative text-sm text-center mb-4">
               {error}
             </div>
           )}
@@ -148,16 +148,16 @@ export function SetupPage() {
       <Card className="w-full max-w-md" padding="lg">
         <div className="text-center mb-8">
           <span className="text-5xl mb-4 block">💑</span>
-          <h1 className="text-2xl font-bold text-text mb-2">
+          <h1 className="text-2xl font-bold text-ink mb-2">
             Bonjour {user.name} !
           </h1>
-          <p className="text-text-muted">
+          <p className="text-muted">
             Créez ou rejoignez un couple pour commencer
           </p>
         </div>
 
         {error && (
-          <div className="p-3 rounded-[12px] bg-danger/10 text-danger text-sm text-center mb-4">
+          <div className="p-3 rounded-[12px] bg-negative-bg text-negative text-sm text-center mb-4">
             {error}
           </div>
         )}
@@ -171,14 +171,14 @@ export function SetupPage() {
             >
               Créer un couple
             </Button>
-            <p className="text-center text-text-muted text-xs mt-2">
+            <p className="text-center text-muted text-xs mt-2">
               Vous recevrez un code à partager
             </p>
           </div>
 
           <div className="flex items-center gap-4">
             <div className="flex-1 h-px bg-border" />
-            <span className="text-text-muted text-sm">ou</span>
+            <span className="text-muted text-sm">ou</span>
             <div className="flex-1 h-px bg-border" />
           </div>
 

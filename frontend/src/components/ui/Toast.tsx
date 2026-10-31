@@ -7,14 +7,11 @@ export function Toast() {
 
   return (
     <div
-      className={`
-        fixed bottom-24 left-1/2 -translate-x-1/2 z-50
-        px-6 py-3 rounded-[16px] shadow-lg
-        text-white text-sm font-medium
-        animate-in fade-in slide-in-from-bottom-4 duration-300
-        ${type === 'success' ? 'bg-success' : 'bg-danger'}
-      `}
+      role="status"
       onClick={hide}
+      className={`fixed bottom-[104px] left-1/2 z-50 -translate-x-1/2 rounded-[16px] px-5 py-3 text-[14px] font-semibold shadow-fab ${
+        type === 'success' ? 'bg-ink text-white' : 'bg-negative text-white'
+      }`}
     >
       {message}
     </div>

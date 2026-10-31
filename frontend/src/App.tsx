@@ -1,7 +1,7 @@
 import { Routes, Route } from 'react-router-dom'
 import { Providers } from './app/Providers'
 import { AuthGuard } from './app/AuthGuard'
-import { Layout } from './components/Layout'
+import { FullScreenLayout, Layout } from './components/Layout'
 import { PWAUpdatePrompt } from './components/PWAUpdatePrompt'
 import { PWAInstallPrompt } from './components/PWAInstallPrompt'
 
@@ -13,8 +13,6 @@ import { ExpensesPage } from './features/expenses/ExpensesPage'
 import { ExpenseFormPage } from './features/expenses/ExpenseFormPage'
 import { PersonalPage } from './features/personal/PersonalPage'
 import { TransfersPage } from './features/transfers/TransfersPage'
-import { HistoryPage } from './features/history/HistoryPage'
-import { HistoryDetailPage } from './features/history/HistoryDetailPage'
 import { SettingsPage } from './features/settings/SettingsPage'
 
 function AppRoutes() {
@@ -34,7 +32,7 @@ function AppRoutes() {
         }
       />
 
-      {/* Protected routes (auth + couple required) */}
+      {/* Tab bar screens */}
       <Route
         element={
           <AuthGuard>
@@ -44,13 +42,21 @@ function AppRoutes() {
       >
         <Route path="/" element={<DashboardPage />} />
         <Route path="/expenses" element={<ExpensesPage />} />
+        <Route path="/transfers" element={<TransfersPage />} />
+        <Route path="/personal" element={<PersonalPage />} />
+        <Route path="/settings" element={<SettingsPage />} />
+      </Route>
+
+      {/* Full-screen flows: they carry their own close button, no tab bar */}
+      <Route
+        element={
+          <AuthGuard>
+            <FullScreenLayout />
+          </AuthGuard>
+        }
+      >
         <Route path="/expenses/new" element={<ExpenseFormPage />} />
         <Route path="/expenses/:id/edit" element={<ExpenseFormPage />} />
-        <Route path="/personal" element={<PersonalPage />} />
-        <Route path="/transfers" element={<TransfersPage />} />
-        <Route path="/history" element={<HistoryPage />} />
-        <Route path="/history/:year/:month" element={<HistoryDetailPage />} />
-        <Route path="/settings" element={<SettingsPage />} />
       </Route>
     </Routes>
   )

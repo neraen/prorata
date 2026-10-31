@@ -10,6 +10,7 @@ use App\Service\ClosedMonthGuard;
 use App\Service\CoupleContextService;
 use App\Service\MonthClosureService;
 use App\Service\MonthlyBalanceService;
+use App\Service\OverallBalanceService;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -27,7 +28,8 @@ class MonthController extends AbstractApiController
         private MonthlyBalanceService $monthlyBalanceService,
         private MonthClosureService $monthClosureService,
         private MonthClosureRepository $monthClosureRepository,
-        private ClosedMonthGuard $closedMonthGuard
+        private ClosedMonthGuard $closedMonthGuard,
+        private OverallBalanceService $overallBalanceService
     ) {
         parent::__construct($serializer, $validator, $coupleContextService);
     }
@@ -43,6 +45,17 @@ class MonthController extends AbstractApiController
         $balance = $this->monthlyBalanceService->calculateBalance($couple, $year, $month);
 
         return $this->json($balance);
+    }
+
+    /**
+     * Cumulative position across every recorded month, transfers included.
+     */
+    #[Route('/overall', name: 'api_months_overall', methods: ['GET'])]
+    public function overall(): JsonResponse
+    {
+        $couple = $this->requireCouple();
+
+        return $this->json($this->overallBalanceService->calculateOverall($couple));
     }
 
     #[Route('/close', name: 'api_months_close', methods: ['POST'])]

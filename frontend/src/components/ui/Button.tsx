@@ -1,6 +1,6 @@
 import { type ButtonHTMLAttributes, forwardRef } from 'react'
 
-type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'danger'
+type ButtonVariant = 'primary' | 'secondary' | 'onInk' | 'danger'
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: ButtonVariant
@@ -8,38 +8,31 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const variantStyles: Record<ButtonVariant, string> = {
-  primary: 'bg-accent text-white hover:bg-accent-hover',
-  secondary: 'bg-surface text-text border border-border hover:bg-background',
-  ghost: 'bg-transparent text-text-muted hover:bg-surface',
-  danger: 'bg-danger text-white hover:opacity-90',
+  primary: 'bg-ink text-white disabled:bg-disabled disabled:text-muted',
+  secondary: 'bg-surface text-ink border border-border',
+  /** White button sitting on the black balance card. */
+  onInk: 'bg-white text-ink',
+  danger: 'bg-surface border border-border text-negative',
 }
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ variant = 'primary', isLoading, className = '', children, disabled, ...props }, ref) => {
-    return (
-      <button
-        ref={ref}
-        className={`
-          px-4 py-3 rounded-[16px] font-semibold text-sm
-          transition-colors duration-200
-          disabled:opacity-50 disabled:cursor-not-allowed
-          ${variantStyles[variant]}
-          ${className}
-        `}
-        disabled={disabled || isLoading}
-        {...props}
-      >
-        {isLoading ? (
-          <span className="flex items-center justify-center gap-2">
-            <span className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
-            Chargement...
-          </span>
-        ) : (
-          children
-        )}
-      </button>
-    )
-  }
+  ({ variant = 'primary', isLoading, className = '', children, disabled, ...props }, ref) => (
+    <button
+      ref={ref}
+      className={`flex h-[52px] items-center justify-center rounded-[16px] px-4 text-[15px] font-bold transition-colors disabled:cursor-not-allowed ${variantStyles[variant]} ${className}`}
+      disabled={disabled || isLoading}
+      {...props}
+    >
+      {isLoading ? (
+        <span className="flex items-center justify-center gap-2">
+          <span className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
+          Chargement…
+        </span>
+      ) : (
+        children
+      )}
+    </button>
+  )
 )
 
 Button.displayName = 'Button'

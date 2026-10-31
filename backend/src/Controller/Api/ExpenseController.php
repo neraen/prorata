@@ -7,7 +7,10 @@ use App\DTO\Request\ExpenseUpdateRequest;
 use App\DTO\Response\ErrorResponse;
 use App\DTO\Response\ExpenseListResponse;
 use App\DTO\Response\ExpenseResponse;
+use App\Entity\Couple;
 use App\Entity\Expense;
+use App\Entity\SplitMode;
+use App\Entity\User;
 use App\Repository\ExpenseRepository;
 use App\Repository\UserRepository;
 use App\Service\ClosedMonthGuard;
@@ -76,6 +79,21 @@ class ExpenseController extends AbstractApiController
             );
         }
 
+        $splitMode = SplitMode::from($dto->splitMode);
+        $chargedTo = null;
+
+        if ($splitMode === SplitMode::FULL) {
+            $chargedTo = $this->resolveMember($couple, $dto->chargedToUserId);
+            if ($chargedTo === null) {
+                return $this->json(
+                    ErrorResponse::validation([
+                        'chargedToUserId' => 'A couple member must be charged when split mode is "full"',
+                    ]),
+                    Response::HTTP_UNPROCESSABLE_ENTITY
+                );
+            }
+        }
+
         // Create expense
         $expense = new Expense();
         $expense->setCouple($couple);
@@ -85,6 +103,8 @@ class ExpenseController extends AbstractApiController
         $expense->setAmountCents($dto->amountCents);
         $expense->setCurrency($dto->currency);
         $expense->setSpentAt($spentAt);
+        $expense->setSplitMode($splitMode);
+        $expense->setChargedTo($chargedTo);
 
         $this->entityManager->persist($expense);
         $this->entityManager->flush();
@@ -148,9 +168,47 @@ class ExpenseController extends AbstractApiController
             $expense->setPaidBy($payer);
         }
 
+        if ($dto->splitMode !== null) {
+            $expense->setSplitMode(SplitMode::from($dto->splitMode));
+        }
+
+        if ($expense->getSplitMode() === SplitMode::FULL) {
+            // Keep the current charged member when the payload does not carry a new one.
+            $chargedTo = $dto->chargedToUserId !== null
+                ? $this->resolveMember($couple, $dto->chargedToUserId)
+                : $expense->getChargedTo();
+
+            if ($chargedTo === null) {
+                return $this->json(
+                    ErrorResponse::validation([
+                        'chargedToUserId' => 'A couple member must be charged when split mode is "full"',
+                    ]),
+                    Response::HTTP_UNPROCESSABLE_ENTITY
+                );
+            }
+
+            $expense->setChargedTo($chargedTo);
+        } else {
+            $expense->setChargedTo(null);
+        }
+
         $this->entityManager->flush();
 
         return $this->json(ExpenseResponse::fromEntity($expense));
+    }
+
+    /**
+     * Resolve a user id into a member of the given couple, or null when it is not one.
+     */
+    private function resolveMember(Couple $couple, ?int $userId): ?User
+    {
+        if ($userId === null) {
+            return null;
+        }
+
+        $user = $this->userRepository->find($userId);
+
+        return $user !== null && $couple->hasUser($user) ? $user : null;
     }
 
     #[Route('/{id}', name: 'api_expenses_delete', methods: ['DELETE'])]
