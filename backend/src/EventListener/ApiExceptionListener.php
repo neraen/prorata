@@ -11,7 +11,7 @@ use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Serializer\SerializerInterface;
 
-#[AsEventListener(event: KernelEvents::EXCEPTION, priority: 100)]
+#[AsEventListener(event: KernelEvents::EXCEPTION, priority: -10)]
 class ApiExceptionListener
 {
     public function __construct(

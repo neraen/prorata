@@ -1,0 +1,8 @@
+import type { FoodReference } from './household'
+export interface FoodSuggestion { name: string; reference: FoodReference | null; origin?: 'common' | 'personal' | 'openfoodfacts' }
+// A small offline starter list. The full vocabulary comes from suggestions,
+// not from asking each household to create its own food dictionary.
+export const COMMON_FOODS = [
+  'Carottes', 'Tomates', 'Courgettes', 'Pommes de terre', 'Patates douces', 'Oignons', 'Ail', 'Poireaux', 'Épinards', 'Brocoli', 'Chou-fleur', 'Champignons', 'Poivrons', 'Aubergines', 'Haricots verts', 'Petits pois', 'Lentilles', 'Pois chiches', 'Haricots rouges', 'Salade verte', 'Concombre', 'Avocat', 'Citron', 'Pommes', 'Bananes', 'Poires', 'Oranges', 'Fraises', 'Riz', 'Pâtes', 'Semoule', 'Quinoa', 'Boulgour', 'Farine', 'Flocons d’avoine', 'Pain', 'Tortillas', 'Œufs', 'Lait', 'Beurre', 'Crème fraîche', 'Yaourt nature', 'Fromage blanc', 'Mozzarella', 'Emmental râpé', 'Parmesan', 'Feta', 'Reblochon', 'Poulet', 'Dinde', 'Bœuf haché', 'Jambon', 'Lardons', 'Saumon', 'Thon en conserve', 'Cabillaud', 'Sardines', 'Tofu', 'Huile d’olive', 'Huile de colza', 'Vinaigre', 'Moutarde', 'Sauce soja', 'Coulis de tomates', 'Tomates concassées', 'Lait de coco', 'Bouillon de légumes', 'Curry en poudre', 'Paprika', 'Cumin', 'Sel', 'Poivre', 'Herbes de Provence', 'Persil', 'Basilic', 'Sucre', 'Miel', 'Chocolat', 'Noix', 'Amandes', 'Pizza surgelée', 'Raviolis en conserve', 'Soupe prête à réchauffer',
+].map((name): FoodSuggestion => ({ name, reference: null, origin: 'common' }))
+export function foldFood(value: string) { return value.toLocaleLowerCase('fr').normalize('NFD').replace(/[\u0300-\u036f]/g, '').replaceAll('œ', 'oe').trim() }

@@ -9,7 +9,7 @@ interface BeforeInstallPromptEvent extends Event {
 
 export function usePWA() {
   const [installPrompt, setInstallPrompt] = useState<BeforeInstallPromptEvent | null>(null)
-  const [isInstalled, setIsInstalled] = useState(false)
+  const [isInstalled, setIsInstalled] = useState(() => window.matchMedia('(display-mode: standalone)').matches)
 
   const {
     needRefresh: [needRefresh, setNeedRefresh],
@@ -30,11 +30,6 @@ export function usePWA() {
   })
 
   useEffect(() => {
-    // Check if already installed
-    if (window.matchMedia('(display-mode: standalone)').matches) {
-      setIsInstalled(true)
-    }
-
     const handleBeforeInstallPrompt = (e: Event) => {
       e.preventDefault()
       setInstallPrompt(e as BeforeInstallPromptEvent)

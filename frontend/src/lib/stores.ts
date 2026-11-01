@@ -66,6 +66,8 @@ export const useAuthStore = create<AuthState>((set) => ({
 
   logout: async () => {
     await authApi.logout()
+    localStorage.removeItem('prorata_couple_session')
+    useCoupleStore.setState({ couple: null, partner: null, inviteToken: null })
     set({ user: null })
   },
 
@@ -112,6 +114,7 @@ export const useCoupleStore = create<CoupleState>((set, get) => ({
     set({ isLoading: true })
     try {
       const response = await coupleApi.getCouple()
+      localStorage.setItem('prorata_couple_session', JSON.stringify({ userId: useAuthStore.getState().user?.id, couple: response.couple }))
       if (response.couple) {
         const couple = apiCoupleToCouple(response.couple)
         const currentUser = useAuthStore.getState().user
@@ -120,7 +123,18 @@ export const useCoupleStore = create<CoupleState>((set, get) => ({
       } else {
         set({ couple: null, partner: null, isLoading: false })
       }
-    } catch {
+    } catch (error) {
+      if (error instanceof TypeError) {
+        try {
+          const cached = JSON.parse(localStorage.getItem('prorata_couple_session') ?? 'null')
+          const user = useAuthStore.getState().user
+          if (cached?.couple && user && cached.userId === user.id) {
+            const couple = apiCoupleToCouple(cached.couple)
+            set({ couple, partner: getPartnerFromCouple(couple, user.id), isLoading: false })
+            return
+          }
+        } catch { /* Ignore invalid cached sessions. */ }
+      }
       set({ couple: null, partner: null, isLoading: false })
     }
   },

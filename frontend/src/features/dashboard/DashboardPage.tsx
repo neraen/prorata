@@ -144,6 +144,8 @@ export function DashboardPage() {
         <AvatarPair selfName={user.name} partnerName={partner.name} />
       </div>
 
+      <Link to="/expenses/new" className="flex h-[52px] items-center justify-center rounded-[16px] bg-ink text-[15px] font-bold text-white">Ajouter une dépense</Link>
+      <div className="no-scrollbar flex gap-2 overflow-x-auto pb-1">{[['/budget', 'Prorata'], ['/expenses', 'Dépenses'], ['/transfers', 'Virements'], ['/personal', 'Perso'], ['/settings', 'Réglages']].map(([to, label]) => <Link key={to} to={to} className="flex min-h-11 shrink-0 items-center rounded-full border bg-surface px-4 text-sm font-semibold">{label}</Link>)}</div>
       <MonthSelector />
 
       {isClosed && (

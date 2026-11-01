@@ -243,3 +243,10 @@ export const CATEGORY_ICON_COMPONENTS = {
   health: PillIcon,
   other: PackageIcon,
 } as const
+
+export function MealIcon(props: IconProps) {
+  return <Icon {...props}><path d="M4 3v6a3 3 0 0 0 6 0V3M7 3v18M20 21V3c-4 2-5 6-5 10h5" /></Icon>
+}
+export function StatsIcon(props: IconProps) {
+  return <Icon {...props}><path d="M4 20V10M10 20V4M16 20v-7M22 20H2" /></Icon>
+}

@@ -37,6 +37,9 @@ services:
       JWT_PASSPHRASE: ${JWT_PASSPHRASE:?Set the existing JWT passphrase}
       DEFAULT_URI: ${DEFAULT_URI:?Set the validation HTTPS URL}
       CORS_ALLOW_ORIGIN: ${CORS_ALLOW_ORIGIN:?Set the allowed origin regex}
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      OPENAI_MEAL_MODEL: ${OPENAI_MEAL_MODEL:-gpt-4.1}
+      OPENAI_MEAL_DAILY_LIMIT: ${OPENAI_MEAL_DAILY_LIMIT:-20}
       MAILER_DSN: "null://null"
       MESSENGER_TRANSPORT_DSN: "doctrine://default?auto_setup=0"
     volumes:

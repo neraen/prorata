@@ -8,10 +8,12 @@ export function getToken(): string | null {
 }
 
 export function setToken(token: string): void {
+  localStorage.removeItem('prorata_session')
   localStorage.setItem(TOKEN_KEY, token)
 }
 
 export function clearToken(): void {
+  localStorage.removeItem('prorata_session')
   localStorage.removeItem(TOKEN_KEY)
 }
 
@@ -29,7 +31,7 @@ export class ApiError extends Error {
 }
 
 // Base fetch function
-async function apiFetch<T>(
+export async function apiFetch<T>(
   endpoint: string,
   options: RequestInit = {}
 ): Promise<T> {
@@ -299,10 +301,15 @@ export const authApi = {
     const token = getToken()
     if (!token) return null
     try {
-      return await apiFetch<ApiUser>('/me')
-    } catch {
-      clearToken()
-      return null
+      const user = await apiFetch<ApiUser>('/me', { cache: 'no-store' })
+      localStorage.setItem('prorata_session', JSON.stringify(user))
+      return user
+    } catch (error) {
+      if (error instanceof ApiError && error.status === 401) { clearToken(); return null }
+      if (error instanceof TypeError) {
+        try { return JSON.parse(localStorage.getItem('prorata_session') ?? 'null') as ApiUser | null } catch { return null }
+      }
+      throw error
     }
   },
 }
@@ -390,7 +397,7 @@ export const expensesApi = {
   async getById(_id: number): Promise<ApiExpense> {
     // We fetch the month's expenses and find the one we need
     // This is a workaround since backend doesn't have a single expense endpoint
-    throw new Error('Use list and filter instead')
+    throw new Error(`Use list and filter instead (expense ${_id})`)
   },
 }
 

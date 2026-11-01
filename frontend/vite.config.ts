@@ -16,11 +16,11 @@ export default defineConfig({
       includeAssets: ['favicon.svg', 'apple-touch-icon.png', 'masked-icon.svg'],
       manifest: {
         id: '/',
-        name: 'Prorata - Gestion des dépenses de couple',
+        name: 'Prorata - Votre quotidien à deux',
         short_name: 'Prorata',
-        description: 'Gérez les dépenses de votre couple simplement avec calcul au prorata',
-        theme_color: '#E58B5A',
-        background_color: '#F7F1EA',
+        description: 'Organisez vos repas, partagez vos courses et gérez votre budget de couple',
+        theme_color: '#15171C',
+        background_color: '#F5F5F1',
         display: 'standalone',
         orientation: 'portrait',
         scope: '/',
@@ -54,21 +54,15 @@ export default defineConfig({
         ]
       },
       workbox: {
-        globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2}'],
+        globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2,ttf}'],
+        cleanupOutdatedCaches: true,
         runtimeCaching: [
           {
-            urlPattern: /^https:\/\/.*\/api\//,
-            handler: 'NetworkFirst',
+            urlPattern: ({ url }) => /^https?:$/.test(url.protocol) && url.pathname.includes('/api/'),
+            handler: 'NetworkOnly',
             options: {
-              cacheName: 'api-cache',
-              expiration: {
-                maxEntries: 100,
-                maxAgeSeconds: 60 * 60 * 24 // 24 hours
-              },
-              networkTimeoutSeconds: 10,
-              cacheableResponse: {
-                statuses: [0, 200]
-              }
+              // Authenticated data is cached per user by the household module.
+              // A shared URL-only API cache can expose a previous account's data.
             }
           },
           {

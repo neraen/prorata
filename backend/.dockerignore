@@ -10,3 +10,4 @@ Dockerfile
 compose*.yaml
 *.md
 .dockerignore
+!resources/prompts/*.md

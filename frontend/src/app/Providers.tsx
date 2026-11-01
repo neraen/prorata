@@ -1,3 +1,5 @@
+import { useEffect } from 'react'
+import { useAuthStore } from '../lib/stores'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { BrowserRouter } from 'react-router-dom'
 import { Toast } from '../components/ui'
@@ -16,6 +18,10 @@ interface ProvidersProps {
 }
 
 export function Providers({ children }: ProvidersProps) {
+  useEffect(() => useAuthStore.subscribe((state, previous) => {
+    if (state.user?.id !== previous.user?.id) queryClient.clear()
+  }), [])
+
   return (
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>

@@ -53,6 +53,13 @@ class Couple
     #[ORM\OneToMany(targetEntity: Transfer::class, mappedBy: 'couple', orphanRemoval: true)]
     private Collection $transfers;
 
+    // Updated atomically by HouseholdService; mapped to preserve schema tooling.
+    #[ORM\Column(type: 'json', nullable: true)]
+    private ?array $householdData = null;
+
+    #[ORM\Column(options: ['default' => 0])]
+    private int $householdRevision = 0;
+
     public function __construct()
     {
         $this->members = new ArrayCollection();

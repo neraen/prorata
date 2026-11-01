@@ -93,6 +93,8 @@ export function ExpensesPage() {
         </div>
       )}
 
+      {!isClosed && <Link to="/expenses/new" className="flex h-[52px] items-center justify-center rounded-[16px] bg-ink text-[15px] font-bold text-white">Ajouter une dépense</Link>}
+
       {/* Recherche */}
       <label className="flex h-12 items-center gap-2.5 rounded-[14px] border border-border bg-surface px-3.5">
         <span className="text-muted">
@@ -150,7 +152,7 @@ export function ExpensesPage() {
           title={expenses.length === 0 ? 'Aucune dépense' : 'Aucun résultat'}
           description={
             expenses.length === 0
-              ? 'Appuie sur + pour ajouter la première dépense du mois.'
+              ? 'Ajoute la première dépense du mois pour commencer.'
               : 'Aucune dépense ne correspond à cette recherche.'
           }
         />
