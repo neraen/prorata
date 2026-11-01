@@ -20,6 +20,14 @@ class MealAssistantController extends AbstractApiController
         return new JsonResponse($assistant->status($this->requireCouple()->getId()), headers: ['Cache-Control' => 'private, no-store']);
     }
 
+    #[Route('/pantry-photo', name: 'api_pantry_photo', methods: ['POST'])]
+    public function pantryPhoto(Request $request, \App\Service\MealAssistant\PantryPhotoService $photos): JsonResponse
+    {
+        $couple = $this->requireCouple();
+        if (strlen($request->getContent()) > 2850000) throw new BadRequestHttpException('Photo trop volumineuse.');
+        return new JsonResponse($photos->inspect($couple->getId(), $this->getCurrentUser()->getId(), $request->toArray()), headers: ['Cache-Control' => 'private, no-store']);
+    }
+
     #[Route('/classify', name: 'api_recipe_classify', methods: ['POST'])]
     public function classify(Request $request, RecipeClassificationService $classifier): JsonResponse
     {

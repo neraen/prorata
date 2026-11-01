@@ -67,6 +67,14 @@ class HouseholdService
             throw new BadRequestHttpException('Données invalides.');
         }
         switch ($command['type'] ?? '') {
+            case 'pantry.import':
+                $items = $payload['items'] ?? null;
+                if (!is_array($items) || !array_is_list($items) || count($items) < 1 || count($items) > 40) throw new BadRequestHttpException('Sélectionne entre 1 et 40 aliments.');
+                foreach ($items as $item) {
+                    if (!is_array($item)) throw new BadRequestHttpException('Aliment invalide.');
+                    $state = $this->apply($state, ['type' => 'pantry.save', 'payload' => $item], $userId);
+                }
+                break;
             case 'pantry.save':
                 $profile = FoodProfile::normalize($state['foodProfile'] ?? []);
                 $id = $this->text($payload['id'] ?? null, 100);

@@ -36,7 +36,23 @@ class MealOpenAiClient
         return $this->structured($instructions, ['recipe' => $recipe], $schema, 'recipe_category', 700);
     }
 
-    private function structured(string $instructions, array $input, array $schema, string $schemaName, int $maxTokens): array
+    public function inspectPantry(string $image): array
+    {
+        $instructions = file_get_contents(dirname($this->promptPath).'/pantry-photo.fr.md');
+        if ($instructions === false) throw new \RuntimeException('Prompt photo introuvable.');
+        $item = ['type' => 'object', 'properties' => [
+            'name' => ['type' => 'string'],
+            'quantity' => ['type' => ['number', 'null']],
+            'unit' => ['type' => 'string', 'enum' => \App\Service\HouseholdService::UNITS],
+            'aisle' => ['type' => 'string', 'enum' => \App\Service\HouseholdService::AISLES],
+            'confidence' => ['type' => 'string', 'enum' => ['low', 'medium', 'high']],
+            'note' => ['type' => 'string'],
+        ], 'required' => ['name', 'quantity', 'unit', 'aisle', 'confidence', 'note'], 'additionalProperties' => false];
+        $schema = ['type' => 'object', 'properties' => ['items' => ['type' => 'array', 'maxItems' => 40, 'items' => $item], 'warnings' => ['type' => 'array', 'items' => ['type' => 'string']]], 'required' => ['items', 'warnings'], 'additionalProperties' => false];
+        return $this->structured($instructions, ['task' => 'Identifier uniquement les aliments visibles sur cette photo, pour un inventaire à valider.'], $schema, 'pantry_photo', 4000, $image);
+    }
+
+    private function structured(string $instructions, array $input, array $schema, string $schemaName, int $maxTokens, ?string $image = null): array
     {
         if (!$this->enabled()) throw new ServiceUnavailableHttpException(null, 'L’assistant n’est pas encore configuré sur le serveur.');
         try {
@@ -46,7 +62,7 @@ class MealOpenAiClient
                     'model' => $this->model,
                     'store' => false,
                     'instructions' => $instructions,
-                    'input' => json_encode($input, JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE),
+                    'input' => $image === null ? json_encode($input, JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE) : [['role' => 'user', 'content' => [['type' => 'input_text', 'text' => json_encode($input, JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE)], ['type' => 'input_image', 'image_url' => $image, 'detail' => 'high']]]],
                     'max_output_tokens' => $maxTokens,
                     'text' => ['format' => ['type' => 'json_schema', 'name' => $schemaName, 'strict' => true, 'schema' => $schema]],
                 ],

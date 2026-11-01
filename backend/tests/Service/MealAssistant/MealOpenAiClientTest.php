@@ -32,6 +32,22 @@ class MealOpenAiClientTest extends TestCase
         self::assertSame(20, $result['usage']['inputTokens']);
     }
 
+    public function testPhotoUsesVisionInputAndStructuredOutputWithoutStorage(): void
+    {
+        $http = new MockHttpClient(function ($method, $url, $options) {
+            $body = json_decode($options['body'], true);
+            self::assertFalse($body['store']);
+            self::assertSame('input_image', $body['input'][0]['content'][1]['type']);
+            self::assertSame('data:image/jpeg;base64,dGVzdA==', $body['input'][0]['content'][1]['image_url']);
+            self::assertSame('high', $body['input'][0]['content'][1]['detail']);
+            self::assertSame('pantry_photo', $body['text']['format']['name']);
+            self::assertTrue($body['text']['format']['strict']);
+            return new MockResponse(json_encode(['status' => 'completed', 'output' => [['type' => 'message', 'content' => [['type' => 'output_text', 'text' => '{"items":[],"warnings":[]}']]]]]));
+        });
+        $result = (new MealOpenAiClient($http, 'sk-test', 'gpt-4.1', $this->prompt()))->inspectPantry('data:image/jpeg;base64,dGVzdA==');
+        self::assertSame([], $result['proposal']['items']);
+    }
+
     public function testProviderErrorIsSanitized(): void
     {
         $client = new MealOpenAiClient(new MockHttpClient(new MockResponse('{"error":"sensitive-provider-body"}', ['http_code' => 401])), 'sk-test', 'gpt-4.1', $this->prompt());
