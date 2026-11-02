@@ -8,7 +8,7 @@ import { AISLES, UNITS, type Ingredient, type Recipe } from './household'
 import { FoodNameInput } from './FoodNameInput'
 
 const emptyIngredient = (): Ingredient => ({ name: '', quantity: 1, unit: 'piece', aisle: 'produce' })
-export const fieldClass = 'min-h-12 w-full rounded-[14px] border border-border bg-surface px-3 text-[14px] text-ink'
+export const fieldClass = 'min-h-12 w-full rounded-[14px] border border-border bg-surface px-3 text-base text-ink'
 export function RecipeForm({ recipe, onSave, onClose }: { recipe?: Recipe; onSave: (payload: Record<string, unknown>) => Promise<unknown>; onClose: () => void }) {
   const [recipeId] = useState(() => recipe?.id ?? crypto.randomUUID())
   const [title, setTitle] = useState(recipe?.title ?? '')

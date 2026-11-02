@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useId, useRef } from 'react'
 import { Button } from './Button'
 
 interface ModalProps {
@@ -10,34 +10,23 @@ interface ModalProps {
 }
 
 export function Modal({ isOpen, onClose, title, children, actions }: ModalProps) {
+  const dialog = useRef<HTMLDialogElement>(null)
+  const titleId = useId()
   useEffect(() => {
-    document.body.style.overflow = isOpen ? 'hidden' : ''
-    return () => {
-      document.body.style.overflow = ''
-    }
+    const element = dialog.current
+    if (!isOpen || !element) return
+    const previousFocus = document.activeElement instanceof HTMLElement ? document.activeElement : null
+    const previousOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    element.showModal()
+    return () => { element.close(); document.body.style.overflow = previousOverflow; if (previousFocus?.isConnected) previousFocus.focus({ preventScroll: true }) }
   }, [isOpen])
-
-  useEffect(() => {
-    if (!isOpen) return
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') onClose()
-    }
-    document.addEventListener('keydown', onKeyDown)
-    return () => document.removeEventListener('keydown', onKeyDown)
-  }, [isOpen, onClose])
-
   if (!isOpen) return null
-
-  return (
-    <div className="fixed inset-0 z-50 flex items-end justify-center sm:items-center">
-      <div className="absolute inset-0 bg-ink/40" onClick={onClose} />
-      <div className="relative m-0 w-full max-w-[480px] rounded-t-[24px] border border-border bg-surface p-5 sm:m-4 sm:rounded-[24px]">
-        <h2 className="mb-4 text-[17px] font-bold text-ink">{title}</h2>
-        <div className="text-[14px] text-muted">{children}</div>
-        {actions && <div className="mt-6 flex gap-2.5">{actions}</div>}
-      </div>
-    </div>
-  )
+  return <dialog ref={dialog} aria-labelledby={titleId} onCancel={(event) => { event.preventDefault(); onClose() }} className="fixed inset-x-0 bottom-0 top-auto mx-auto my-0 max-h-[90dvh] w-full max-w-[480px] overflow-y-auto rounded-t-[24px] border border-border bg-surface p-5 text-ink backdrop:bg-ink/40 sm:inset-0 sm:m-auto sm:rounded-[24px]">
+    <h2 id={titleId} className="mb-4 text-[17px] font-bold">{title}</h2>
+    <div className="text-sm text-muted">{children}</div>
+    {actions && <div className="mt-6 flex gap-2.5">{actions}</div>}
+  </dialog>
 }
 
 interface ConfirmModalProps {
@@ -66,11 +55,11 @@ export function ConfirmModal({
   return (
     <Modal
       isOpen={isOpen}
-      onClose={onClose}
+      onClose={() => { if (!isLoading) onClose() }}
       title={title}
       actions={
         <>
-          <Button variant="secondary" onClick={onClose} className="flex-1">
+          <Button variant="secondary" disabled={isLoading} onClick={onClose} className="flex-1">
             {cancelLabel}
           </Button>
           <Button

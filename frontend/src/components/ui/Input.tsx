@@ -1,4 +1,4 @@
-import { type InputHTMLAttributes, forwardRef } from 'react'
+import { type InputHTMLAttributes, forwardRef, useId } from 'react'
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string
@@ -7,7 +7,9 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(
   ({ label, error, className = '', id, ...props }, ref) => {
-    const inputId = id || label?.toLowerCase().replace(/\s/g, '-')
+    const generatedId = useId()
+    const inputId = id || generatedId
+    const errorId = `${inputId}-error`
 
     return (
       <div className="flex flex-col gap-1.5">
@@ -23,8 +25,10 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             error ? 'border-negative' : 'border-border'
           } ${className}`}
           {...props}
+          aria-invalid={error ? true : props['aria-invalid']}
+          aria-describedby={[props['aria-describedby'], error ? errorId : null].filter(Boolean).join(' ') || undefined}
         />
-        {error && <p className="text-[13px] text-negative">{error}</p>}
+        {error && <p id={errorId} role="alert" className="text-[13px] text-negative">{error}</p>}
       </div>
     )
   }

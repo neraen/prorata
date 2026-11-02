@@ -88,6 +88,9 @@ class HouseholdService
                 $profile['pantry'] = array_values(array_filter($profile['pantry'], fn ($i) => $i['id'] !== $id));
                 $state['foodProfile'] = $profile;
                 break;
+            case 'profile.preferences':
+                $state['foodProfile'] = FoodProfile::normalize([...$payload, 'pantry' => $state['foodProfile']['pantry'] ?? []]);
+                break;
             case 'profile.save':
                 $state['foodProfile'] = FoodProfile::normalize($payload);
                 break;

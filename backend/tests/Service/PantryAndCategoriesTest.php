@@ -51,6 +51,19 @@ class PantryAndCategoriesTest extends TestCase
         self::assertSame([], $state['foodProfile']['pantry']);
     }
 
+    public function testSavingPreferencesCannotOverwriteStockUpdatedByPartner(): void
+    {
+        $service = $this->service();
+        $staleProfile = $service->read(1)['foodProfile'];
+        $item = ['id' => 'new-stock', 'name' => 'Carottes', 'quantity' => 3, 'unit' => 'piece', 'aisle' => 'produce'];
+        $service->execute(1, 8, ['id' => 'partner-add', 'type' => 'pantry.save', 'payload' => $item]);
+        $state = $service->execute(1, 7, ['id' => 'preferences', 'type' => 'profile.preferences', 'payload' => [...$staleProfile, 'habits' => 'Repas rapides le mardi.']]);
+        self::assertSame('Repas rapides le mardi.', $state['foodProfile']['habits']);
+        self::assertCount(1, $state['foodProfile']['pantry']);
+        self::assertSame('new-stock', $state['foodProfile']['pantry'][0]['id']);
+        self::assertSame([], $service->read(2)['foodProfile']['pantry']);
+    }
+
     public function testLegacyStockGetsStableDistinctIds(): void
     {
         $item = ['name' => 'Carottes', 'quantity' => 2, 'unit' => 'piece', 'aisle' => 'produce'];
