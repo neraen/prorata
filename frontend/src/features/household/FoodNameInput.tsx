@@ -18,14 +18,19 @@ export function FoodNameInput({ value, onChange, label, placeholder = 'Un alimen
     const panel = panelRef.current
     if (!input || !panel) return
     let frame = 0
+    let resizeFrame = 0
     function place(ensureVisible = false) {
       if (!input || !panel) return
       const viewport = window.visualViewport
-      const top = viewport?.offsetTop ?? 0
-      const bottom = top + (viewport?.height ?? window.innerHeight)
+      const viewportTop = viewport?.offsetTop ?? 0
+      const viewportBottom = viewportTop + (viewport?.height ?? window.innerHeight)
+      const dialog = input.closest('dialog')
+      const bounds = dialog?.getBoundingClientRect()
+      const top = Math.max(viewportTop, bounds?.top ?? viewportTop) + 8
+      const bottom = Math.min(viewportBottom, bounds?.bottom ?? viewportBottom) - 8
       let rect = input.getBoundingClientRect()
-      if (ensureVisible && (rect.bottom > bottom - 12 || rect.top < top + 12)) {
-        input.scrollIntoView({ block: 'nearest', behavior: 'instant' })
+      if (ensureVisible && (rect.bottom + Math.min(144, (bottom - top) / 3) > bottom || rect.top < top + 12)) {
+        input.scrollIntoView({ block: 'center', behavior: 'instant' })
         rect = input.getBoundingClientRect()
       }
       const below = Math.max(0, bottom - rect.bottom - 12)
@@ -42,8 +47,12 @@ export function FoodNameInput({ value, onChange, label, placeholder = 'Un alimen
       })
     }
     function schedule() { cancelAnimationFrame(frame); frame = requestAnimationFrame(() => place()) }
-    function resize() { cancelAnimationFrame(frame); frame = requestAnimationFrame(() => place(true)) }
-    place(true)
+    function resize() {
+      cancelAnimationFrame(resizeFrame); cancelAnimationFrame(frame)
+      // Let the dialog resize first, then position against its final visible bounds.
+      resizeFrame = requestAnimationFrame(() => { frame = requestAnimationFrame(() => place(true)) })
+    }
+    resize()
     window.visualViewport?.addEventListener('resize', resize)
     window.visualViewport?.addEventListener('scroll', schedule)
     window.addEventListener('resize', resize)
@@ -51,7 +60,7 @@ export function FoodNameInput({ value, onChange, label, placeholder = 'Un alimen
     const observer = new ResizeObserver(schedule)
     observer.observe(panel)
     return () => {
-      cancelAnimationFrame(frame); observer.disconnect()
+      cancelAnimationFrame(frame); cancelAnimationFrame(resizeFrame); observer.disconnect()
       window.visualViewport?.removeEventListener('resize', resize)
       window.visualViewport?.removeEventListener('scroll', schedule)
       window.removeEventListener('resize', resize)
@@ -86,7 +95,8 @@ export function FoodNameInput({ value, onChange, label, placeholder = 'Un alimen
       if (e.key === 'Enter' && open && active >= 0 && suggestions[active]) { e.preventDefault(); select(suggestions[active]) }
       if (e.key === 'Escape') { e.preventDefault(); setOpen(false) }
     }} className="min-h-12 w-full rounded-[14px] border border-border bg-surface px-3 text-base text-ink" />
-    {open && portalHost && createPortal(<div ref={panelRef} className="fixed z-[100] overflow-y-auto overscroll-contain rounded-[16px] border bg-surface p-2 shadow-lg" onMouseDown={(e) => e.preventDefault()} onBlur={(e) => { if (!e.currentTarget.contains(e.relatedTarget) && e.relatedTarget !== inputRef.current) setOpen(false) }}>
+    {open && portalHost && createPortal(<div ref={panelRef} className="fixed z-[100] overflow-y-auto overscroll-contain touch-pan-y rounded-[16px] border bg-surface p-2 shadow-lg" onPointerDown={(e) => { if ((e.target as HTMLElement).closest('button')) e.preventDefault() }} onBlur={(e) => { if (!e.currentTarget.contains(e.relatedTarget) && e.relatedTarget !== inputRef.current) setOpen(false) }}>
+      <button type="button" onClick={() => setOpen(false)} className="mb-1 min-h-11 w-full rounded-xl bg-bg px-2 text-left text-xs font-bold">{value.trim() ? `Garder « ${value.trim()} »` : 'Continuer sans suggestion'}</button>
       <ul id={`${id}-options`} role="listbox" aria-label="Suggestions d’aliments">{suggestions.map((item, index) => <li key={foldFood(item.name)} role="option" aria-selected={index === active} id={`${id}-${index}`}><button type="button" onClick={() => select(item)} className={`flex min-h-11 w-full items-center justify-between gap-2 rounded-xl px-2 text-left text-sm ${index === active ? 'bg-positive-bg' : ''}`}><span>{item.name}</span><span className="shrink-0 text-[10px] text-muted">{item.origin === 'openfoodfacts' ? 'Open Food Facts' : item.origin === 'personal' ? 'Vos aliments' : 'Courant'}</span></button></li>)}</ul>
       {suggestions.length === 0 && <p className="p-2 text-xs text-muted">Tu peux garder ce nom librement.</p>}
       {canSearch && <button type="button" disabled={remote.isFetching} onClick={() => { setRemoteQuery(value.trim()); if (remoteQuery === value.trim()) void remote.refetch() }} className="min-h-11 w-full rounded-xl bg-positive-bg px-2 text-xs font-bold text-positive">{remote.isFetching ? 'Recherche…' : 'Chercher dans Open Food Facts'}</button>}

@@ -104,6 +104,16 @@ class MealProposalValidatorTest extends TestCase
         self::assertEquals(400, $result['meals'][0]['ingredients'][0]['quantity']);
         self::assertSame(2, $result['meals'][0]['servings']);
     }
+    public function testExistingRecipeWithoutPreparationCanBeReused(): void
+    {
+        $recipe = ['id' => 'known-by-heart', 'title' => 'Mes raviolis', 'servings' => 2, 'minutes' => 15, 'equipment' => ['Four'], 'ingredients' => [['name' => 'Raviolis préparés', 'quantity' => 400, 'unit' => 'g', 'aisle' => 'pantry']], 'instructions' => ''];
+        $context = $this->context(); $context['retrievedRecipes'] = [$recipe];
+        $data = self::proposalData(); $data['meals'][0]['existingRecipeId'] = 'known-by-heart';
+        $result = (new MealProposalValidator())->proposal($data, self::requestData(), $context);
+        self::assertSame('', $result['meals'][0]['instructions']);
+        self::assertSame('known-by-heart', $result['meals'][0]['existingRecipeId']);
+    }
+
     public function testSharedStockCannotBeCountedTwice(): void
     {
         $request = self::requestData();

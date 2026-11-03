@@ -33,6 +33,32 @@ class HouseholdServiceTest extends TestCase
         return ['id' => $id, 'title' => 'Recette test', 'servings' => 2, 'minutes' => 20, 'instructions' => 'Mélanger et cuire.', 'ingredients' => $ingredients];
     }
 
+    public function testRecipeAllowsOmittedPreparationAndOptionalPrice(): void
+    {
+        $payload = $this->recipe('no-steps', [['name' => 'Tomates', 'quantity' => 340, 'unit' => 'g', 'aisle' => 'produce']]);
+        unset($payload['instructions']);
+        $payload['estimatedCostCents'] = 680;
+        $state = $this->runCommand('recipe.save', $payload);
+        $saved = array_find($state['recipes'], fn ($recipe) => $recipe['id'] === 'no-steps');
+        self::assertSame('', $saved['instructions']);
+        self::assertSame(680, $saved['estimatedCostCents']);
+        self::assertEquals(340, $saved['ingredients'][0]['quantity']);
+        $payload['instructions'] = '   ';
+        $payload['estimatedCostCents'] = null;
+        $state = $this->runCommand('recipe.save', $payload);
+        $saved = array_find($state['recipes'], fn ($recipe) => $recipe['id'] === 'no-steps');
+        self::assertSame('', $saved['instructions']);
+        self::assertNull($saved['estimatedCostCents']);
+    }
+
+    public function testRecipeRejectsInvalidPrice(): void
+    {
+        $payload = $this->recipe('bad-price', [['name' => 'Tomates', 'quantity' => 340, 'unit' => 'g', 'aisle' => 'produce']]);
+        $payload['estimatedCostCents'] = -1;
+        $this->expectException(BadRequestHttpException::class);
+        $this->runCommand('recipe.save', $payload);
+    }
+
     public function testCommandsAreScopedToTheCoupleAndReplaySafe(): void
     {
         $payload = ['id' => 'manual', 'name' => 'Pain', 'quantity' => 1, 'unit' => 'piece', 'aisle' => 'pantry'];

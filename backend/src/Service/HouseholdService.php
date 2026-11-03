@@ -142,7 +142,8 @@ class HouseholdService
                     'title' => $this->text($payload['title'] ?? null, 150),
                     'servings' => $this->number($payload['servings'] ?? null, 1, 20),
                     'minutes' => $this->number($payload['minutes'] ?? null, 1, 1440),
-                    'instructions' => $this->text($payload['instructions'] ?? null, 10000),
+                    'instructions' => $this->optionalText($payload['instructions'] ?? '', 10000),
+                    'estimatedCostCents' => ($cost = array_key_exists('estimatedCostCents', $payload) ? $payload['estimatedCostCents'] : ($existing['estimatedCostCents'] ?? null)) === null ? null : $this->cost($cost),
                     'authorId' => $userId,
                     'source' => 'personal',
                     'category' => ($category = array_key_exists('category', $payload) ? $payload['category'] : ($existing['category'] ?? null)) === null ? null : $this->choice($category, FoodProfile::CATEGORIES),
@@ -232,6 +233,18 @@ class HouseholdService
             'aisle' => $this->choice($input['aisle'] ?? null, self::AISLES),
             'reference' => FoodReference::normalize($input['reference'] ?? null),
         ];
+    }
+
+    private function optionalText(mixed $value, int $max): string
+    {
+        if (!is_string($value) || mb_strlen($value) > $max) throw new BadRequestHttpException('Préparation trop longue ou invalide.');
+        return trim($value);
+    }
+
+    private function cost(mixed $value): int
+    {
+        if (!is_int($value) || $value < 0 || $value > 1000000) throw new BadRequestHttpException('Prix estimé invalide.');
+        return $value;
     }
 
     private function text(mixed $value, int $max): string

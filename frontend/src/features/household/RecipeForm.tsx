@@ -7,7 +7,8 @@ import { assistantApi, MEAL_CATEGORIES, type MealCategory } from './assistant'
 import { AISLES, UNITS, type Ingredient, type Recipe } from './household'
 import { FoodNameInput } from './FoodNameInput'
 
-const emptyIngredient = (): Ingredient => ({ name: '', quantity: 1, unit: 'piece', aisle: 'produce' })
+type IngredientDraft = Omit<Ingredient, 'quantity'> & { quantity: string }
+const emptyIngredient = (): IngredientDraft => ({ name: '', quantity: '1', unit: 'piece', aisle: 'produce' })
 export const fieldClass = 'min-h-12 w-full rounded-[14px] border border-border bg-surface px-3 text-base text-ink'
 export function RecipeForm({ recipe, onSave, onClose }: { recipe?: Recipe; onSave: (payload: Record<string, unknown>) => Promise<unknown>; onClose: () => void }) {
   const [recipeId] = useState(() => recipe?.id ?? crypto.randomUUID())
@@ -18,15 +19,16 @@ export function RecipeForm({ recipe, onSave, onClose }: { recipe?: Recipe; onSav
   const [categoryReason, setCategoryReason] = useState(recipe?.categoryReason ?? '')
   const [automatic, setAutomatic] = useState(true)
   const [minutes, setMinutes] = useState(recipe?.minutes ?? 30)
+  const [cost, setCost] = useState(recipe?.estimatedCostCents == null ? '' : String(recipe.estimatedCostCents / 100))
   const [instructions, setInstructions] = useState(recipe?.instructions ?? '')
-  const [ingredients, setIngredients] = useState<Ingredient[]>(recipe?.ingredients ?? [emptyIngredient()])
+  const [ingredients, setIngredients] = useState<IngredientDraft[]>(recipe?.ingredients.map((item) => ({ ...item, quantity: String(item.quantity) })) ?? [emptyIngredient()])
   const [saving, setSaving] = useState(false)
   const [classifying, setClassifying] = useState(false)
   const [error, setError] = useState('')
   const toast = useToastStore((s) => s.show)
   const busy = saving || classifying
-  function change(index: number, patch: Partial<Ingredient>) { setIngredients((all) => all.map((item, i) => i === index ? { ...item, ...patch } : item)) }
-  const content = { title, servings, minutes, instructions, ingredients }
+  function change(index: number, patch: Partial<IngredientDraft>) { setIngredients((all) => all.map((item, i) => i === index ? { ...item, ...patch } : item)) }
+  const content = { title, servings, minutes, instructions, ingredients: ingredients.map((item) => ({ ...item, quantity: Number(item.quantity) })) }
   async function classification() {
     return assistantApi.classify({ id: crypto.randomUUID(), recipe: content })
   }
@@ -49,7 +51,7 @@ export function RecipeForm({ recipe, onSave, onClose }: { recipe?: Recipe; onSav
         try { const result = await classification(); selected = result.category; reason = result.reason; source = 'ai' }
         catch { classificationFailed = true }
       }
-      await onSave({ id: recipeId, ...content, category: selected, categorySource: selected ? source : null, categoryReason: reason || null })
+      await onSave({ id: recipeId, ...content, estimatedCostCents: cost === '' ? null : Math.round(Number(cost) * 100), category: selected, categorySource: selected ? source : null, categoryReason: reason || null })
       if (classificationFailed) toast('Recette enregistrée sans classement : l’IA est indisponible.', 'success')
       onClose()
     } catch (error) { setError(error instanceof Error ? error.message : 'Enregistrement impossible') }
@@ -70,13 +72,14 @@ export function RecipeForm({ recipe, onSave, onClose }: { recipe?: Recipe; onSav
     {ingredients.map((item, index) => <fieldset className="grid grid-cols-2 gap-2 rounded-[16px] bg-bg p-3" key={index}>
       <legend className="sr-only">Ingrédient {index + 1}</legend>
       <div className="col-span-2"><FoodNameInput label={`Nom de l’ingrédient ${index + 1}`} value={item.name} onChange={(name, reference) => change(index, { name, reference })} placeholder="Un aliment, sans tout retaper…" /></div>
-      <input aria-label={`Quantité de l’ingrédient ${index + 1}`} className={fieldClass} required type="number" min={0.001} max={100000} step="any" value={item.quantity} onChange={(e) => change(index, { quantity: Number(e.target.value) })} />
+      <input aria-label={`Quantité de l’ingrédient ${index + 1}`} className={fieldClass} required type="number" min={0.001} max={100000} step="any" inputMode="decimal" value={item.quantity} onChange={(e) => change(index, { quantity: e.target.value.replace(/^0+(?=\d)/, '') })} />
       <select aria-label={`Unité de l’ingrédient ${index + 1}`} className={fieldClass} value={item.unit} onChange={(e) => change(index, { unit: e.target.value as Ingredient['unit'] })}>{Object.entries(UNITS).map(([key, label]) => <option key={key} value={key}>{label}</option>)}</select>
       <select aria-label={`Rayon de l’ingrédient ${index + 1}`} className={fieldClass} value={item.aisle} onChange={(e) => change(index, { aisle: e.target.value as Ingredient['aisle'] })}>{Object.entries(AISLES).map(([key, label]) => <option key={key} value={key}>{label}</option>)}</select>
       <button type="button" disabled={ingredients.length === 1} onClick={() => setIngredients((all) => all.filter((_, i) => i !== index))} className="flex items-center justify-center gap-2 text-negative disabled:opacity-30" aria-label={`Retirer l’ingrédient ${index + 1}`}><TrashIcon size={18} /> Retirer</button>
     </fieldset>)}
     <Button type="button" variant="secondary" disabled={ingredients.length >= 100} onClick={() => setIngredients((all) => [...all, emptyIngredient()])}><PlusIcon size={18} /> Ajouter un ingrédient</Button>
-    <label className="grid gap-1 text-sm font-semibold">Préparation<textarea className={`${fieldClass} py-3`} required maxLength={10000} rows={5} value={instructions} onChange={(e) => setInstructions(e.target.value)} placeholder="Décris les étapes de ta recette…" /></label>
+    <label className="grid gap-1 text-sm font-semibold">Préparation (facultative)<textarea className={`${fieldClass} py-3`} maxLength={10000} rows={5} value={instructions} onChange={(e) => setInstructions(e.target.value)} placeholder="Les étapes, si tu souhaites les noter…" /></label>
+    <label className="grid gap-1 text-sm font-semibold">Prix estimé de la recette entière (€, facultatif)<input className={fieldClass} type="number" min={0} max={10000} step="0.01" inputMode="decimal" value={cost} onChange={(e) => setCost(e.target.value)} placeholder="Ex. 6,80 pour toutes les portions" /><span className="text-xs font-normal text-muted">Ton estimation, pas un prix en magasin. Elle sera affichée par portion dans le choix des plats.</span></label>
     {error && <p role="alert" className="text-sm text-negative">{error}</p>}
     <Button type="submit" isLoading={saving}>Enregistrer la recette</Button>
     <Button type="button" variant="secondary" onClick={onClose}>Annuler</Button>

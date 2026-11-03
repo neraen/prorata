@@ -91,7 +91,7 @@ final class MealProposalValidator
             }
             $cost = $meal['estimatedCostCents'] ?? null;
             if ($cost !== null) $cost = FoodProfile::integer($cost, 0, 1000000);
-            $result['meals'][] = ['date' => $date, 'slot' => $slot, 'category' => $category, 'existingRecipeId' => $id, 'title' => $title, 'servings' => $profile['servings'], 'minutes' => $minutes, 'equipment' => $equipment, 'ingredients' => $ingredients, 'instructions' => FoodProfile::text($recipe['instructions'] ?? null, 10000), 'reason' => FoodProfile::text($meal['reason'] ?? null, 800), 'pantryUsed' => $pantryUsed, 'estimatedCostCents' => $cost];
+            $result['meals'][] = ['date' => $date, 'slot' => $slot, 'category' => $category, 'existingRecipeId' => $id, 'title' => $title, 'servings' => $profile['servings'], 'minutes' => $minutes, 'equipment' => $equipment, 'ingredients' => $ingredients, 'instructions' => FoodProfile::text($recipe['instructions'] ?? '', 10000, $id !== null), 'reason' => FoodProfile::text($meal['reason'] ?? null, 800), 'pantryUsed' => $pantryUsed, 'estimatedCostCents' => $cost];
         }
         if ($expected || $mix !== $request['mix']) throw new BadRequestHttpException();
         $result['meals'] = $this->allocateStock($result['meals'], $profile, $result['warnings']);
