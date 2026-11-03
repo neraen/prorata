@@ -22,6 +22,7 @@ function ingredientFromSuggestion(food: FoodSuggestion): Ingredient {
 export const fieldClass = 'min-h-12 w-full rounded-[14px] border border-border bg-surface px-3 text-base text-ink'
 export function RecipeForm({ recipe, onSave, onClose }: { recipe?: Recipe; onSave: (payload: Record<string, unknown>) => Promise<unknown>; onClose: () => void }) {
   const form = useRef<HTMLFormElement>(null)
+  const deselectedIngredients = useRef(new Map<string, IngredientDraft[]>())
   const addButton = useRef<HTMLButtonElement>(null)
   const [recipeId] = useState(() => recipe?.id ?? crypto.randomUUID())
   const [title, setTitle] = useState(recipe?.title ?? '')
@@ -103,5 +104,5 @@ export function RecipeForm({ recipe, onSave, onClose }: { recipe?: Recipe; onSav
     {error && <p role="alert" className="text-sm text-negative">{error}</p>}
     <Button type="submit" isLoading={saving}disabled={!ingredients.length}>{ingredients.length ? 'Enregistrer la recette' : 'Ajoute au moins un ingrédient'}</Button>
     <Button type="button" variant="secondary" onClick={onClose}>Annuler</Button>
-  </fieldset></form>{pickerOpen && <IngredientPicker ingredients={content.ingredients} onClose={closePicker} onAdd={(food) => { setIngredients((all) => [...all, { ...ingredientFromSuggestion(food), quantity: '' }]); setError('') }} />}</>
+  </fieldset></form>{pickerOpen && <IngredientPicker ingredients={content.ingredients} onClose={closePicker} onRemove={(food, indexes) => { deselectedIngredients.current.set(food.name, ingredients.filter((_, index) => indexes.includes(index))); setIngredients((all) => all.filter((_, index) => !indexes.includes(index))) }} onAdd={(food) => { const restored = deselectedIngredients.current.get(food.name); deselectedIngredients.current.delete(food.name); setIngredients((all) => [...all, ...(restored ?? [{ ...ingredientFromSuggestion(food), quantity: '' }])]); setError('') }} />}</>
 }

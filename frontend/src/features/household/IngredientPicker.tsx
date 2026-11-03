@@ -23,9 +23,10 @@ const nameKey = (name: string) => {
   return aliases.get(normalized) ?? normalized
 }
 
-export function IngredientPicker({ ingredients, onAdd, onClose }: { ingredients: Ingredient[]; onAdd: (food: FoodSuggestion) => void; onClose: () => void }) {
+export function IngredientPicker({ ingredients, onAdd, onRemove, onClose }: { ingredients: Ingredient[]; onAdd: (food: FoodSuggestion) => void; onRemove: (food: FoodSuggestion, indexes: number[]) => void; onClose: () => void }) {
   const { data } = useHousehold()
   const searchInput = useRef<HTMLInputElement>(null)
+  const [sessionFoods, setSessionFoods] = useState<FoodSuggestion[]>([])
   const [search, setSearch] = useState('')
   const [showAll, setShowAll] = useState(false)
   const [remoteQuery, setRemoteQuery] = useState('')
@@ -33,7 +34,7 @@ export function IngredientPicker({ ingredients, onAdd, onClose }: { ingredients:
   const needle = nameKey(search)
   const remote = useQuery({ queryKey: ['foodSuggestions', foldFood(remoteQuery)], queryFn: () => apiFetch<{ items: FoodSuggestion[]; available: boolean }>(`/foods/suggestions?q=${encodeURIComponent(remoteQuery)}`), enabled: remoteQuery.length >= 2, staleTime: 604800000, retry: false })
   const unique = new Map<string, FoodSuggestion>()
-  const own = [...ingredients, ...(data?.foodProfile?.pantry ?? []), ...(data?.recipes.filter((recipe) => recipe.source !== 'app' || Object.values(data.meals).some((meal) => meal.recipeId === recipe.id)).slice().reverse().flatMap((recipe) => recipe.ingredients) ?? [])]
+  const own = [...sessionFoods, ...ingredients, ...(data?.foodProfile?.pantry ?? []), ...(data?.recipes.filter((recipe) => recipe.source !== 'app' || Object.values(data.meals).some((meal) => meal.recipeId === recipe.id)).slice().reverse().flatMap((recipe) => recipe.ingredients) ?? [])]
   for (const item of [...own.map((item): FoodSuggestion => ({ name: item.name, reference: item.reference ?? null, origin: 'personal' })), ...COMMON_FOODS]) {
     const key = nameKey(item.name)
     if ((!needle || key.includes(needle)) && !unique.has(key)) unique.set(key, item)
@@ -49,22 +50,29 @@ export function IngredientPicker({ ingredients, onAdd, onClose }: { ingredients:
   const canAdd = ingredients.length < 100
   const customName = search.trim().replace(/\s+/g, ' ')
   function add(food: FoodSuggestion) {
-    if (!canAdd || alreadyAdded(food.name)) return
+    const indexes = ingredients.flatMap((item, index) => nameKey(item.name) === nameKey(food.name) ? [index] : [])
+    setSessionFoods((previous) => previous.some((item) => nameKey(item.name) === nameKey(food.name)) ? previous : [...previous, food])
+    if (indexes.length) {
+      onRemove(food, indexes)
+      setAnnouncement(`Retiré : ${food.name}. Touche + pour le remettre.`)
+      return
+    }
+    if (!canAdd) return
     onAdd(food)
     setSearch('')
     setAnnouncement(`Ajouté : ${food.name}. Tu peux continuer ou revenir à la recette.`)
   }
   return createPortal(<HouseholdDialog title="Ajouter des ingrédients" fixedLayout onClose={onClose}>
     <div className="flex min-h-0 flex-1 flex-col gap-3">
-      <p className="shrink-0 text-sm leading-relaxed text-muted">Touche + pour ajouter. Tu renseigneras les quantités dans la recette.</p>
+      <p className="shrink-0 text-sm leading-relaxed text-muted">Touche + pour ajouter, ou ✓ pour retirer. Les quantités se renseignent dans la recette.</p>
       <label className="grid shrink-0 gap-1"><span className="sr-only">Rechercher un ingrédient</span><input ref={searchInput} type="search" maxLength={100} autoComplete="off" value={search} onChange={(event) => { setSearch(event.target.value); setAnnouncement('') }} onKeyDown={(event) => { if (event.key === 'Enter') event.preventDefault() }} placeholder="Tomates, riz, mozzarella…" className="min-h-12 w-full rounded-[14px] border bg-surface px-3 text-base" /></label>
       <div className="min-h-16 flex-1 overflow-y-auto overscroll-contain rounded-xl px-1 pb-1">
         <p className="mb-3 text-xs font-semibold text-muted">{needle ? `${matches.length} résultat${matches.length > 1 ? 's' : ''}` : 'Vos aliments et les essentiels'}</p>
         <div className="grid gap-2">{visible.map((food) => {
           const added = alreadyAdded(food.name)
-          return <button key={nameKey(food.name)} type="button" disabled={added || !canAdd} onPointerDown={(event) => { if (document.activeElement === searchInput.current) event.preventDefault() }} onClick={() => add(food)} aria-label={added ? `Déjà dans la recette : ${food.name}` : `Ajouter ${food.name}`} className={`flex min-h-20 w-full items-center gap-3 rounded-[18px] border p-2 text-left disabled:cursor-default ${added ? 'border-positive/25 bg-pastel-sage' : 'bg-bg hover:border-positive/40'}`}>
+          return <button key={nameKey(food.name)} type="button" disabled={!added && !canAdd} aria-pressed={added} onPointerDown={(event) => { if (document.activeElement === searchInput.current) event.preventDefault() }} onClick={() => add(food)} aria-label={added ? `Retirer ${food.name}` : `Ajouter ${food.name}`} className={`flex min-h-20 w-full items-center gap-3 rounded-[18px] border p-2 text-left disabled:cursor-default ${added ? 'border-positive/25 bg-pastel-sage' : 'bg-bg hover:border-positive/40'}`}>
             <IngredientIllustration name={food.name} className="h-14 w-14" />
-            <span className="min-w-0 flex-1"><span className="block break-words text-sm font-bold">{food.name}</span><span className="mt-1 block text-xs text-muted">{added ? 'Dans la recette' : food.origin === 'personal' ? 'Dans votre cuisine' : food.origin === 'openfoodfacts' ? 'Open Food Facts' : 'Aliment courant'}</span></span>
+            <span className="min-w-0 flex-1"><span className="block break-words text-sm font-bold">{food.name}</span><span className="mt-1 block text-xs text-muted">{added ? 'Dans la recette · Toucher pour retirer' : food.origin === 'personal' ? 'Dans votre cuisine' : food.origin === 'openfoodfacts' ? 'Open Food Facts' : 'Aliment courant'}</span></span>
             <span aria-hidden="true" className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full ${added ? 'bg-positive text-white' : 'bg-surface text-positive'}`}>{added ? '✓' : <PlusIcon size={20} />}</span>
           </button>
         })}</div>
