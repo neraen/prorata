@@ -80,7 +80,7 @@ export function FoodNameInput({ value, onChange, label, placeholder = 'Un alimen
   const unique = new Map<string, FoodSuggestion>()
   for (const item of [...own, ...COMMON_FOODS, ...(includeHousehold ? HOUSEHOLD_ITEMS : [])]) {
     const key = foldFood(item.name)
-    if ((!needle || key.includes(needle)) && !unique.has(key)) unique.set(key, item)
+    if ((!needle || key.includes(needle) || item.aliases?.some((alias) => foldFood(alias).includes(needle))) && !unique.has(key)) unique.set(key, item)
   }
   if (foldFood(remoteQuery) === needle) for (const item of remote.data?.items ?? []) unique.set(foldFood(item.name), { ...item, origin: 'openfoodfacts' })
   const suggestions = [...unique.values()].sort((a, b) => Number(foldFood(b.name).startsWith(needle)) - Number(foldFood(a.name).startsWith(needle))).slice(0, 8)

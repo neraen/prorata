@@ -6,5 +6,5 @@ const entries = new Map(catalog.flatMap((item) => item.aliases.map((alias) => [f
 /** Exact, curated aliases; a fallback never pretends to depict an unknown item. */
 export function ingredientVisual(name: string) {
   const item = entries.get(foldFood(name).replaceAll('’', "'"))
-  return item ? { src: `/illustrations/ingredients/${item.id}.webp`, aisle: item.aisle as Ingredient['aisle'] } : null
+  return item ? { src: `/illustrations/ingredients/${item.id}.webp`, aisle: item.aisle as Ingredient['aisle'], unit: 'unit' in item ? item.unit as Ingredient['unit'] : undefined } : null
 }

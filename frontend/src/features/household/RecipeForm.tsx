@@ -16,7 +16,7 @@ function ingredientFromSuggestion(food: FoodSuggestion): Ingredient {
   const visual = ingredientVisual(food.name)
   const liquids = ['lait','creme','huile','vinaigre','sauce soja','lait de coco','coulis','bouillon']
   const weight = ['riz','pates','semoule','quinoa','boulgour','farine','flocons','sucre','chocolat','lentilles','pois chiches','haricots rouges','epinards','petits pois','haricots verts','champignons','beurre','fromage','yaourt','mozzarella','emmental','parmesan','feta','reblochon','tofu','sel','poivre','curry','paprika','cumin','noix','amandes','miel']
-  const unit = food.reference?.type === 'product' ? 'piece' : liquids.some((prefix) => name.startsWith(prefix)) ? 'ml' : visual?.aisle === 'meat' || weight.some((prefix) => name.startsWith(prefix)) ? 'g' : 'piece'
+  const unit = food.reference?.type === 'product' ? 'piece' : visual?.unit ?? (liquids.some((prefix) => name.startsWith(prefix)) ? 'ml' : visual?.aisle === 'meat' || weight.some((prefix) => name.startsWith(prefix)) ? 'g' : 'piece')
   return { name: food.name, reference: food.reference, quantity: 1, unit, aisle: visual?.aisle ?? 'other' }
 }
 export const fieldClass = 'min-h-12 w-full rounded-[14px] border border-border bg-surface px-3 text-base text-ink'

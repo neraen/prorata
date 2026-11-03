@@ -37,7 +37,7 @@ export function IngredientPicker({ ingredients, onAdd, onRemove, onClose }: { in
   const own = [...sessionFoods, ...ingredients, ...(data?.foodProfile?.pantry ?? []), ...(data?.recipes.filter((recipe) => recipe.source !== 'app' || Object.values(data.meals).some((meal) => meal.recipeId === recipe.id)).slice().reverse().flatMap((recipe) => recipe.ingredients) ?? [])]
   for (const item of [...own.map((item): FoodSuggestion => ({ name: item.name, reference: item.reference ?? null, origin: 'personal' })), ...COMMON_FOODS]) {
     const key = nameKey(item.name)
-    if ((!needle || key.includes(needle)) && !unique.has(key)) unique.set(key, item)
+    if ((!needle || key.includes(needle) || item.aliases?.some((alias) => nameKey(alias).includes(needle))) && !unique.has(key)) unique.set(key, item)
   }
   const remoteMatches = remoteQuery !== '' && nameKey(remoteQuery) === needle
   if (remoteMatches) for (const item of remote.data?.items ?? []) {
@@ -78,7 +78,7 @@ export function IngredientPicker({ ingredients, onAdd, onRemove, onClose }: { in
         })}</div>
         {!needle && !showAll && matches.length > visible.length && <Button type="button" variant="secondary" onClick={() => setShowAll(true)} className="mt-3 w-full">Voir tous les aliments</Button>}
         {needle && !matches.length && <p className="py-3 text-sm text-muted">Cet aliment n’est pas encore dans les suggestions. Tu peux l’ajouter avec ton propre nom.</p>}
-        {customName && !alreadyAdded(customName) && !matches.some((food) => nameKey(food.name) === needle) && <Button type="button" variant="secondary" disabled={!canAdd} onPointerDown={(event) => { if (document.activeElement === searchInput.current) event.preventDefault() }} onClick={() => add({ name: customName, reference: null })} className="mt-3 h-auto! min-h-12 w-full py-3"><PlusIcon size={18} /><span className="min-w-0 break-words">Ajouter « {customName} »</span></Button>}
+        {customName && !alreadyAdded(customName) && !matches.some((food) => nameKey(food.name) === needle || food.aliases?.some((alias) => nameKey(alias) === needle)) && <Button type="button" variant="secondary" disabled={!canAdd} onPointerDown={(event) => { if (document.activeElement === searchInput.current) event.preventDefault() }} onClick={() => add({ name: customName, reference: null })} className="mt-3 h-auto! min-h-12 w-full py-3"><PlusIcon size={18} /><span className="min-w-0 break-words">Ajouter « {customName} »</span></Button>}
         {customName.length >= 2 && customName.length <= 60 && <Button type="button" variant="secondary" isLoading={remote.isFetching} className="mt-3 w-full" onClick={() => { setRemoteQuery(customName); if (remoteQuery === customName) void remote.refetch() }}>Chercher dans Open Food Facts</Button>}
         {remoteMatches && (remote.isError || remote.data?.available === false) && <p role="status" className="mt-3 text-xs text-muted">Open Food Facts est indisponible. Les suggestions locales et la saisie libre restent disponibles.</p>}
         {remoteMatches && remote.data && <a className="mt-3 block min-h-11 py-3 text-xs text-muted underline" href="https://world.openfoodfacts.org/terms-of-use" target="_blank" rel="noreferrer">Suggestions Open Food Facts · ODbL</a>}
