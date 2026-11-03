@@ -98,7 +98,7 @@ class HouseholdServiceTest extends TestCase
         self::assertFalse(array_find($state['shopping'], fn ($i) => $i['id'] === $tomatoes['id'])['checked']);
     }
 
-    public function testDifferentUnitsAndWeeksRemainSeparateAndRemovedMealsDisappear(): void
+    public function testMixedUnitsAreGroupedByWeekAndRemovedMealsDisappear(): void
     {
         $this->runCommand('recipe.save', $this->recipe('one', [
             ['name' => 'Tomates', 'quantity' => 1, 'unit' => 'piece', 'aisle' => 'produce'],
@@ -108,11 +108,50 @@ class HouseholdServiceTest extends TestCase
             $this->runCommand('meal.set', ['date' => $date, 'slot' => 'dinner', 'recipeId' => 'one', 'servings' => 2]);
             $this->runCommand('shopping.generate', ['week' => $date]);
         }
-        self::assertCount(4, $this->service->read(1)['shopping']);
+        self::assertCount(2, $this->service->read(1)['shopping']);
+        self::assertEquals([['unit' => 'piece', 'quantity' => 1], ['unit' => 'g', 'quantity' => 100]], $this->service->read(1)['shopping'][0]['quantities']);
         $this->runCommand('meal.set', ['date' => '2026-11-02', 'slot' => 'dinner', 'recipeId' => null]);
         $state = $this->runCommand('shopping.generate', ['week' => '2026-11-02']);
-        self::assertCount(2, $state['shopping']);
+        self::assertCount(1, $state['shopping']);
         self::assertSame(['2026-11-09'], array_values(array_unique(array_column($state['shopping'], 'week'))));
+    }
+
+    public function testPiecesAndGramsKeepExactNeedsAndNonFoodAdditions(): void
+    {
+        $this->runCommand('recipe.save', $this->recipe('pieces', [['name' => 'Tomate', 'quantity' => 3, 'unit' => 'piece', 'aisle' => 'produce']]));
+        $this->runCommand('recipe.save', $this->recipe('grams', [['name' => 'Tomates', 'quantity' => 350, 'unit' => 'g', 'aisle' => 'produce']]));
+        $this->runCommand('recipe.save', $this->recipe('sauce', [['name' => 'Coulis de tomates', 'quantity' => 200, 'unit' => 'ml', 'aisle' => 'pantry']]));
+        foreach (['pieces','grams','sauce'] as $index => $recipe) $this->runCommand('meal.set', ['date' => '2026-11-0'.($index + 2), 'slot' => 'dinner', 'recipeId' => $recipe, 'servings' => 2]);
+        foreach ([['litter','Litière du chat','pets'],['soap','Savon','household']] as [$id,$name,$aisle]) $this->runCommand('shopping.add', ['id'=>$id,'name'=>$name,'quantity'=>1,'unit'=>'piece','aisle'=>$aisle]);
+        $state = $this->runCommand('shopping.generate', ['week'=>'2026-11-02']);
+        self::assertCount(4, $state['shopping']);
+        $tomato = array_find($state['shopping'], fn ($item) => $item['name'] === 'Tomate');
+        self::assertSame([['unit'=>'piece','quantity'=>3.0],['unit'=>'g','quantity'=>350.0]], $tomato['quantities']);
+        $this->runCommand('shopping.check', ['id'=>$tomato['id'],'checked'=>true]);
+        $this->runCommand('meal.set', ['date'=>'2026-11-03','slot'=>'dinner','recipeId'=>'grams','servings'=>4]);
+        $state = $this->runCommand('shopping.generate', ['week'=>'2026-11-02']);
+        $tomato = array_find($state['shopping'], fn ($item) => $item['name'] === 'Tomate');
+        self::assertFalse($tomato['checked']);
+        self::assertEquals(700, $tomato['quantities'][1]['quantity']);
+        self::assertSame('pets', array_find($state['shopping'], fn ($item) => $item['id'] === 'litter')['aisle']);
+        self::assertSame('household', array_find($state['shopping'], fn ($item) => $item['id'] === 'soap')['aisle']);
+    }
+
+    public function testDistinctProductReferencesAreNotMerged(): void
+    {
+        $ingredients = [];
+        foreach (['brand-a','brand-b'] as $id) $ingredients[] = ['name'=>'Lait','quantity'=>1,'unit'=>'l','aisle'=>'dairy','reference'=>['source'=>'openfoodfacts','type'=>'product','id'=>$id]];
+        $this->runCommand('recipe.save', $this->recipe('brands', $ingredients));
+        $this->runCommand('meal.set', ['date'=>'2026-11-02','slot'=>'dinner','recipeId'=>'brands','servings'=>2]);
+        $state = $this->runCommand('shopping.generate', ['week'=>'2026-11-02']);
+        self::assertCount(2, $state['shopping']);
+        self::assertEquals(1000, $state['shopping'][0]['quantity']);
+    }
+
+    public function testNonFoodAislesAreReservedForShopping(): void
+    {
+        $this->expectException(BadRequestHttpException::class);
+        $this->runCommand('recipe.save', $this->recipe('not-food', [['name'=>'Savon','quantity'=>1,'unit'=>'piece','aisle'=>'household']]));
     }
 
     public function testOnlyAuthorCanEditRecipe(): void

@@ -43,7 +43,7 @@ final class FoodProfile
         if (!is_array($input)) self::invalid('Ingrédient invalide.');
         $quantity = $input['quantity'] ?? null;
         if ((!is_int($quantity) && !is_float($quantity)) || !is_finite((float) $quantity) || $quantity < 0.001 || $quantity > 100000) self::invalid('Quantité invalide.');
-        return ['name' => self::text($input['name'] ?? null, 100), 'quantity' => $quantity, 'unit' => self::choice($input['unit'] ?? null, HouseholdService::UNITS), 'aisle' => self::choice($input['aisle'] ?? null, HouseholdService::AISLES), 'reference' => FoodReference::normalize($input['reference'] ?? null)];
+        return ['name' => self::text($input['name'] ?? null, 100), 'quantity' => $quantity, 'unit' => self::choice($input['unit'] ?? null, HouseholdService::UNITS), 'aisle' => self::choice($input['aisle'] ?? null, HouseholdService::FOOD_AISLES), 'reference' => FoodReference::normalize($input['reference'] ?? null)];
     }
 
     public static function strings(mixed $value, int $count = 20, int $length = 500): array

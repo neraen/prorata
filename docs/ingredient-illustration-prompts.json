@@ -1,0 +1,486 @@
+{
+  "tool": "image_gen built-in",
+  "promptTemplate": "Use case: stylized-concept. One isolated ingredient or household item illustration for a premium French grocery app. Subject: {subject}. Soft hand-painted gouache and colored pencil editorial illustration, muted natural pastel colors, fine paper texture, subtle soft shadow. Warm ivory background #F8F7F2. Square, centered, 65% subject size, generous margins, recognizable at 48px. No text, no letters, no logos, no border, no collage.",
+  "assets": [
+    {
+      "id": "tomato",
+      "subject": "ripe red tomato with green calyx",
+      "path": "frontend/public/illustrations/ingredients/tomato.webp",
+      "prompt": "Use case: stylized-concept. One isolated ingredient or household item illustration for a premium French grocery app. Subject: ripe red tomato with green calyx. Soft hand-painted gouache and colored pencil editorial illustration, muted natural pastel colors, fine paper texture, subtle soft shadow. Warm ivory background #F8F7F2. Square, centered, 65% subject size, generous margins, recognizable at 48px. No text, no letters, no logos, no border, no collage."
+    },
+    {
+      "id": "carrot",
+      "subject": "two orange carrots with leafy tops",
+      "path": "frontend/public/illustrations/ingredients/carrot.webp",
+      "prompt": "Use case: stylized-concept. One standalone ingredient or household item icon for a premium French grocery app. Subject: two orange carrots with leafy tops. Soft hand-painted gouache and colored pencil editorial illustration, muted natural pastel colors, fine paper grain and soft shadow. Warm ivory background #F8F7F2, square composition, centered subject occupying 65% of frame, generous margins. Recognizable at 48px. No text, no letters, no labels, no logos, no border, no collage. This is one isolated item illustration matching a coherent pastel food library."
+    },
+    {
+      "id": "zucchini",
+      "subject": "one green zucchini",
+      "path": "frontend/public/illustrations/ingredients/zucchini.webp",
+      "prompt": "Use case: stylized-concept. One standalone ingredient or household item icon for a premium French grocery app. Subject: one green zucchini. Soft hand-painted gouache and colored pencil editorial illustration, muted natural pastel colors, fine paper grain and soft shadow. Warm ivory background #F8F7F2, square composition, centered subject occupying 65% of frame, generous margins. Recognizable at 48px. No text, no letters, no labels, no logos, no border, no collage. This is one isolated item illustration matching a coherent pastel food library."
+    },
+    {
+      "id": "potato",
+      "subject": "two brown potatoes",
+      "path": "frontend/public/illustrations/ingredients/potato.webp",
+      "prompt": "Use case: stylized-concept. One standalone ingredient or household item icon for a premium French grocery app. Subject: two brown potatoes. Soft hand-painted gouache and colored pencil editorial illustration, muted natural pastel colors, fine paper grain and soft shadow. Warm ivory background #F8F7F2, square composition, centered subject occupying 65% of frame, generous margins. Recognizable at 48px. No text, no letters, no labels, no logos, no border, no collage. This is one isolated item illustration matching a coherent pastel food library."
+    },
+    {
+      "id": "sweet-potato",
+      "subject": "one orange sweet potato cut in half",
+      "path": "frontend/public/illustrations/ingredients/sweet-potato.webp",
+      "prompt": "Use case: stylized-concept. One standalone ingredient or household item icon for a premium French grocery app. Subject: one orange sweet potato cut in half. Soft hand-painted gouache and colored pencil editorial illustration, muted natural pastel colors, fine paper grain and soft shadow. Warm ivory background #F8F7F2, square composition, centered subject occupying 65% of frame, generous margins. Recognizable at 48px. No text, no letters, no labels, no logos, no border, no collage. This is one isolated item illustration matching a coherent pastel food library."
+    },
+    {
+      "id": "onion",
+      "subject": "one golden onion",
+      "path": "frontend/public/illustrations/ingredients/onion.webp",
+      "prompt": "Use case: stylized-concept. One standalone ingredient or household item icon for a premium French grocery app. Subject: one golden onion. Soft hand-painted gouache and colored pencil editorial illustration, muted natural pastel colors, fine paper grain and soft shadow. Warm ivory background #F8F7F2, square composition, centered subject occupying 65% of frame, generous margins. Recognizable at 48px. No text, no letters, no labels, no logos, no border, no collage. This is one isolated item illustration matching a coherent pastel food library."
+    },
+    {
+      "id": "garlic",
+      "subject": "one garlic bulb and a clove",
+      "path": "frontend/public/illustrations/ingredients/garlic.webp",
+      "prompt": "Use case: stylized-concept. One standalone ingredient or household item icon for a premium French grocery app. Subject: one garlic bulb and a clove. Soft hand-painted gouache and colored pencil editorial illustration, muted natural pastel colors, fine paper grain and soft shadow. Warm ivory background #F8F7F2, square composition, centered subject occupying 65% of frame, generous margins. Recognizable at 48px. No text, no letters, no labels, no logos, no border, no collage. This is one isolated item illustration matching a coherent pastel food library."
+    },
+    {
+      "id": "leek",
+      "subject": "one fresh leek",
+      "path": "frontend/public/illustrations/ingredients/leek.webp",
+      "prompt": "Use case: stylized-concept. One standalone ingredient or household item icon for a premium French grocery app. Subject: one fresh leek. Soft hand-painted gouache and colored pencil editorial illustration, muted natural pastel colors, fine paper grain and soft shadow. Warm ivory background #F8F7F2, square composition, centered subject occupying 65% of frame, generous margins. Recognizable at 48px. No text, no letters, no labels, no logos, no border, no collage. This is one isolated item illustration matching a coherent pastel food library."
+    },
+    {
+      "id": "spinach",
+      "subject": "a small bunch of spinach leaves",
+      "path": "frontend/public/illustrations/ingredients/spinach.webp",
+      "prompt": "Use case: stylized-concept. One standalone ingredient or household item icon for a premium French grocery app. Subject: a small bunch of spinach leaves. Soft hand-painted gouache and colored pencil editorial illustration, muted natural pastel colors, fine paper grain and soft shadow. Warm ivory background #F8F7F2, square composition, centered subject occupying 65% of frame, generous margins. Recognizable at 48px. No text, no letters, no labels, no logos, no border, no collage. This is one isolated item illustration matching a coherent pastel food library."
+    },
+    {
+      "id": "broccoli",
+      "subject": "one broccoli head",
+      "path": "frontend/public/illustrations/ingredients/broccoli.webp",
+      "prompt": "Use case: stylized-concept. One standalone ingredient or household item icon for a premium French grocery app. Subject: one broccoli head. Soft hand-painted gouache and colored pencil editorial illustration, muted natural pastel colors, fine paper grain and soft shadow. Warm ivory background #F8F7F2, square composition, centered subject occupying 65% of frame, generous margins. Recognizable at 48px. No text, no letters, no labels, no logos, no border, no collage. This is one isolated item illustration matching a coherent pastel food library."
+    },
+    {
+      "id": "cauliflower",
+      "subject": "one cauliflower head",
+      "path": "frontend/public/illustrations/ingredients/cauliflower.webp",
+      "prompt": "Use case: stylized-concept. Single isolated ingredient or household item illustration for a premium French grocery app. Subject: one cauliflower head. Soft hand-painted gouache and colored pencil, muted natural pastel colors, fine paper grain, subtle soft shadow. Warm ivory background #F8F7F2. Square centered composition, subject occupies 65%, generous clear margins, recognizable at 48px. No text, no letters, no logos, no border, no collage. One standalone item matching a cohesive pastel ingredient library."
+    },
+    {
+      "id": "mushroom",
+      "subject": "three button mushrooms",
+      "path": "frontend/public/illustrations/ingredients/mushroom.webp",
+      "prompt": "Use case: stylized-concept. Single isolated ingredient or household item illustration for a premium French grocery app. Subject: three button mushrooms. Soft hand-painted gouache and colored pencil, muted natural pastel colors, fine paper grain, subtle soft shadow. Warm ivory background #F8F7F2. Square centered composition, subject occupies 65%, generous clear margins, recognizable at 48px. No text, no letters, no logos, no border, no collage. One standalone item matching a cohesive pastel ingredient library."
+    },
+    {
+      "id": "bell-pepper",
+      "subject": "one red bell pepper",
+      "path": "frontend/public/illustrations/ingredients/bell-pepper.webp",
+      "prompt": "Use case: stylized-concept. Single isolated ingredient or household item illustration for a premium French grocery app. Subject: one red bell pepper. Soft hand-painted gouache and colored pencil, muted natural pastel colors, fine paper grain, subtle soft shadow. Warm ivory background #F8F7F2. Square centered composition, subject occupies 65%, generous clear margins, recognizable at 48px. No text, no letters, no logos, no border, no collage. One standalone item matching a cohesive pastel ingredient library."
+    },
+    {
+      "id": "eggplant",
+      "subject": "one purple eggplant",
+      "path": "frontend/public/illustrations/ingredients/eggplant.webp",
+      "prompt": "Use case: stylized-concept. Single isolated ingredient or household item illustration for a premium French grocery app. Subject: one purple eggplant. Soft hand-painted gouache and colored pencil, muted natural pastel colors, fine paper grain, subtle soft shadow. Warm ivory background #F8F7F2. Square centered composition, subject occupies 65%, generous clear margins, recognizable at 48px. No text, no letters, no logos, no border, no collage. One standalone item matching a cohesive pastel ingredient library."
+    },
+    {
+      "id": "green-beans",
+      "subject": "a handful of green beans",
+      "path": "frontend/public/illustrations/ingredients/green-beans.webp",
+      "prompt": "Use case: stylized-concept. Single isolated ingredient or household item illustration for a premium French grocery app. Subject: a handful of green beans. Soft hand-painted gouache and colored pencil, muted natural pastel colors, fine paper grain, subtle soft shadow. Warm ivory background #F8F7F2. Square centered composition, subject occupies 65%, generous clear margins, recognizable at 48px. No text, no letters, no logos, no border, no collage. One standalone item matching a cohesive pastel ingredient library."
+    },
+    {
+      "id": "peas",
+      "subject": "green peas and an open pod",
+      "path": "frontend/public/illustrations/ingredients/peas.webp",
+      "prompt": "Use case: stylized-concept. Single isolated ingredient or household item illustration for a premium French grocery app. Subject: green peas and an open pod. Soft hand-painted gouache and colored pencil, muted natural pastel colors, fine paper grain, subtle soft shadow. Warm ivory background #F8F7F2. Square centered composition, subject occupies 65%, generous clear margins, recognizable at 48px. No text, no letters, no logos, no border, no collage. One standalone item matching a cohesive pastel ingredient library."
+    },
+    {
+      "id": "lettuce",
+      "subject": "one green lettuce",
+      "path": "frontend/public/illustrations/ingredients/lettuce.webp",
+      "prompt": "Use case: stylized-concept. Single isolated ingredient or household item illustration for a premium French grocery app. Subject: one green lettuce. Soft hand-painted gouache and colored pencil, muted natural pastel colors, fine paper grain, subtle soft shadow. Warm ivory background #F8F7F2. Square centered composition, subject occupies 65%, generous clear margins, recognizable at 48px. No text, no letters, no logos, no border, no collage. One standalone item matching a cohesive pastel ingredient library."
+    },
+    {
+      "id": "cucumber",
+      "subject": "one cucumber and a slice",
+      "path": "frontend/public/illustrations/ingredients/cucumber.webp",
+      "prompt": "Use case: stylized-concept. Single isolated ingredient or household item illustration for a premium French grocery app. Subject: one cucumber and a slice. Soft hand-painted gouache and colored pencil, muted natural pastel colors, fine paper grain, subtle soft shadow. Warm ivory background #F8F7F2. Square centered composition, subject occupies 65%, generous clear margins, recognizable at 48px. No text, no letters, no logos, no border, no collage. One standalone item matching a cohesive pastel ingredient library."
+    },
+    {
+      "id": "avocado",
+      "subject": "one halved avocado with stone",
+      "path": "frontend/public/illustrations/ingredients/avocado.webp",
+      "prompt": "Use case: stylized-concept. Single isolated ingredient or household item illustration for a premium French grocery app. Subject: one halved avocado with stone. Soft hand-painted gouache and colored pencil, muted natural pastel colors, fine paper grain, subtle soft shadow. Warm ivory background #F8F7F2. Square centered composition, subject occupies 65%, generous clear margins, recognizable at 48px. No text, no letters, no logos, no border, no collage. One standalone item matching a cohesive pastel ingredient library."
+    },
+    {
+      "id": "lemon",
+      "subject": "one yellow lemon",
+      "path": "frontend/public/illustrations/ingredients/lemon.webp",
+      "prompt": "Use case: stylized-concept. Single isolated ingredient or household item illustration for a premium French grocery app. Subject: one yellow lemon. Soft hand-painted gouache and colored pencil, muted natural pastel colors, fine paper grain, subtle soft shadow. Warm ivory background #F8F7F2. Square centered composition, subject occupies 65%, generous clear margins, recognizable at 48px. No text, no letters, no logos, no border, no collage. One standalone item matching a cohesive pastel ingredient library."
+    },
+    {
+      "id": "apple",
+      "subject": "one red apple",
+      "path": "frontend/public/illustrations/ingredients/apple.webp",
+      "prompt": "Use case: stylized-concept. Single isolated ingredient or household item illustration for a premium French grocery app. Subject: one red apple. Soft hand-painted gouache and colored pencil, muted natural pastel colors, fine paper grain, subtle soft shadow. Warm ivory background #F8F7F2. Square centered composition, subject occupies 65%, generous clear margins, recognizable at 48px. No text, no letters, no logos, no border, no collage. One standalone item matching a cohesive pastel ingredient library."
+    },
+    {
+      "id": "banana",
+      "subject": "a small bunch of bananas",
+      "path": "frontend/public/illustrations/ingredients/banana.webp",
+      "prompt": "Use case: stylized-concept. Single isolated ingredient or household item illustration for a premium French grocery app. Subject: a small bunch of bananas. Soft hand-painted gouache and colored pencil, muted natural pastel colors, fine paper grain, subtle soft shadow. Warm ivory background #F8F7F2. Square centered composition, subject occupies 65%, generous clear margins, recognizable at 48px. No text, no letters, no logos, no border, no collage. One standalone item matching a cohesive pastel ingredient library."
+    },
+    {
+      "id": "pear",
+      "subject": "one green pear",
+      "path": "frontend/public/illustrations/ingredients/pear.webp",
+      "prompt": "Use case: stylized-concept. Single isolated ingredient or household item illustration for a premium French grocery app. Subject: one green pear. Soft hand-painted gouache and colored pencil, muted natural pastel colors, fine paper grain, subtle soft shadow. Warm ivory background #F8F7F2. Square centered composition, subject occupies 65%, generous clear margins, recognizable at 48px. No text, no letters, no logos, no border, no collage. One standalone item matching a cohesive pastel ingredient library."
+    },
+    {
+      "id": "orange",
+      "subject": "one orange and a cut half",
+      "path": "frontend/public/illustrations/ingredients/orange.webp",
+      "prompt": "Use case: stylized-concept. Single isolated ingredient or household item illustration for a premium French grocery app. Subject: one orange and a cut half. Soft hand-painted gouache and colored pencil, muted natural pastel colors, fine paper grain, subtle soft shadow. Warm ivory background #F8F7F2. Square centered composition, subject occupies 65%, generous clear margins, recognizable at 48px. No text, no letters, no logos, no border, no collage. One standalone item matching a cohesive pastel ingredient library."
+    },
+    {
+      "id": "strawberry",
+      "subject": "three strawberries",
+      "path": "frontend/public/illustrations/ingredients/strawberry.webp",
+      "prompt": "Use case: stylized-concept. Single isolated ingredient or household item illustration for a premium French grocery app. Subject: three strawberries. Soft hand-painted gouache and colored pencil, muted natural pastel colors, fine paper grain, subtle soft shadow. Warm ivory background #F8F7F2. Square centered composition, subject occupies 65%, generous clear margins, recognizable at 48px. No text, no letters, no logos, no border, no collage. One standalone item matching a cohesive pastel ingredient library."
+    },
+    {
+      "id": "lentils",
+      "subject": "a small bowl of green lentils",
+      "path": "frontend/public/illustrations/ingredients/lentils.webp",
+      "prompt": "Use case: stylized-concept. Single isolated ingredient or household item illustration for a premium French grocery app. Subject: a small bowl of green lentils. Soft hand-painted gouache and colored pencil, muted natural pastel colors, fine paper grain, subtle soft shadow. Warm ivory background #F8F7F2. Square centered composition, subject occupies 65%, generous clear margins, recognizable at 48px. No text, no letters, no logos, no border, no collage. One standalone item matching a cohesive pastel ingredient library."
+    },
+    {
+      "id": "chickpeas",
+      "subject": "a small bowl of cooked chickpeas",
+      "path": "frontend/public/illustrations/ingredients/chickpeas.webp",
+      "prompt": "Use case: stylized-concept. Single isolated ingredient or household item illustration for a premium French grocery app. Subject: a small bowl of cooked chickpeas. Soft hand-painted gouache and colored pencil, muted natural pastel colors, fine paper grain, subtle soft shadow. Warm ivory background #F8F7F2. Square centered composition, subject occupies 65%, generous clear margins, recognizable at 48px. No text, no letters, no logos, no border, no collage. One standalone item matching a cohesive pastel ingredient library."
+    },
+    {
+      "id": "kidney-beans",
+      "subject": "a small bowl of red kidney beans",
+      "path": "frontend/public/illustrations/ingredients/kidney-beans.webp",
+      "prompt": "Use case: stylized-concept. Single isolated ingredient or household item illustration for a premium French grocery app. Subject: a small bowl of red kidney beans. Soft hand-painted gouache and colored pencil, muted natural pastel colors, fine paper grain, subtle soft shadow. Warm ivory background #F8F7F2. Square centered composition, subject occupies 65%, generous clear margins, recognizable at 48px. No text, no letters, no logos, no border, no collage. One standalone item matching a cohesive pastel ingredient library."
+    },
+    {
+      "id": "rice",
+      "subject": "a small bowl of uncooked white rice",
+      "path": "frontend/public/illustrations/ingredients/rice.webp",
+      "prompt": "Use case: stylized-concept. Single isolated ingredient or household item illustration for a premium French grocery app. Subject: a small bowl of uncooked white rice. Soft hand-painted gouache and colored pencil, muted natural pastel colors, fine paper grain, subtle soft shadow. Warm ivory background #F8F7F2. Square centered composition, subject occupies 65%, generous clear margins, recognizable at 48px. No text, no letters, no logos, no border, no collage. One standalone item matching a cohesive pastel ingredient library."
+    },
+    {
+      "id": "pasta",
+      "subject": "a handful of dry penne pasta",
+      "path": "frontend/public/illustrations/ingredients/pasta.webp",
+      "prompt": "Use case: stylized-concept. Single isolated ingredient or household item illustration for a premium French grocery app. Subject: a handful of dry penne pasta. Soft hand-painted gouache and colored pencil, muted natural pastel colors, fine paper grain, subtle soft shadow. Warm ivory background #F8F7F2. Square centered composition, subject occupies 65%, generous clear margins, recognizable at 48px. No text, no letters, no logos, no border, no collage. One standalone item matching a cohesive pastel ingredient library."
+    },
+    {
+      "id": "couscous",
+      "subject": "a small bowl of dry fine couscous semolina",
+      "path": "frontend/public/illustrations/ingredients/couscous.webp",
+      "prompt": "Use case: stylized-concept. Single isolated ingredient or household item illustration for a premium French grocery app. Subject: a small bowl of dry fine couscous semolina. Soft hand-painted gouache and colored pencil, muted natural pastel colors, fine paper grain, subtle soft shadow. Warm ivory background #F8F7F2. Square centered composition, subject occupies 65%, generous clear margins, recognizable at 48px. No text, no letters, no logos, no border, no collage. One standalone item matching a cohesive pastel ingredient library."
+    },
+    {
+      "id": "quinoa",
+      "subject": "a small bowl of quinoa grains",
+      "path": "frontend/public/illustrations/ingredients/quinoa.webp",
+      "prompt": "Use case: stylized-concept. Single isolated ingredient or household item illustration for a premium French grocery app. Subject: a small bowl of quinoa grains. Soft hand-painted gouache and colored pencil, muted natural pastel colors, fine paper grain, subtle soft shadow. Warm ivory background #F8F7F2. Square centered composition, subject occupies 65%, generous clear margins, recognizable at 48px. No text, no letters, no logos, no border, no collage. One standalone item matching a cohesive pastel ingredient library."
+    },
+    {
+      "id": "flour",
+      "subject": "a plain unbranded flour paper bag with a small mound of flour",
+      "path": "frontend/public/illustrations/ingredients/flour.webp",
+      "prompt": "Use case: stylized-concept. Single isolated ingredient or household item illustration for a premium French grocery app. Subject: a plain unbranded flour paper bag with a small mound of flour. Soft hand-painted gouache and colored pencil, muted natural pastel colors, fine paper grain, subtle soft shadow. Warm ivory background #F8F7F2. Square centered composition, subject occupies 65%, generous clear margins, recognizable at 48px. No text, no letters, no logos, no border, no collage. One standalone item matching a cohesive pastel ingredient library."
+    },
+    {
+      "id": "oats",
+      "subject": "a small bowl of oat flakes",
+      "path": "frontend/public/illustrations/ingredients/oats.webp",
+      "prompt": "Use case: stylized-concept. Single isolated ingredient or household item illustration for a premium French grocery app. Subject: a small bowl of oat flakes. Soft hand-painted gouache and colored pencil, muted natural pastel colors, fine paper grain, subtle soft shadow. Warm ivory background #F8F7F2. Square centered composition, subject occupies 65%, generous clear margins, recognizable at 48px. No text, no letters, no logos, no border, no collage. One standalone item matching a cohesive pastel ingredient library."
+    },
+    {
+      "id": "bread",
+      "subject": "a rustic bread loaf and a slice",
+      "path": "frontend/public/illustrations/ingredients/bread.webp",
+      "prompt": "Use case: stylized-concept. Single isolated ingredient or household item illustration for a premium French grocery app. Subject: a rustic bread loaf and a slice. Soft hand-painted gouache and colored pencil, muted natural pastel colors, fine paper grain, subtle soft shadow. Warm ivory background #F8F7F2. Square centered composition, subject occupies 65%, generous clear margins, recognizable at 48px. No text, no letters, no logos, no border, no collage. One standalone item matching a cohesive pastel ingredient library."
+    },
+    {
+      "id": "tortilla",
+      "subject": "a stack of soft wheat tortillas",
+      "path": "frontend/public/illustrations/ingredients/tortilla.webp",
+      "prompt": "Use case: stylized-concept. One isolated ingredient or household item illustration for a premium French grocery app. Subject: a stack of soft wheat tortillas. Soft hand-painted gouache and colored pencil editorial illustration, muted natural pastel colors, fine paper texture, subtle soft shadow. Warm ivory background #F8F7F2. Square, centered, 65% subject size, generous margins, recognizable at 48px. No text, no letters, no logos, no border, no collage. One item, coherent pastel ingredient library."
+    },
+    {
+      "id": "sugar",
+      "subject": "a small bowl of white sugar",
+      "path": "frontend/public/illustrations/ingredients/sugar.webp",
+      "prompt": "Use case: stylized-concept. One isolated ingredient or household item illustration for a premium French grocery app. Subject: a small bowl of white sugar. Soft hand-painted gouache and colored pencil editorial illustration, muted natural pastel colors, fine paper texture, subtle soft shadow. Warm ivory background #F8F7F2. Square, centered, 65% subject size, generous margins, recognizable at 48px. No text, no letters, no logos, no border, no collage. One item, coherent pastel ingredient library."
+    },
+    {
+      "id": "chocolate",
+      "subject": "a few squares of dark chocolate",
+      "path": "frontend/public/illustrations/ingredients/chocolate.webp",
+      "prompt": "Use case: stylized-concept. One isolated ingredient or household item illustration for a premium French grocery app. Subject: a few squares of dark chocolate. Soft hand-painted gouache and colored pencil editorial illustration, muted natural pastel colors, fine paper texture, subtle soft shadow. Warm ivory background #F8F7F2. Square, centered, 65% subject size, generous margins, recognizable at 48px. No text, no letters, no logos, no border, no collage. One item, coherent pastel ingredient library."
+    },
+    {
+      "id": "egg",
+      "subject": "two eggs and one cracked egg",
+      "path": "frontend/public/illustrations/ingredients/egg.webp",
+      "prompt": "Use case: stylized-concept. One isolated ingredient or household item illustration for a premium French grocery app. Subject: two eggs and one cracked egg. Soft hand-painted gouache and colored pencil editorial illustration, muted natural pastel colors, fine paper texture, subtle soft shadow. Warm ivory background #F8F7F2. Square, centered, 65% subject size, generous margins, recognizable at 48px. No text, no letters, no logos, no border, no collage. One item, coherent pastel ingredient library."
+    },
+    {
+      "id": "milk",
+      "subject": "a glass milk bottle",
+      "path": "frontend/public/illustrations/ingredients/milk.webp",
+      "prompt": "Use case: stylized-concept. One isolated ingredient or household item illustration for a premium French grocery app. Subject: a glass milk bottle. Soft hand-painted gouache and colored pencil editorial illustration, muted natural pastel colors, fine paper texture, subtle soft shadow. Warm ivory background #F8F7F2. Square, centered, 65% subject size, generous margins, recognizable at 48px. No text, no letters, no logos, no border, no collage. One item, coherent pastel ingredient library."
+    },
+    {
+      "id": "butter",
+      "subject": "a pat of yellow butter on plain parchment",
+      "path": "frontend/public/illustrations/ingredients/butter.webp",
+      "prompt": "Use case: stylized-concept. One isolated ingredient or household item illustration for a premium French grocery app. Subject: a pat of yellow butter on plain parchment. Soft hand-painted gouache and colored pencil editorial illustration, muted natural pastel colors, fine paper texture, subtle soft shadow. Warm ivory background #F8F7F2. Square, centered, 65% subject size, generous margins, recognizable at 48px. No text, no letters, no logos, no border, no collage. One item, coherent pastel ingredient library."
+    },
+    {
+      "id": "cream",
+      "subject": "a small ceramic jug of white cream",
+      "path": "frontend/public/illustrations/ingredients/cream.webp",
+      "prompt": "Use case: stylized-concept. One isolated ingredient or household item illustration for a premium French grocery app. Subject: a small ceramic jug of white cream. Soft hand-painted gouache and colored pencil editorial illustration, muted natural pastel colors, fine paper texture, subtle soft shadow. Warm ivory background #F8F7F2. Square, centered, 65% subject size, generous margins, recognizable at 48px. No text, no letters, no logos, no border, no collage. One item, coherent pastel ingredient library."
+    },
+    {
+      "id": "yogurt",
+      "subject": "a plain open yogurt pot",
+      "path": "frontend/public/illustrations/ingredients/yogurt.webp",
+      "prompt": "Use case: stylized-concept. One isolated ingredient or household item illustration for a premium French grocery app. Subject: a plain open yogurt pot. Soft hand-painted gouache and colored pencil editorial illustration, muted natural pastel colors, fine paper texture, subtle soft shadow. Warm ivory background #F8F7F2. Square, centered, 65% subject size, generous margins, recognizable at 48px. No text, no letters, no logos, no border, no collage. One item, coherent pastel ingredient library."
+    },
+    {
+      "id": "fresh-cheese",
+      "subject": "a small bowl of fromage blanc",
+      "path": "frontend/public/illustrations/ingredients/fresh-cheese.webp",
+      "prompt": "Use case: stylized-concept. One isolated ingredient or household item illustration for a premium French grocery app. Subject: a small bowl of fromage blanc. Soft hand-painted gouache and colored pencil editorial illustration, muted natural pastel colors, fine paper texture, subtle soft shadow. Warm ivory background #F8F7F2. Square, centered, 65% subject size, generous margins, recognizable at 48px. No text, no letters, no logos, no border, no collage. One item, coherent pastel ingredient library."
+    },
+    {
+      "id": "mozzarella",
+      "subject": "one mozzarella ball and a cut slice",
+      "path": "frontend/public/illustrations/ingredients/mozzarella.webp",
+      "prompt": "Use case: stylized-concept. One isolated ingredient or household item illustration for a premium French grocery app. Subject: one mozzarella ball and a cut slice. Soft hand-painted gouache and colored pencil editorial illustration, muted natural pastel colors, fine paper texture, subtle soft shadow. Warm ivory background #F8F7F2. Square, centered, 65% subject size, generous margins, recognizable at 48px. No text, no letters, no logos, no border, no collage. One item, coherent pastel ingredient library."
+    },
+    {
+      "id": "grated-cheese",
+      "subject": "a small mound of grated emmental cheese",
+      "path": "frontend/public/illustrations/ingredients/grated-cheese.webp",
+      "prompt": "Use case: stylized-concept. One isolated ingredient or household item illustration for a premium French grocery app. Subject: a small mound of grated emmental cheese. Soft hand-painted gouache and colored pencil editorial illustration, muted natural pastel colors, fine paper texture, subtle soft shadow. Warm ivory background #F8F7F2. Square, centered, 65% subject size, generous margins, recognizable at 48px. No text, no letters, no logos, no border, no collage. One item, coherent pastel ingredient library."
+    },
+    {
+      "id": "parmesan",
+      "subject": "a wedge of parmesan",
+      "path": "frontend/public/illustrations/ingredients/parmesan.webp",
+      "prompt": "Use case: stylized-concept. One isolated ingredient or household item illustration for a premium French grocery app. Subject: a wedge of parmesan. Soft hand-painted gouache and colored pencil editorial illustration, muted natural pastel colors, fine paper texture, subtle soft shadow. Warm ivory background #F8F7F2. Square, centered, 65% subject size, generous margins, recognizable at 48px. No text, no letters, no logos, no border, no collage. One item, coherent pastel ingredient library."
+    },
+    {
+      "id": "feta",
+      "subject": "a cube of feta cheese",
+      "path": "frontend/public/illustrations/ingredients/feta.webp",
+      "prompt": "Use case: stylized-concept. One isolated ingredient or household item illustration for a premium French grocery app. Subject: a cube of feta cheese. Soft hand-painted gouache and colored pencil editorial illustration, muted natural pastel colors, fine paper texture, subtle soft shadow. Warm ivory background #F8F7F2. Square, centered, 65% subject size, generous margins, recognizable at 48px. No text, no letters, no logos, no border, no collage. One item, coherent pastel ingredient library."
+    },
+    {
+      "id": "chicken",
+      "subject": "one raw chicken breast",
+      "path": "frontend/public/illustrations/ingredients/chicken.webp",
+      "prompt": "Use case: stylized-concept. One isolated ingredient or household item illustration for a premium French grocery app. Subject: one raw chicken breast. Soft hand-painted gouache and colored pencil editorial illustration, muted natural pastel colors, fine paper texture, subtle soft shadow. Warm ivory background #F8F7F2. Square, centered, 65% subject size, generous margins, recognizable at 48px. No text, no letters, no logos, no border, no collage. One item, coherent pastel ingredient library."
+    },
+    {
+      "id": "turkey",
+      "subject": "one raw turkey cutlet",
+      "path": "frontend/public/illustrations/ingredients/turkey.webp",
+      "prompt": "Use case: stylized-concept. One isolated ingredient or household item illustration for a premium French grocery app. Subject: one raw turkey cutlet. Soft hand-painted gouache and colored pencil editorial illustration, muted natural pastel colors, fine paper texture, subtle soft shadow. Warm ivory background #F8F7F2. Square, centered, 65% subject size, generous margins, recognizable at 48px. No text, no letters, no logos, no border, no collage. One item, coherent pastel ingredient library."
+    },
+    {
+      "id": "beef",
+      "subject": "a portion of raw ground beef",
+      "path": "frontend/public/illustrations/ingredients/beef.webp",
+      "prompt": "Use case: stylized-concept. One isolated ingredient or household item illustration for a premium French grocery app. Subject: a portion of raw ground beef. Soft hand-painted gouache and colored pencil editorial illustration, muted natural pastel colors, fine paper texture, subtle soft shadow. Warm ivory background #F8F7F2. Square, centered, 65% subject size, generous margins, recognizable at 48px. No text, no letters, no logos, no border, no collage. One item, coherent pastel ingredient library."
+    },
+    {
+      "id": "ham",
+      "subject": "two folded slices of cooked ham",
+      "path": "frontend/public/illustrations/ingredients/ham.webp",
+      "prompt": "Use case: stylized-concept. One isolated ingredient or household item illustration for a premium French grocery app. Subject: two folded slices of cooked ham. Soft hand-painted gouache and colored pencil editorial illustration, muted natural pastel colors, fine paper texture, subtle soft shadow. Warm ivory background #F8F7F2. Square, centered, 65% subject size, generous margins, recognizable at 48px. No text, no letters, no logos, no border, no collage. One item, coherent pastel ingredient library."
+    },
+    {
+      "id": "bacon",
+      "subject": "a few bacon lardons",
+      "path": "frontend/public/illustrations/ingredients/bacon.webp",
+      "prompt": "Use case: stylized-concept. One isolated ingredient or household item illustration for a premium French grocery app. Subject: a few bacon lardons. Soft hand-painted gouache and colored pencil editorial illustration, muted natural pastel colors, fine paper texture, subtle soft shadow. Warm ivory background #F8F7F2. Square, centered, 65% subject size, generous margins, recognizable at 48px. No text, no letters, no logos, no border, no collage. One item, coherent pastel ingredient library."
+    },
+    {
+      "id": "salmon",
+      "subject": "a raw salmon fillet",
+      "path": "frontend/public/illustrations/ingredients/salmon.webp",
+      "prompt": "Use case: stylized-concept. One isolated ingredient or household item illustration for a premium French grocery app. Subject: a raw salmon fillet. Soft hand-painted gouache and colored pencil editorial illustration, muted natural pastel colors, fine paper texture, subtle soft shadow. Warm ivory background #F8F7F2. Square, centered, 65% subject size, generous margins, recognizable at 48px. No text, no letters, no logos, no border, no collage. One item, coherent pastel ingredient library."
+    },
+    {
+      "id": "tuna",
+      "subject": "an open unbranded tin of tuna",
+      "path": "frontend/public/illustrations/ingredients/tuna.webp",
+      "prompt": "Use case: stylized-concept. One isolated ingredient or household item illustration for a premium French grocery app. Subject: an open unbranded tin of tuna. Soft hand-painted gouache and colored pencil editorial illustration, muted natural pastel colors, fine paper texture, subtle soft shadow. Warm ivory background #F8F7F2. Square, centered, 65% subject size, generous margins, recognizable at 48px. No text, no letters, no logos, no border, no collage. One item, coherent pastel ingredient library."
+    },
+    {
+      "id": "white-fish",
+      "subject": "a cod fillet",
+      "path": "frontend/public/illustrations/ingredients/white-fish.webp",
+      "prompt": "Use case: stylized-concept. One isolated ingredient or household item illustration for a premium French grocery app. Subject: a cod fillet. Soft hand-painted gouache and colored pencil editorial illustration, muted natural pastel colors, fine paper texture, subtle soft shadow. Warm ivory background #F8F7F2. Square, centered, 65% subject size, generous margins, recognizable at 48px. No text, no letters, no logos, no border, no collage. One item, coherent pastel ingredient library."
+    },
+    {
+      "id": "sardines",
+      "subject": "an open unbranded tin of sardines",
+      "path": "frontend/public/illustrations/ingredients/sardines.webp",
+      "prompt": "Use case: stylized-concept. One isolated ingredient or household item illustration for a premium French grocery app. Subject: an open unbranded tin of sardines. Soft hand-painted gouache and colored pencil editorial illustration, muted natural pastel colors, fine paper texture, subtle soft shadow. Warm ivory background #F8F7F2. Square, centered, 65% subject size, generous margins, recognizable at 48px. No text, no letters, no logos, no border, no collage. One item, coherent pastel ingredient library."
+    },
+    {
+      "id": "tofu",
+      "subject": "a block of tofu and two cubes",
+      "path": "frontend/public/illustrations/ingredients/tofu.webp",
+      "prompt": "Use case: stylized-concept. One isolated ingredient or household item illustration for a premium French grocery app. Subject: a block of tofu and two cubes. Soft hand-painted gouache and colored pencil editorial illustration, muted natural pastel colors, fine paper texture, subtle soft shadow. Warm ivory background #F8F7F2. Square, centered, 65% subject size, generous margins, recognizable at 48px. No text, no letters, no logos, no border, no collage. One item, coherent pastel ingredient library."
+    },
+    {
+      "id": "olive-oil",
+      "subject": "a clear small bottle of olive oil with an olive sprig",
+      "path": "frontend/public/illustrations/ingredients/olive-oil.webp",
+      "prompt": "Use case: stylized-concept. One isolated ingredient or household item illustration for a premium French grocery app. Subject: a clear small bottle of olive oil with an olive sprig. Soft hand-painted gouache and colored pencil editorial illustration, muted natural pastel colors, fine paper texture, subtle soft shadow. Warm ivory background #F8F7F2. Square, centered, 65% subject size, generous margins, recognizable at 48px. No text, no letters, no logos, no border, no collage. One item, coherent pastel ingredient library."
+    },
+    {
+      "id": "vinegar",
+      "subject": "a plain small bottle of amber vinegar",
+      "path": "frontend/public/illustrations/ingredients/vinegar.webp",
+      "prompt": "Use case: stylized-concept. One isolated ingredient or household item illustration for a premium French grocery app. Subject: a plain small bottle of amber vinegar. Soft hand-painted gouache and colored pencil editorial illustration, muted natural pastel colors, fine paper texture, subtle soft shadow. Warm ivory background #F8F7F2. Square, centered, 65% subject size, generous margins, recognizable at 48px. No text, no letters, no logos, no border, no collage. One item, coherent pastel ingredient library."
+    },
+    {
+      "id": "mustard",
+      "subject": "a small unbranded jar of yellow mustard",
+      "path": "frontend/public/illustrations/ingredients/mustard.webp",
+      "prompt": "Use case: stylized-concept. One isolated ingredient or household item illustration for a premium French grocery app. Subject: a small unbranded jar of yellow mustard. Soft hand-painted gouache and colored pencil editorial illustration, muted natural pastel colors, fine paper texture, subtle soft shadow. Warm ivory background #F8F7F2. Square, centered, 65% subject size, generous margins, recognizable at 48px. No text, no letters, no logos, no border, no collage. One item, coherent pastel ingredient library."
+    },
+    {
+      "id": "soy-sauce",
+      "subject": "a plain small dark soy sauce bottle",
+      "path": "frontend/public/illustrations/ingredients/soy-sauce.webp",
+      "prompt": "Use case: stylized-concept. One isolated ingredient or household item illustration for a premium French grocery app. Subject: a plain small dark soy sauce bottle. Soft hand-painted gouache and colored pencil editorial illustration, muted natural pastel colors, fine paper texture, subtle soft shadow. Warm ivory background #F8F7F2. Square, centered, 65% subject size, generous margins, recognizable at 48px. No text, no letters, no logos, no border, no collage. One item, coherent pastel ingredient library."
+    },
+    {
+      "id": "tomato-sauce",
+      "subject": "a plain glass jar of red tomato sauce",
+      "path": "frontend/public/illustrations/ingredients/tomato-sauce.webp",
+      "prompt": "Use case: stylized-concept. One isolated ingredient or household item illustration for a premium French grocery app. Subject: a plain glass jar of red tomato sauce. Soft hand-painted gouache and colored pencil editorial illustration, muted natural pastel colors, fine paper texture, subtle soft shadow. Warm ivory background #F8F7F2. Square, centered, 65% subject size, generous margins, recognizable at 48px. No text, no letters, no logos, no border, no collage. One item, coherent pastel ingredient library."
+    },
+    {
+      "id": "coconut-milk",
+      "subject": "an unbranded open can of coconut milk with a coconut half",
+      "path": "frontend/public/illustrations/ingredients/coconut-milk.webp",
+      "prompt": "Use case: stylized-concept. One isolated ingredient or household item illustration for a premium French grocery app. Subject: an unbranded open can of coconut milk with a coconut half. Soft hand-painted gouache and colored pencil editorial illustration, muted natural pastel colors, fine paper texture, subtle soft shadow. Warm ivory background #F8F7F2. Square, centered, 65% subject size, generous margins, recognizable at 48px. No text, no letters, no logos, no border, no collage. One item, coherent pastel ingredient library."
+    },
+    {
+      "id": "stock-cube",
+      "subject": "two vegetable bouillon cubes",
+      "path": "frontend/public/illustrations/ingredients/stock-cube.webp",
+      "prompt": "Use case: stylized-concept. One isolated ingredient or household item illustration for a premium French grocery app. Subject: two vegetable bouillon cubes. Soft hand-painted gouache and colored pencil editorial illustration, muted natural pastel colors, fine paper texture, subtle soft shadow. Warm ivory background #F8F7F2. Square, centered, 65% subject size, generous margins, recognizable at 48px. No text, no letters, no logos, no border, no collage. One item, coherent pastel ingredient library."
+    },
+    {
+      "id": "spice",
+      "subject": "a small bowl of golden curry powder",
+      "path": "frontend/public/illustrations/ingredients/spice.webp",
+      "prompt": "Use case: stylized-concept. One isolated ingredient or household item illustration for a premium French grocery app. Subject: a small bowl of golden curry powder. Soft hand-painted gouache and colored pencil editorial illustration, muted natural pastel colors, fine paper texture, subtle soft shadow. Warm ivory background #F8F7F2. Square, centered, 65% subject size, generous margins, recognizable at 48px. No text, no letters, no logos, no border, no collage. One item, coherent pastel ingredient library."
+    },
+    {
+      "id": "salt",
+      "subject": "a small bowl of white salt",
+      "path": "frontend/public/illustrations/ingredients/salt.webp",
+      "prompt": "Use case: stylized-concept. One isolated ingredient or household item illustration for a premium French grocery app. Subject: a small bowl of white salt. Soft hand-painted gouache and colored pencil editorial illustration, muted natural pastel colors, fine paper texture, subtle soft shadow. Warm ivory background #F8F7F2. Square, centered, 65% subject size, generous margins, recognizable at 48px. No text, no letters, no logos, no border, no collage. One item, coherent pastel ingredient library."
+    },
+    {
+      "id": "pepper",
+      "subject": "a few black peppercorns with a plain pepper shaker",
+      "path": "frontend/public/illustrations/ingredients/pepper.webp",
+      "prompt": "Use case: stylized-concept. One isolated ingredient or household item illustration for a premium French grocery app. Subject: a few black peppercorns with a plain pepper shaker. Soft hand-painted gouache and colored pencil editorial illustration, muted natural pastel colors, fine paper texture, subtle soft shadow. Warm ivory background #F8F7F2. Square, centered, 65% subject size, generous margins, recognizable at 48px. No text, no letters, no logos, no border, no collage. One item, coherent pastel ingredient library."
+    },
+    {
+      "id": "herbs",
+      "subject": "a small bunch of parsley and basil herbs",
+      "path": "frontend/public/illustrations/ingredients/herbs.webp",
+      "prompt": "Use case: stylized-concept. One isolated ingredient or household item illustration for a premium French grocery app. Subject: a small bunch of parsley and basil herbs. Soft hand-painted gouache and colored pencil editorial illustration, muted natural pastel colors, fine paper texture, subtle soft shadow. Warm ivory background #F8F7F2. Square, centered, 65% subject size, generous margins, recognizable at 48px. No text, no letters, no logos, no border, no collage. One item, coherent pastel ingredient library."
+    },
+    {
+      "id": "nuts",
+      "subject": "a few walnuts and almonds",
+      "path": "frontend/public/illustrations/ingredients/nuts.webp",
+      "prompt": "Use case: stylized-concept. One isolated ingredient or household item illustration for a premium French grocery app. Subject: a few walnuts and almonds. Soft hand-painted gouache and colored pencil editorial illustration, muted natural pastel colors, fine paper texture, subtle soft shadow. Warm ivory background #F8F7F2. Square, centered, 65% subject size, generous margins, recognizable at 48px. No text, no letters, no logos, no border, no collage. One item, coherent pastel ingredient library."
+    },
+    {
+      "id": "honey",
+      "subject": "a plain small jar of golden honey",
+      "path": "frontend/public/illustrations/ingredients/honey.webp",
+      "prompt": "Use case: stylized-concept. One isolated ingredient or household item illustration for a premium French grocery app. Subject: a plain small jar of golden honey. Soft hand-painted gouache and colored pencil editorial illustration, muted natural pastel colors, fine paper texture, subtle soft shadow. Warm ivory background #F8F7F2. Square, centered, 65% subject size, generous margins, recognizable at 48px. No text, no letters, no logos, no border, no collage. One item, coherent pastel ingredient library."
+    },
+    {
+      "id": "pizza",
+      "subject": "a simple frozen pizza in a plain unbranded open box",
+      "path": "frontend/public/illustrations/ingredients/pizza.webp",
+      "prompt": "Use case: stylized-concept. One isolated ingredient or household item illustration for a premium French grocery app. Subject: a simple frozen pizza in a plain unbranded open box. Soft hand-painted gouache and colored pencil editorial illustration, muted natural pastel colors, fine paper texture, subtle soft shadow. Warm ivory background #F8F7F2. Square, centered, 65% subject size, generous margins, recognizable at 48px. No text, no letters, no logos, no border, no collage. One item, coherent pastel ingredient library."
+    },
+    {
+      "id": "cat-litter",
+      "subject": "an unbranded pastel sage bag of cat litter with a simple drawn cat silhouette and small litter scoop",
+      "path": "frontend/public/illustrations/ingredients/cat-litter.webp",
+      "prompt": "Use case: stylized-concept. One isolated ingredient or household item illustration for a premium French grocery app. Subject: an unbranded pastel sage bag of cat litter with a simple drawn cat silhouette and small litter scoop. Soft hand-painted gouache and colored pencil editorial illustration, muted natural pastel colors, fine paper texture, subtle soft shadow. Warm ivory background #F8F7F2. Square, centered, 65% subject size, generous margins, recognizable at 48px. No text, no letters, no logos, no border, no collage. One item, coherent pastel ingredient library."
+    },
+    {
+      "id": "pet-food",
+      "subject": "an unbranded pastel peach bag of dry pet kibble and a small food bowl",
+      "path": "frontend/public/illustrations/ingredients/pet-food.webp",
+      "prompt": "Use case: stylized-concept. One isolated ingredient or household item illustration for a premium French grocery app. Subject: an unbranded pastel peach bag of dry pet kibble and a small food bowl. Soft hand-painted gouache and colored pencil editorial illustration, muted natural pastel colors, fine paper texture, subtle soft shadow. Warm ivory background #F8F7F2. Square, centered, 65% subject size, generous margins, recognizable at 48px. No text, no letters, no logos, no border, no collage. One item, coherent pastel ingredient library."
+    },
+    {
+      "id": "soap",
+      "subject": "a pale pink bar of hand soap",
+      "path": "frontend/public/illustrations/ingredients/soap.webp",
+      "prompt": "Use case: stylized-concept. One isolated ingredient or household item illustration for a premium French grocery app. Subject: a pale pink bar of hand soap. Soft hand-painted gouache and colored pencil editorial illustration, muted natural pastel colors, fine paper texture, subtle soft shadow. Warm ivory background #F8F7F2. Square, centered, 65% subject size, generous margins, recognizable at 48px. No text, no letters, no logos, no border, no collage. One item, coherent pastel ingredient library."
+    },
+    {
+      "id": "dish-soap",
+      "subject": "an unbranded pastel sage dishwashing liquid bottle",
+      "path": "frontend/public/illustrations/ingredients/dish-soap.webp",
+      "prompt": "Use case: stylized-concept. One isolated ingredient or household item illustration for a premium French grocery app. Subject: an unbranded pastel sage dishwashing liquid bottle. Soft hand-painted gouache and colored pencil editorial illustration, muted natural pastel colors, fine paper texture, subtle soft shadow. Warm ivory background #F8F7F2. Square, centered, 65% subject size, generous margins, recognizable at 48px. No text, no letters, no logos, no border, no collage. One item, coherent pastel ingredient library."
+    },
+    {
+      "id": "detergent",
+      "subject": "an unbranded pastel lavender laundry detergent bottle",
+      "path": "frontend/public/illustrations/ingredients/detergent.webp",
+      "prompt": "Use case: stylized-concept. One isolated ingredient or household item illustration for a premium French grocery app. Subject: an unbranded pastel lavender laundry detergent bottle. Soft hand-painted gouache and colored pencil editorial illustration, muted natural pastel colors, fine paper texture, subtle soft shadow. Warm ivory background #F8F7F2. Square, centered, 65% subject size, generous margins, recognizable at 48px. No text, no letters, no logos, no border, no collage. One item, coherent pastel ingredient library."
+    },
+    {
+      "id": "toilet-paper",
+      "subject": "two toilet paper rolls",
+      "path": "frontend/public/illustrations/ingredients/toilet-paper.webp",
+      "prompt": "Use case: stylized-concept. One isolated ingredient or household item illustration for a premium French grocery app. Subject: two toilet paper rolls. Soft hand-painted gouache and colored pencil editorial illustration, muted natural pastel colors, fine paper texture, subtle soft shadow. Warm ivory background #F8F7F2. Square, centered, 65% subject size, generous margins, recognizable at 48px. No text, no letters, no logos, no border, no collage. One item, coherent pastel ingredient library."
+    },
+    {
+      "id": "cleaner",
+      "subject": "an unbranded pastel blue household spray cleaner bottle",
+      "path": "frontend/public/illustrations/ingredients/cleaner.webp",
+      "prompt": "Use case: stylized-concept. One isolated ingredient or household item illustration for a premium French grocery app. Subject: an unbranded pastel blue household spray cleaner bottle. Soft hand-painted gouache and colored pencil editorial illustration, muted natural pastel colors, fine paper texture, subtle soft shadow. Warm ivory background #F8F7F2. Square, centered, 65% subject size, generous margins, recognizable at 48px. No text, no letters, no logos, no border, no collage. One item, coherent pastel ingredient library."
+    },
+    {
+      "id": "sponge",
+      "subject": "two kitchen cleaning sponges",
+      "path": "frontend/public/illustrations/ingredients/sponge.webp",
+      "prompt": "Use case: stylized-concept. One isolated ingredient or household item illustration for a premium French grocery app. Subject: two kitchen cleaning sponges. Soft hand-painted gouache and colored pencil editorial illustration, muted natural pastel colors, fine paper texture, subtle soft shadow. Warm ivory background #F8F7F2. Square, centered, 65% subject size, generous margins, recognizable at 48px. No text, no letters, no logos, no border, no collage. One item, coherent pastel ingredient library."
+    }
+  ]
+}

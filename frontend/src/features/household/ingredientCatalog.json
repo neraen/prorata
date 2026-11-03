@@ -1,0 +1,664 @@
+[
+  {
+    "id": "tomato",
+    "aliases": [
+      "Tomate",
+      "Tomates"
+    ],
+    "aisle": "produce"
+  },
+  {
+    "id": "carrot",
+    "aliases": [
+      "Carotte",
+      "Carottes",
+      "Carotte cuite",
+      "Carottes cuites"
+    ],
+    "aisle": "produce"
+  },
+  {
+    "id": "zucchini",
+    "aliases": [
+      "Courgette",
+      "Courgettes"
+    ],
+    "aisle": "produce"
+  },
+  {
+    "id": "potato",
+    "aliases": [
+      "Pomme de terre",
+      "Pommes de terre"
+    ],
+    "aisle": "produce"
+  },
+  {
+    "id": "sweet-potato",
+    "aliases": [
+      "Patate douce",
+      "Patates douces"
+    ],
+    "aisle": "produce"
+  },
+  {
+    "id": "onion",
+    "aliases": [
+      "Oignon",
+      "Oignons"
+    ],
+    "aisle": "produce"
+  },
+  {
+    "id": "garlic",
+    "aliases": [
+      "Ail",
+      "Gousse d'ail",
+      "Gousses d'ail"
+    ],
+    "aisle": "produce"
+  },
+  {
+    "id": "leek",
+    "aliases": [
+      "Poireau",
+      "Poireaux"
+    ],
+    "aisle": "produce"
+  },
+  {
+    "id": "spinach",
+    "aliases": [
+      "Épinard",
+      "Épinards"
+    ],
+    "aisle": "produce"
+  },
+  {
+    "id": "broccoli",
+    "aliases": [
+      "Brocoli",
+      "Brocolis"
+    ],
+    "aisle": "produce"
+  },
+  {
+    "id": "cauliflower",
+    "aliases": [
+      "Chou-fleur",
+      "Choux-fleurs"
+    ],
+    "aisle": "produce"
+  },
+  {
+    "id": "mushroom",
+    "aliases": [
+      "Champignon",
+      "Champignons",
+      "Champignons de Paris"
+    ],
+    "aisle": "produce"
+  },
+  {
+    "id": "bell-pepper",
+    "aliases": [
+      "Poivron",
+      "Poivrons",
+      "Poivron rouge"
+    ],
+    "aisle": "produce"
+  },
+  {
+    "id": "eggplant",
+    "aliases": [
+      "Aubergine",
+      "Aubergines"
+    ],
+    "aisle": "produce"
+  },
+  {
+    "id": "green-beans",
+    "aliases": [
+      "Haricots verts",
+      "Haricot vert"
+    ],
+    "aisle": "produce"
+  },
+  {
+    "id": "peas",
+    "aliases": [
+      "Petits pois",
+      "Petit pois"
+    ],
+    "aisle": "produce"
+  },
+  {
+    "id": "lettuce",
+    "aliases": [
+      "Salade",
+      "Salade verte",
+      "Laitue"
+    ],
+    "aisle": "produce"
+  },
+  {
+    "id": "cucumber",
+    "aliases": [
+      "Concombre",
+      "Concombres"
+    ],
+    "aisle": "produce"
+  },
+  {
+    "id": "avocado",
+    "aliases": [
+      "Avocat",
+      "Avocats"
+    ],
+    "aisle": "produce"
+  },
+  {
+    "id": "lemon",
+    "aliases": [
+      "Citron",
+      "Citrons"
+    ],
+    "aisle": "produce"
+  },
+  {
+    "id": "apple",
+    "aliases": [
+      "Pomme",
+      "Pommes"
+    ],
+    "aisle": "produce"
+  },
+  {
+    "id": "banana",
+    "aliases": [
+      "Banane",
+      "Bananes"
+    ],
+    "aisle": "produce"
+  },
+  {
+    "id": "pear",
+    "aliases": [
+      "Poire",
+      "Poires"
+    ],
+    "aisle": "produce"
+  },
+  {
+    "id": "orange",
+    "aliases": [
+      "Orange",
+      "Oranges"
+    ],
+    "aisle": "produce"
+  },
+  {
+    "id": "strawberry",
+    "aliases": [
+      "Fraise",
+      "Fraises"
+    ],
+    "aisle": "produce"
+  },
+  {
+    "id": "lentils",
+    "aliases": [
+      "Lentilles",
+      "Lentilles vertes"
+    ],
+    "aisle": "pantry"
+  },
+  {
+    "id": "chickpeas",
+    "aliases": [
+      "Pois chiches",
+      "Pois chiches cuits"
+    ],
+    "aisle": "pantry"
+  },
+  {
+    "id": "kidney-beans",
+    "aliases": [
+      "Haricots rouges",
+      "Haricots rouges cuits"
+    ],
+    "aisle": "pantry"
+  },
+  {
+    "id": "rice",
+    "aliases": [
+      "Riz",
+      "Riz blanc",
+      "Riz basmati"
+    ],
+    "aisle": "pantry"
+  },
+  {
+    "id": "pasta",
+    "aliases": [
+      "Pâtes",
+      "Penne",
+      "Spaghetti"
+    ],
+    "aisle": "pantry"
+  },
+  {
+    "id": "couscous",
+    "aliases": [
+      "Semoule",
+      "Couscous",
+      "Semoule de couscous"
+    ],
+    "aisle": "pantry"
+  },
+  {
+    "id": "quinoa",
+    "aliases": [
+      "Quinoa"
+    ],
+    "aisle": "pantry"
+  },
+  {
+    "id": "flour",
+    "aliases": [
+      "Farine",
+      "Farine de blé"
+    ],
+    "aisle": "pantry"
+  },
+  {
+    "id": "oats",
+    "aliases": [
+      "Flocons d'avoine",
+      "Avoine"
+    ],
+    "aisle": "pantry"
+  },
+  {
+    "id": "bread",
+    "aliases": [
+      "Pain",
+      "Pain de campagne"
+    ],
+    "aisle": "pantry"
+  },
+  {
+    "id": "tortilla",
+    "aliases": [
+      "Tortilla",
+      "Tortillas",
+      "Wraps"
+    ],
+    "aisle": "pantry"
+  },
+  {
+    "id": "sugar",
+    "aliases": [
+      "Sucre",
+      "Sucre blanc"
+    ],
+    "aisle": "pantry"
+  },
+  {
+    "id": "chocolate",
+    "aliases": [
+      "Chocolat",
+      "Chocolat noir"
+    ],
+    "aisle": "pantry"
+  },
+  {
+    "id": "egg",
+    "aliases": [
+      "Œuf",
+      "Œufs",
+      "Oeuf",
+      "Oeufs"
+    ],
+    "aisle": "dairy"
+  },
+  {
+    "id": "milk",
+    "aliases": [
+      "Lait",
+      "Lait entier",
+      "Lait demi-écrémé"
+    ],
+    "aisle": "dairy"
+  },
+  {
+    "id": "butter",
+    "aliases": [
+      "Beurre"
+    ],
+    "aisle": "dairy"
+  },
+  {
+    "id": "cream",
+    "aliases": [
+      "Crème",
+      "Crème fraîche",
+      "Crème fraîche épaisse",
+      "Crème liquide"
+    ],
+    "aisle": "dairy"
+  },
+  {
+    "id": "yogurt",
+    "aliases": [
+      "Yaourt",
+      "Yaourt nature",
+      "Yaourts"
+    ],
+    "aisle": "dairy"
+  },
+  {
+    "id": "fresh-cheese",
+    "aliases": [
+      "Fromage blanc"
+    ],
+    "aisle": "dairy"
+  },
+  {
+    "id": "mozzarella",
+    "aliases": [
+      "Mozzarella"
+    ],
+    "aisle": "dairy"
+  },
+  {
+    "id": "grated-cheese",
+    "aliases": [
+      "Emmental",
+      "Emmental râpé",
+      "Fromage râpé"
+    ],
+    "aisle": "dairy"
+  },
+  {
+    "id": "parmesan",
+    "aliases": [
+      "Parmesan"
+    ],
+    "aisle": "dairy"
+  },
+  {
+    "id": "feta",
+    "aliases": [
+      "Feta"
+    ],
+    "aisle": "dairy"
+  },
+  {
+    "id": "chicken",
+    "aliases": [
+      "Poulet",
+      "Blanc de poulet",
+      "Filet de poulet",
+      "Filets de poulet"
+    ],
+    "aisle": "meat"
+  },
+  {
+    "id": "turkey",
+    "aliases": [
+      "Dinde",
+      "Escalope de dinde"
+    ],
+    "aisle": "meat"
+  },
+  {
+    "id": "beef",
+    "aliases": [
+      "Bœuf",
+      "Bœuf haché",
+      "Viande hachée",
+      "Steak haché"
+    ],
+    "aisle": "meat"
+  },
+  {
+    "id": "ham",
+    "aliases": [
+      "Jambon",
+      "Jambon blanc"
+    ],
+    "aisle": "meat"
+  },
+  {
+    "id": "bacon",
+    "aliases": [
+      "Lardons",
+      "Lardons fumés"
+    ],
+    "aisle": "meat"
+  },
+  {
+    "id": "salmon",
+    "aliases": [
+      "Saumon",
+      "Pavé de saumon",
+      "Filet de saumon"
+    ],
+    "aisle": "meat"
+  },
+  {
+    "id": "tuna",
+    "aliases": [
+      "Thon",
+      "Thon en conserve",
+      "Thon au naturel"
+    ],
+    "aisle": "meat"
+  },
+  {
+    "id": "white-fish",
+    "aliases": [
+      "Cabillaud",
+      "Filet de cabillaud",
+      "Poisson blanc"
+    ],
+    "aisle": "meat"
+  },
+  {
+    "id": "sardines",
+    "aliases": [
+      "Sardines",
+      "Sardines en conserve"
+    ],
+    "aisle": "meat"
+  },
+  {
+    "id": "tofu",
+    "aliases": [
+      "Tofu",
+      "Tofu nature"
+    ],
+    "aisle": "dairy"
+  },
+  {
+    "id": "olive-oil",
+    "aliases": [
+      "Huile d'olive"
+    ],
+    "aisle": "pantry"
+  },
+  {
+    "id": "vinegar",
+    "aliases": [
+      "Vinaigre",
+      "Vinaigre de cidre"
+    ],
+    "aisle": "pantry"
+  },
+  {
+    "id": "mustard",
+    "aliases": [
+      "Moutarde"
+    ],
+    "aisle": "pantry"
+  },
+  {
+    "id": "soy-sauce",
+    "aliases": [
+      "Sauce soja"
+    ],
+    "aisle": "pantry"
+  },
+  {
+    "id": "tomato-sauce",
+    "aliases": [
+      "Coulis de tomates",
+      "Sauce tomate",
+      "Tomates concassées",
+      "Concentré de tomates"
+    ],
+    "aisle": "pantry"
+  },
+  {
+    "id": "coconut-milk",
+    "aliases": [
+      "Lait de coco"
+    ],
+    "aisle": "pantry"
+  },
+  {
+    "id": "stock-cube",
+    "aliases": [
+      "Bouillon",
+      "Bouillon de légumes",
+      "Bouillon cube"
+    ],
+    "aisle": "pantry"
+  },
+  {
+    "id": "spice",
+    "aliases": [
+      "Curry",
+      "Curry en poudre"
+    ],
+    "aisle": "pantry"
+  },
+  {
+    "id": "salt",
+    "aliases": [
+      "Sel",
+      "Sel fin"
+    ],
+    "aisle": "pantry"
+  },
+  {
+    "id": "pepper",
+    "aliases": [
+      "Poivre",
+      "Poivre noir"
+    ],
+    "aisle": "pantry"
+  },
+  {
+    "id": "herbs",
+    "aliases": [
+      "Persil",
+      "Basilic",
+      "Herbes fraîches"
+    ],
+    "aisle": "produce"
+  },
+  {
+    "id": "nuts",
+    "aliases": [
+      "Noix",
+      "Amandes",
+      "Noix et amandes"
+    ],
+    "aisle": "pantry"
+  },
+  {
+    "id": "honey",
+    "aliases": [
+      "Miel"
+    ],
+    "aisle": "pantry"
+  },
+  {
+    "id": "pizza",
+    "aliases": [
+      "Pizza",
+      "Pizza surgelée"
+    ],
+    "aisle": "frozen"
+  },
+  {
+    "id": "cat-litter",
+    "aliases": [
+      "Litière",
+      "Litière du chat",
+      "Litière pour chat"
+    ],
+    "aisle": "pets"
+  },
+  {
+    "id": "pet-food",
+    "aliases": [
+      "Croquettes",
+      "Croquettes du chat",
+      "Croquettes pour chat",
+      "Croquettes pour chien"
+    ],
+    "aisle": "pets"
+  },
+  {
+    "id": "soap",
+    "aliases": [
+      "Savon",
+      "Savon pour les mains"
+    ],
+    "aisle": "household"
+  },
+  {
+    "id": "dish-soap",
+    "aliases": [
+      "Liquide vaisselle",
+      "Produit vaisselle"
+    ],
+    "aisle": "household"
+  },
+  {
+    "id": "detergent",
+    "aliases": [
+      "Lessive",
+      "Lessive liquide"
+    ],
+    "aisle": "household"
+  },
+  {
+    "id": "toilet-paper",
+    "aliases": [
+      "Papier toilette",
+      "Papier WC"
+    ],
+    "aisle": "household"
+  },
+  {
+    "id": "cleaner",
+    "aliases": [
+      "Nettoyant",
+      "Nettoyant ménager",
+      "Produit ménager"
+    ],
+    "aisle": "household"
+  },
+  {
+    "id": "sponge",
+    "aliases": [
+      "Éponge",
+      "Éponges"
+    ],
+    "aisle": "household"
+  }
+]

@@ -1,5 +1,6 @@
 import type { FoodReference } from './household'
 export interface FoodSuggestion { name: string; reference: FoodReference | null; origin?: 'common' | 'personal' | 'openfoodfacts' }
+export const HOUSEHOLD_ITEMS: FoodSuggestion[] = ['Litière du chat', 'Croquettes pour chat', 'Croquettes pour chien', 'Savon', 'Liquide vaisselle', 'Lessive', 'Papier toilette', 'Nettoyant ménager', 'Éponges'].map((name) => ({ name, reference: null, origin: 'common' }))
 // A small offline starter list. The full vocabulary comes from suggestions,
 // not from asking each household to create its own food dictionary.
 export const COMMON_FOODS = [

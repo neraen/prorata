@@ -4,13 +4,14 @@ import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { apiFetch } from '../../lib/api'
 import { useAuthStore, useCoupleStore, useToastStore } from '../../lib/stores'
 
-export const AISLES = { produce: 'Fruits & légumes', meat: 'Viande & poisson', dairy: 'Frais & crémerie', pantry: 'Épicerie', frozen: 'Surgelés', other: 'Autres' } as const
+export const FOOD_AISLES = { produce: 'Fruits & légumes', meat: 'Viande & poisson', dairy: 'Frais & crémerie', pantry: 'Épicerie', frozen: 'Surgelés', other: 'Autres' } as const
+export const AISLES = { ...FOOD_AISLES, household: 'Maison & hygiène', pets: 'Animaux' } as const
 export const UNITS = { g: 'g', kg: 'kg', ml: 'ml', l: 'l', piece: 'pièce(s)' } as const
 export interface FoodReference { source: 'openfoodfacts'; type: 'ingredient' | 'product'; id: string }
 export interface Ingredient { name: string; quantity: number; unit: keyof typeof UNITS; aisle: keyof typeof AISLES; reference?: FoodReference | null }
 export interface Recipe { id: string; title: string; servings: number; minutes: number; instructions: string; estimatedCostCents?: number | null; authorId: number; source: 'personal' | 'app'; ingredients: Ingredient[]; category?: MealCategory | null; categorySource?: 'user' | 'ai' | 'catalog' | null; categoryReason?: string | null; illustration?: string; origin?: 'ai' | null; equipment?: string[] }
 export interface Meal { date: string; slot: 'lunch' | 'dinner'; recipeId: string; servings: number; category?: MealCategory | null }
-export interface ShoppingItem extends Ingredient { id: string; checked: boolean; week: string | null }
+export interface ShoppingItem extends Ingredient { quantities?: { quantity: number; unit: Ingredient['unit'] }[]; id: string; checked: boolean; week: string | null }
 export interface Household { recipes: Recipe[]; meals: Record<string, Meal>; shopping: ShoppingItem[]; revision: number; foodProfile?: FoodProfile }
 interface Command { id: string; type: string; payload: Record<string, unknown> }
 const listeners = new Set<() => void>()
@@ -119,4 +120,4 @@ export function weekDates(offset = 0) {
 export function displayDate(date: string, options: Intl.DateTimeFormatOptions = { weekday: 'long', day: 'numeric' }) {
   return new Date(`${date}T12:00:00`).toLocaleDateString('fr-FR', options)
 }
-export function quantityLabel(item: Ingredient) { return `${Number(item.quantity.toFixed(3)).toLocaleString('fr-FR')} ${UNITS[item.unit]}` }
+export function quantityLabel(item: Ingredient & { quantities?: { quantity: number; unit: Ingredient['unit'] }[] }) { return (item.quantities ?? [item]).map((part) => `${Number(part.quantity.toFixed(3)).toLocaleString('fr-FR')} ${UNITS[part.unit]}`).join(' + ') }

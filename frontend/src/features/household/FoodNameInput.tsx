@@ -4,9 +4,10 @@ import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { apiFetch } from '../../lib/api'
 import { useAuthStore, useCoupleStore } from '../../lib/stores'
 import type { FoodReference, Household } from './household'
-import { COMMON_FOODS, foldFood, type FoodSuggestion } from './foodCatalog'
+import { IngredientIllustration } from './IngredientIllustration'
+import { COMMON_FOODS, HOUSEHOLD_ITEMS, foldFood, type FoodSuggestion } from './foodCatalog'
 
-export function FoodNameInput({ value, onChange, label, placeholder = 'Un aliment…', required = true }: { value: string; onChange: (name: string, reference: FoodReference | null) => void; label: string; placeholder?: string; required?: boolean }) {
+export function FoodNameInput({ value, onChange, label, placeholder = 'Un aliment…', required = true, includeHousehold = false }: { value: string; onChange: (name: string, reference: FoodReference | null) => void; label: string; placeholder?: string; required?: boolean; includeHousehold?: boolean }) {
   const [open, setOpen] = useState(false)
   const [portalHost, setPortalHost] = useState<Element | null>(null)
   const id = useId()
@@ -77,7 +78,7 @@ export function FoodNameInput({ value, onChange, label, placeholder = 'Un alimen
   const own = [...(household?.foodProfile?.pantry ?? []), ...(household?.recipes.flatMap((r) => r.ingredients) ?? [])].map((i): FoodSuggestion => ({ name: i.name, reference: i.reference ?? null, origin: 'personal' }))
   const needle = foldFood(value)
   const unique = new Map<string, FoodSuggestion>()
-  for (const item of [...own, ...COMMON_FOODS]) {
+  for (const item of [...own, ...COMMON_FOODS, ...(includeHousehold ? HOUSEHOLD_ITEMS : [])]) {
     const key = foldFood(item.name)
     if ((!needle || key.includes(needle)) && !unique.has(key)) unique.set(key, item)
   }
@@ -97,7 +98,7 @@ export function FoodNameInput({ value, onChange, label, placeholder = 'Un alimen
     }} className="min-h-12 w-full rounded-[14px] border border-border bg-surface px-3 text-base text-ink" />
     {open && portalHost && createPortal(<div ref={panelRef} className="fixed z-[100] overflow-y-auto overscroll-contain touch-pan-y rounded-[16px] border bg-surface p-2 shadow-lg" onPointerDown={(e) => { if ((e.target as HTMLElement).closest('button')) e.preventDefault() }} onBlur={(e) => { if (!e.currentTarget.contains(e.relatedTarget) && e.relatedTarget !== inputRef.current) setOpen(false) }}>
       <button type="button" onClick={() => setOpen(false)} className="mb-1 min-h-11 w-full rounded-xl bg-bg px-2 text-left text-xs font-bold">{value.trim() ? `Garder « ${value.trim()} »` : 'Continuer sans suggestion'}</button>
-      <ul id={`${id}-options`} role="listbox" aria-label="Suggestions d’aliments">{suggestions.map((item, index) => <li key={foldFood(item.name)} role="option" aria-selected={index === active} id={`${id}-${index}`}><button type="button" onClick={() => select(item)} className={`flex min-h-11 w-full items-center justify-between gap-2 rounded-xl px-2 text-left text-sm ${index === active ? 'bg-positive-bg' : ''}`}><span>{item.name}</span><span className="shrink-0 text-[10px] text-muted">{item.origin === 'openfoodfacts' ? 'Open Food Facts' : item.origin === 'personal' ? 'Vos aliments' : 'Courant'}</span></button></li>)}</ul>
+      <ul id={`${id}-options`} role="listbox" aria-label={includeHousehold ? 'Suggestions d’articles' : 'Suggestions d’aliments'}>{suggestions.map((item, index) => <li key={foldFood(item.name)} role="option" aria-selected={index === active} id={`${id}-${index}`}><button type="button" onClick={() => select(item)} className={`flex min-h-11 w-full items-center justify-between gap-2 rounded-xl px-2 text-left text-sm ${index === active ? 'bg-positive-bg' : ''}`}><span className="flex min-w-0 items-center gap-2"><IngredientIllustration name={item.name} className="h-10 w-10" /><span>{item.name}</span></span><span className="shrink-0 text-[10px] text-muted">{item.origin === 'openfoodfacts' ? 'Open Food Facts' : item.origin === 'personal' ? 'Vos aliments' : 'Courant'}</span></button></li>)}</ul>
       {suggestions.length === 0 && <p className="p-2 text-xs text-muted">Tu peux garder ce nom librement.</p>}
       {canSearch && <button type="button" disabled={remote.isFetching} onClick={() => { setRemoteQuery(value.trim()); if (remoteQuery === value.trim()) void remote.refetch() }} className="min-h-11 w-full rounded-xl bg-positive-bg px-2 text-xs font-bold text-positive">{remote.isFetching ? 'Recherche…' : 'Chercher dans Open Food Facts'}</button>}
       {foldFood(remoteQuery) === needle && (remote.isError || remote.data?.available === false) && <p role="status" className="p-2 text-xs text-muted">Open Food Facts est indisponible. La saisie libre reste disponible.</p>}
