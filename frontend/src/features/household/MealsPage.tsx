@@ -50,10 +50,13 @@ export function MealsPage() {
   const userId = useAuthStore((s) => s.user?.id)
   const showToast = useToastStore((s) => s.show)
   const navigate = useNavigate()
-  const [tab, setTab] = useState<'week' | 'recipes'>('week')
   const [searchParams] = useSearchParams()
+  const [tab, setTab] = useState<'week' | 'recipes'>(() => searchParams.get('tab') === 'recipes' ? 'recipes' : 'week')
+  const requestedDate = searchParams.get('date')
+  const requestedSlot = searchParams.get('slot')
+  const directSlot = requestedDate && /^\d{4}-\d{2}-\d{2}$/.test(requestedDate) && ['lunch', 'dinner'].includes(requestedSlot ?? '') ? { date: requestedDate, slot: requestedSlot as Meal['slot'] } : null
   const [offset, setOffset] = useState(() => {
-    const requested = searchParams.get('week')
+    const requested = searchParams.get('week') ?? requestedDate
     if (!requested || !/^\d{4}-\d{2}-\d{2}$/.test(requested)) return 0
     const day = new Date(`${requested}T12:00:00`); day.setDate(day.getDate() - (day.getDay() + 6) % 7)
     return Math.round((Date.UTC(day.getFullYear(), day.getMonth(), day.getDate()) - Date.parse(`${weekDates()[0]}T00:00:00Z`)) / 604800000)
@@ -63,20 +66,23 @@ export function MealsPage() {
   const [search, setSearch] = useState('')
   const [editing, setEditing] = useState<Recipe | 'new' | null>(null)
   const [recipeToPlan, setRecipeToPlan] = useState<Recipe | null>(null)
-  const [viewing, setViewing] = useState<Recipe | null>(null)
-  const [slot, setSlot] = useState<{ date: string; slot: Meal['slot'] } | null>(null)
+  const [viewingId, setViewingId] = useState<string | null>(() => searchParams.get('view'))
+  const viewing = data?.recipes.find((recipe) => recipe.id === viewingId) ?? null
+  function setViewing(recipe: Recipe | null) { setViewingId(recipe?.id ?? null) }
+  const [slot, setSlot] = useState<{ date: string; slot: Meal['slot'] } | null>(directSlot)
   const [selected, setSelected] = useState('')
   const [portions, setPortions] = useState(2)
   const [busy, setBusy] = useState(false)
   const days = weekDates(offset)
   const recipes = data?.recipes ?? []
-  const selectedRecipe = recipes.find((recipe) => recipe.id === selected)
+  const effectiveSelected = selected || (slot ? data?.meals[`${slot.date}-${slot.slot}`]?.recipeId : '') || recipes[0]?.id || ''
+  const selectedRecipe = recipes.find((recipe) => recipe.id === effectiveSelected)
   const filtered = recipes.filter((r) => (categoryFilter === 'all' || r.category === categoryFilter) && r.title.toLocaleLowerCase('fr').includes(search.toLocaleLowerCase('fr')) && (source === 'all' || (source === 'app' ? r.source === 'app' : r.authorId === userId)))
   const count = Object.values(data?.meals ?? {}).filter((m) => days.includes(m.date)).length
   async function saveMeal(remove = false) {
     if (!slot) return
     setBusy(true)
-    try { await send('meal.set', { ...slot, recipeId: remove ? null : selected, servings: portions }); setSlot(null); setRecipeToPlan(null) }
+    try { await send('meal.set', { ...slot, recipeId: remove ? null : effectiveSelected, servings: portions }); setSlot(null); setRecipeToPlan(null) }
     catch { /* Error is shown by the shared command handler. */ }
     finally { setBusy(false) }
   }
@@ -115,8 +121,9 @@ export function MealsPage() {
       <div className="grid grid-cols-2 gap-3">{filtered.map((recipe) => <button type="button" key={recipe.id} onClick={() => setViewing(recipe)} className="overflow-hidden rounded-[20px] border bg-surface text-left transition-shadow hover:shadow-md"><RecipeIllustration recipe={recipe} className="aspect-[4/3] w-full" /><span className="grid gap-2 p-3"><span className="text-xs font-semibold text-positive">{recipe.category ? MEAL_CATEGORIES[recipe.category] : 'À classer'}</span><span className="min-h-11 text-sm font-extrabold leading-snug">{recipe.title}</span><span className="text-xs text-muted">{recipe.minutes} min · {recipe.servings} personnes</span>{recipe.source !== 'app' && <span className="text-xs text-muted">{recipe.authorId === userId ? 'Ma recette' : 'Recette partagée'}</span>}</span></button>)}</div>
       <p className="text-xs leading-relaxed text-muted">Le carnet signale une recette personnelle. L’assiette vide signale une recette sans image. Ces visuels génériques ne représentent pas les plats.</p>
     </>)}
+    {viewingId && data && !viewing && <Card className="grid gap-3"><p className="text-sm text-muted">Cette recette n’est plus disponible. Tu peux en choisir une autre.</p><Button onClick={() => { setViewingId(null); setTab('recipes') }}>Voir les recettes</Button></Card>}
     {editing && <HouseholdDialog title={editing === 'new' ? 'Créer une recette' : 'Modifier la recette'} onClose={() => setEditing(null)}><RecipeForm recipe={editing === 'new' ? undefined : editing} onClose={() => setEditing(null)} onSave={(payload) => send('recipe.save', payload)} /></HouseholdDialog>}
     {viewing && <HouseholdDialog title={viewing.title} onClose={() => setViewing(null)}><RecipeIllustration recipe={viewing} eager className="mb-2 h-48 w-full rounded-2xl" />{recipeVisual(viewing).generic && <p className="mb-4 text-center text-xs text-muted">{recipeVisual(viewing).label} : ne représente pas le plat.</p>}<p className="mb-4 text-sm text-muted">{viewing.minutes} min · Pour {viewing.servings} personnes</p><p className="mb-4 text-xs font-semibold text-positive">{viewing.category ? MEAL_CATEGORIES[viewing.category] : 'À classer'}{viewing.categorySource === 'ai' ? ' · Suggestion IA, modifiable' : ''}</p><details className="mb-4 rounded-xl border px-3"><summary className="min-h-11 cursor-pointer py-3 text-sm font-semibold">Modifier le type de ce plat</summary><RecipeCategoryEditor recipe={viewing} onSave={async (payload) => { await send('recipe.category', payload); setViewing(null) }} /></details><h3 className="mb-2 font-bold">Ingrédients</h3><ul className="mb-5 divide-y divide-border">{viewing.ingredients.map((i, index) => <li className="flex justify-between gap-3 py-2 text-sm" key={index}><span>{i.name}</span><span className="shrink-0 font-semibold">{quantityLabel(i)}</span></li>)}</ul><h3 className="mb-2 font-bold">Préparation</h3><p className="mb-5 whitespace-pre-wrap text-sm leading-relaxed text-muted">{viewing.instructions}</p><Button className="w-full" onClick={() => { setRecipeToPlan(viewing); setViewing(null); setTab('week'); requestAnimationFrame(() => { window.scrollTo({ top: 0, behavior: 'instant' }); document.getElementById('main-content')?.focus({ preventScroll: true }) }) }}>Planifier dans la semaine</Button>{viewing.authorId === userId && <Button variant="secondary" className="mt-2 w-full" onClick={() => { setEditing(viewing); setViewing(null) }}>Modifier ma recette</Button>}</HouseholdDialog>}
-    {slot && <HouseholdDialog title={`${displayDate(slot.date)} · ${slot.slot === 'lunch' ? 'Déjeuner' : 'Dîner'}`} onClose={() => setSlot(null)}><div className="flex flex-col gap-4">{recipeToPlan && data?.meals[`${slot.date}-${slot.slot}`] && <p className="rounded-xl bg-positive-bg p-3 text-sm">Ce repas est déjà prévu. Enregistrer remplacera le plat actuel par ta sélection.</p>}{recipes.length ? <><label className="grid gap-2 text-sm font-semibold">Le plat<select className={fieldClass} value={selected} onChange={(e) => setSelected(e.target.value)}>{recipes.map((r) => <option key={r.id} value={r.id}>{r.title}</option>)}</select></label>{selectedRecipe && <figure aria-label={`${recipeVisual(selectedRecipe).generic ? 'Visuel générique pour' : 'Illustration de'} ${selectedRecipe.title}`} className="overflow-hidden rounded-[20px] bg-bg"><RecipeIllustration recipe={selectedRecipe} eager showLabel={false} className="h-[min(32dvh,260px)] min-h-40 w-full" /><figcaption className="px-4 pb-3 text-center text-sm text-muted">{selectedRecipe.minutes} min{selectedRecipe.category ? ` · ${MEAL_CATEGORIES[selectedRecipe.category]}` : ''}<span className="mt-1 block text-xs">{recipeVisual(selectedRecipe).generic ? `${recipeVisual(selectedRecipe).label} : ne représente pas le plat` : 'Illustration du plat'}</span></figcaption></figure>}<label className="grid gap-2 text-sm font-semibold">Nombre de portions<input className={fieldClass} type="number" min={1} max={20} step={1} value={portions} onChange={(e) => setPortions(Number(e.target.value))} /></label><Button disabled={!selectedRecipe || !Number.isInteger(portions) || portions < 1 || portions > 20} isLoading={busy} onClick={() => void saveMeal()}>Enregistrer ce repas</Button></> : <><p className="text-sm text-muted">Commence par enregistrer une recette.</p><Button onClick={() => { setSlot(null); setEditing('new') }}>Créer une recette</Button></>}{data?.meals[`${slot.date}-${slot.slot}`] && <Button variant="danger" disabled={busy} onClick={() => void saveMeal(true)}>Retirer ce repas</Button>}</div></HouseholdDialog>}
+    {slot && <HouseholdDialog title={`${displayDate(slot.date)} · ${slot.slot === 'lunch' ? 'Déjeuner' : 'Dîner'}`} onClose={() => setSlot(null)}><div className="flex flex-col gap-4">{recipeToPlan && data?.meals[`${slot.date}-${slot.slot}`] && <p className="rounded-xl bg-positive-bg p-3 text-sm">Ce repas est déjà prévu. Enregistrer remplacera le plat actuel par ta sélection.</p>}{recipes.length ? <><label className="grid gap-2 text-sm font-semibold">Le plat<select className={fieldClass} value={effectiveSelected} onChange={(e) => setSelected(e.target.value)}>{recipes.map((r) => <option key={r.id} value={r.id}>{r.title}</option>)}</select></label>{selectedRecipe && <figure aria-label={`${recipeVisual(selectedRecipe).generic ? 'Visuel générique pour' : 'Illustration de'} ${selectedRecipe.title}`} className="overflow-hidden rounded-[20px] bg-bg"><RecipeIllustration recipe={selectedRecipe} eager showLabel={false} className="h-[min(32dvh,260px)] min-h-40 w-full" /><figcaption className="px-4 pb-3 text-center text-sm text-muted">{selectedRecipe.minutes} min{selectedRecipe.category ? ` · ${MEAL_CATEGORIES[selectedRecipe.category]}` : ''}<span className="mt-1 block text-xs">{recipeVisual(selectedRecipe).generic ? `${recipeVisual(selectedRecipe).label} : ne représente pas le plat` : 'Illustration du plat'}</span></figcaption></figure>}<label className="grid gap-2 text-sm font-semibold">Nombre de portions<input className={fieldClass} type="number" min={1} max={20} step={1} value={portions} onChange={(e) => setPortions(Number(e.target.value))} /></label><Button disabled={!selectedRecipe || !Number.isInteger(portions) || portions < 1 || portions > 20} isLoading={busy} onClick={() => void saveMeal()}>Enregistrer ce repas</Button></> : <><p className="text-sm text-muted">Commence par enregistrer une recette.</p><Button onClick={() => { setSlot(null); setEditing('new') }}>Créer une recette</Button></>}{data?.meals[`${slot.date}-${slot.slot}`] && <Button variant="danger" disabled={busy} onClick={() => void saveMeal(true)}>Retirer ce repas</Button>}</div></HouseholdDialog>}
   </div>
 }

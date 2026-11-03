@@ -1,3 +1,4 @@
+import { ScreenState } from '../../components/ui/ScreenState'
 import { useMemo, useState } from 'react'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import dayjs from 'dayjs'
@@ -32,13 +33,13 @@ export function TransfersPage() {
   const [transferredAt, setTransferredAt] = useState(() => defaultDateInMonth(year, month))
   const [note, setNote] = useState('')
 
-  const { data: transferList } = useQuery({
+  const { data: transferList, isPending: transfersPending, isError: transfersError, refetch: transfersRetry } = useQuery({
     queryKey: ['transfers'],
     queryFn: () => transfersApi.list(),
     enabled: !!couple,
   })
 
-  const { data: overall } = useQuery({
+  const { data: overall, isPending: overallPending, isError: overallError, refetch: overallRetry } = useQuery({
     queryKey: ['overall'],
     queryFn: () => monthsApi.overall(),
     enabled: !!couple,
@@ -102,6 +103,7 @@ export function TransfersPage() {
   })
 
   if (!couple || !user || !partner) return null
+  if (transfersPending || transfersError || overallPending || overallError) return <ScreenState title="Nos virements" loading={transfersPending || overallPending} onRetry={() => { void transfersRetry(); void overallRetry() }} />
 
   /** Standing position across every month, transfers already deducted. */
   const netSelf = overall?.members.find((m) => m.userId === user.id)?.netDeltaCents ?? 0
@@ -157,6 +159,7 @@ export function TransfersPage() {
           icon={<ArrowLeftRightIcon size={24} />}
           title="Aucun virement"
           description="Enregistre ici l'argent que vous vous êtes réellement versé."
+          action={<Button onClick={() => { resetForm(); setShowForm(true) }}>Enregistrer un virement</Button>}
         />
       ) : (
         days.map(([date, items]) => (

@@ -173,6 +173,7 @@ export function SettingsPage() {
         </Button>
       </Card>
 
+      <Card className="grid gap-2 bg-pastel-sage!"><h2 className="font-bold">Votre quotidien à deux</h2><Link to="/meals/preferences" className="flex min-h-11 items-center justify-between text-sm font-semibold">Goûts, allergies et équipement<ChevronRightIcon size={18} /></Link><Link to="/meals/stock" className="flex min-h-11 items-center justify-between text-sm font-semibold">Notre frigo et nos placards<ChevronRightIcon size={18} /></Link></Card>
       {/* Votre couple */}
       <Card radius="xl" padding="none" className="flex flex-col px-5 py-2">
         <div className="pt-3 pb-1 text-[13px] font-semibold uppercase tracking-[0.06em] text-muted">

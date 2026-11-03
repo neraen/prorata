@@ -1,12 +1,12 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Navigate, useNavigate } from 'react-router-dom'
 import { useAuthStore, useCoupleStore, useToastStore } from '../../lib/stores'
 import { Button, Input, Card } from '../../components/ui'
 
 export function SetupPage() {
   const navigate = useNavigate()
   const user = useAuthStore((s) => s.user)
-  const { createCouple, invitePartner, joinCouple, couple, inviteToken } = useCoupleStore()
+  const { createCouple, invitePartner, joinCouple, couple, inviteToken, fetchCouple, isLoading } = useCoupleStore()
   const showToast = useToastStore((s) => s.show)
 
   const [inviteCode, setInviteCode] = useState('')
@@ -17,6 +17,8 @@ export function SetupPage() {
   const [error, setError] = useState<string | null>(null)
 
   if (!user) return null
+  if (isLoading) return <p role="status" className="p-8 text-center text-muted">Chargement de votre espace…</p>
+  if (couple && couple.members.length >= 2) return <Navigate to="/" replace />
 
   // Couple created, waiting for partner or showing invite form
   if (couple && couple.members.length === 1) {
@@ -26,7 +28,7 @@ export function SetupPage() {
           <Card className="w-full max-w-md" padding="lg">
             <div className="text-center mb-8">
               <span className="text-5xl mb-4 block">🎉</span>
-              <h1 className="text-2xl font-bold text-ink mb-2">Invitation envoyée !</h1>
+              <h1 className="text-2xl font-bold text-ink mb-2">Invitation prête !</h1>
               <p className="text-muted">
                 Partagez ce code avec votre partenaire
               </p>
@@ -42,14 +44,15 @@ export function SetupPage() {
             <Button
               variant="secondary"
               className="w-full"
-              onClick={() => {
-                navigator.clipboard.writeText(inviteToken)
-                showToast('Code copié !', 'success')
+              onClick={async () => {
+                try { await navigator.clipboard.writeText(inviteToken); showToast('Code copié !', 'success') }
+                catch { showToast('Copie indisponible. Sélectionne le code ci-dessus pour le copier.', 'error') }
               }}
             >
               Copier le code
             </Button>
 
+            <Button className="mt-3 w-full" onClick={async () => { await fetchCouple(); if ((useCoupleStore.getState().couple?.members.length ?? 0) < 2) showToast("Ton partenaire n’a pas encore rejoint votre espace.", 'success') }}>Mon partenaire a rejoint</Button>
             <p className="text-center text-muted text-sm mt-6">
               En attente de votre partenaire...
             </p>
@@ -66,7 +69,7 @@ export function SetupPage() {
             <span className="text-5xl mb-4 block">💌</span>
             <h1 className="text-2xl font-bold text-ink mb-2">Inviter votre partenaire</h1>
             <p className="text-muted">
-              Entrez l'email de votre partenaire pour l'inviter
+              Entrez l'email de votre partenaire pour créer son code d’invitation
             </p>
           </div>
 

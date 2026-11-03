@@ -9,7 +9,7 @@ export function AuthLayout({ children }: AuthLayoutProps) {
   const isLogin = location.pathname === '/login'
 
   return (
-    <div className="flex min-h-screen flex-col bg-bg">
+    <div className="flex min-h-screen flex-col premium-hero">
       <header className="mx-auto flex h-16 w-full max-w-[480px] items-center justify-between px-5">
         <Link to="/login" className="text-[22px] font-extrabold tracking-[-0.03em] text-ink">
           Prorata

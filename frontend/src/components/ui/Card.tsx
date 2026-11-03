@@ -16,15 +16,15 @@ const paddingStyles: Record<NonNullable<CardProps['padding']>, string> = {
 
 const radiusStyles: Record<NonNullable<CardProps['radius']>, string> = {
   md: 'rounded-[16px]',
-  lg: 'rounded-[20px]',
-  xl: 'rounded-[24px]',
+  lg: 'rounded-[24px]',
+  xl: 'rounded-[28px]',
 }
 
 export const Card = forwardRef<HTMLDivElement, CardProps>(
   ({ padding = 'md', radius = 'lg', className = '', children, ...props }, ref) => (
     <div
       ref={ref}
-      className={`bg-surface border border-border ${radiusStyles[radius]} ${paddingStyles[padding]} ${className}`}
+      className={`bg-surface border border-border shadow-card ${radiusStyles[radius]} ${paddingStyles[padding]} ${className}`}
       {...props}
     >
       {children}

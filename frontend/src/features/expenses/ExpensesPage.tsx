@@ -1,3 +1,4 @@
+import { ScreenState } from '../../components/ui/ScreenState'
 import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
@@ -18,6 +19,7 @@ import {
   Chip,
   ChipDivider,
   EmptyState,
+  Button,
   MonthMenu,
 } from '../../components/ui'
 
@@ -33,7 +35,7 @@ export function ExpensesPage() {
   const [paidBy, setPaidBy] = useState<PaidByFilter>('all')
   const [category, setCategory] = useState<CategoryFilter>('all')
 
-  const { data: expenseList } = useQuery({
+  const { data: expenseList, isPending: expensesPending, isError: expensesError, refetch: expensesRetry } = useQuery({
     queryKey: ['expenses', year, month],
     queryFn: () => expensesApi.list(year, month),
     enabled: !!couple,
@@ -69,6 +71,7 @@ export function ExpensesPage() {
   }, [filtered])
 
   if (!couple || !user || !partner) return null
+  if (expensesPending || expensesError) return <ScreenState title="Nos dépenses" loading={expensesPending} onRetry={() => { void expensesRetry() }} />
 
   const isClosed = expenseList?.isClosed ?? false
   const visibleTotal = filtered.reduce((sum, expense) => sum + expense.amountCents, 0)
@@ -93,7 +96,7 @@ export function ExpensesPage() {
         </div>
       )}
 
-      {!isClosed && <Link to="/expenses/new" className="flex h-[52px] items-center justify-center rounded-[16px] bg-ink text-[15px] font-bold text-white">Ajouter une dépense</Link>}
+      {!isClosed && <Link to="/expenses/new" className="action-link">Ajouter une dépense</Link>}
 
       {/* Recherche */}
       <label className="flex h-12 items-center gap-2.5 rounded-[14px] border border-border bg-surface px-3.5">
@@ -152,9 +155,10 @@ export function ExpensesPage() {
           title={expenses.length === 0 ? 'Aucune dépense' : 'Aucun résultat'}
           description={
             expenses.length === 0
-              ? 'Ajoute la première dépense du mois pour commencer.'
+              ? (isClosed ? 'Ce mois est clôturé et ne contient aucune dépense.' : 'Ajoute la première dépense du mois pour commencer.')
               : 'Aucune dépense ne correspond à cette recherche.'
           }
+          action={expenses.length > 0 ? <Button variant="secondary" onClick={() => { setSearch(''); setCategory('all'); setPaidBy('all') }}>Effacer les filtres</Button> : isClosed ? <Link to="/budget" className="action-link">Voir le budget du mois</Link> : <Link to="/expenses/new" className="action-link">Ajouter ma première dépense</Link>}
         />
       ) : (
         days.map((day) => (

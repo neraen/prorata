@@ -8,7 +8,7 @@ import { Button, Input, Card } from '../../components/ui'
 import { AuthLayout } from '../../components/AuthLayout'
 
 const schema = z.object({
-  email: z.string().email('Email invalide'),
+  email: z.string().trim().email('Email invalide'),
   password: z.string().min(1, 'Mot de passe requis'),
 })
 
@@ -47,7 +47,7 @@ export function LoginPage() {
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           {error && (
-            <div className="p-3 rounded-[12px] bg-negative-bg text-negative text-sm text-center">
+            <div role="alert" className="p-3 rounded-[12px] bg-negative-bg text-negative text-sm text-center">
               {error}
             </div>
           )}
@@ -55,6 +55,7 @@ export function LoginPage() {
           <Input
             label="Email"
             type="email"
+            autoComplete="email" inputMode="email" autoCapitalize="none" spellCheck={false}
             placeholder="votre@email.com"
             error={errors.email?.message}
             {...register('email')}
@@ -63,6 +64,7 @@ export function LoginPage() {
           <Input
             label="Mot de passe"
             type="password"
+            autoComplete="current-password"
             placeholder="Votre mot de passe"
             error={errors.password?.message}
             {...register('password')}

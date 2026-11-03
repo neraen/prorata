@@ -8,8 +8,8 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const variantStyles: Record<ButtonVariant, string> = {
-  primary: 'bg-ink text-white disabled:bg-disabled disabled:text-muted',
-  secondary: 'bg-surface text-ink border border-border',
+  primary: 'bg-ink text-white shadow-sm hover:bg-[#344f42] disabled:bg-disabled disabled:text-muted',
+  secondary: 'bg-surface text-ink border border-border hover:bg-pastel-sage',
   /** White button sitting on the black balance card. */
   onInk: 'bg-white text-ink',
   danger: 'bg-surface border border-border text-negative',
@@ -19,7 +19,8 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   ({ variant = 'primary', isLoading, className = '', children, disabled, ...props }, ref) => (
     <button
       ref={ref}
-      className={`flex h-[52px] items-center justify-center rounded-[16px] px-4 text-[15px] font-bold transition-colors disabled:cursor-not-allowed ${variantStyles[variant]} ${className}`}
+      className={`flex h-[52px] items-center justify-center gap-2 rounded-[17px] px-4 text-[15px] font-bold transition-colors disabled:cursor-not-allowed ${variantStyles[variant]} ${className}`}
+      aria-busy={isLoading || undefined}
       disabled={disabled || isLoading}
       {...props}
     >

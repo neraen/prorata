@@ -1,3 +1,4 @@
+import { ScreenState } from '../../components/ui/ScreenState'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useForm, Controller } from 'react-hook-form'
@@ -73,7 +74,7 @@ export function PersonalPage() {
   const [showForm, setShowForm] = useState(false)
   const [toDelete, setToDelete] = useState<number | null>(null)
 
-  const { data: personalMonth } = useQuery({
+  const { data: personalMonth, isPending: personalPending, isError: personalError, refetch: personalRetry } = useQuery({
     queryKey: ['personal', year, month],
     queryFn: () => personalApi.month(year, month),
     enabled: !!user,
@@ -162,6 +163,7 @@ export function PersonalPage() {
   })
 
   if (!user) return null
+  if (personalPending || personalError) return <ScreenState title="Mes dépenses personnelles" loading={personalPending} onRetry={() => { void personalRetry() }} />
 
   const recurrence = watch('recurrence')
   const personal = personalMonth?.personal ?? []
@@ -246,8 +248,9 @@ export function PersonalPage() {
       {isEmpty ? (
         <EmptyState
           icon={<PackageIcon size={24} strokeWidth={2} />}
-          title="Aucune dépense perso"
-          description="Ajoute tes dépenses à toi, ponctuelles ou tous les mois."
+          title="Ton espace personnel est prêt"
+          description="Commence par un achat ou un abonnement. Ces dépenses restent privées."
+          action={<Button onClick={openCreate}>Ajouter une dépense personnelle</Button>}
         />
       ) : (
         <Card padding="none" className="px-4">

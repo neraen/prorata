@@ -18,13 +18,13 @@ export function FoodNameInput({ value, onChange, label, placeholder = 'Un alimen
     const panel = panelRef.current
     if (!input || !panel) return
     let frame = 0
-    function place() {
+    function place(ensureVisible = false) {
       if (!input || !panel) return
       const viewport = window.visualViewport
       const top = viewport?.offsetTop ?? 0
       const bottom = top + (viewport?.height ?? window.innerHeight)
       let rect = input.getBoundingClientRect()
-      if (rect.bottom > bottom - 12 || rect.top < top + 12) {
+      if (ensureVisible && (rect.bottom > bottom - 12 || rect.top < top + 12)) {
         input.scrollIntoView({ block: 'nearest', behavior: 'instant' })
         rect = input.getBoundingClientRect()
       }
@@ -35,24 +35,26 @@ export function FoodNameInput({ value, onChange, label, placeholder = 'Un alimen
       const height = Math.min(288, available)
       const left = Math.max((viewport?.offsetLeft ?? 0) + 8, rect.left)
       Object.assign(panel.style, {
+        visibility: rect.bottom < top || rect.top > bottom ? 'hidden' : 'visible',
         left: `${left}px`, width: `${Math.min(rect.width, (viewport?.width ?? window.innerWidth) - 16)}px`,
         maxHeight: `${height}px`,
         top: `${upwards ? rect.top - Math.min(panel.scrollHeight, height) - 4 : rect.bottom + 4}px`,
       })
     }
-    function schedule() { cancelAnimationFrame(frame); frame = requestAnimationFrame(place) }
-    place()
-    window.visualViewport?.addEventListener('resize', schedule)
+    function schedule() { cancelAnimationFrame(frame); frame = requestAnimationFrame(() => place()) }
+    function resize() { cancelAnimationFrame(frame); frame = requestAnimationFrame(() => place(true)) }
+    place(true)
+    window.visualViewport?.addEventListener('resize', resize)
     window.visualViewport?.addEventListener('scroll', schedule)
-    window.addEventListener('resize', schedule)
+    window.addEventListener('resize', resize)
     window.addEventListener('scroll', schedule, true)
     const observer = new ResizeObserver(schedule)
     observer.observe(panel)
     return () => {
       cancelAnimationFrame(frame); observer.disconnect()
-      window.visualViewport?.removeEventListener('resize', schedule)
+      window.visualViewport?.removeEventListener('resize', resize)
       window.visualViewport?.removeEventListener('scroll', schedule)
-      window.removeEventListener('resize', schedule)
+      window.removeEventListener('resize', resize)
       window.removeEventListener('scroll', schedule, true)
     }
   }, [open])

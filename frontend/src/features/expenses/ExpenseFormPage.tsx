@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import dayjs from 'dayjs'
 import {
@@ -20,6 +20,8 @@ import {
 } from '../../lib/utils'
 import { CATEGORY_ICON_COMPONENTS, CalendarIcon, CloseIcon, TrashIcon } from '../../components/icons'
 import {
+  ActionLink,
+  ScreenState,
   Avatar,
   Button,
   Card,
@@ -47,7 +49,7 @@ export function ExpenseFormPage() {
   const { couple } = useCoupleStore()
   const { year, month } = useMonthStore()
 
-  const { data: expenseList, isLoading } = useQuery({
+  const { data: expenseList, isLoading, isError, refetch } = useQuery({
     queryKey: ['expenses', year, month],
     queryFn: () => expensesApi.list(year, month),
     enabled: isEdit && !!couple,
@@ -55,13 +57,11 @@ export function ExpenseFormPage() {
 
   if (!isEdit) return <ExpenseForm />
 
-  if (isLoading) {
-    return <p className="py-10 text-center text-[14px] text-muted">Chargement…</p>
-  }
+  if (isLoading || isError) return <ScreenState title="La dépense" loading={isLoading} onRetry={() => void refetch()} />
 
   const expense = expenseList?.items.find((e) => e.id === expenseId)
   if (!expense) {
-    return <p className="py-10 text-center text-[14px] text-muted">Dépense introuvable</p>
+    return <Card><h1 className="font-bold">Dépense introuvable</h1><p className="my-3 text-sm text-muted">Elle a peut-être été supprimée ou appartient à un autre mois.</p><ActionLink to="/expenses">Revenir aux dépenses</ActionLink></Card>
   }
 
   return <ExpenseForm key={expense.id} expense={expense} />
@@ -69,6 +69,8 @@ export function ExpenseFormPage() {
 
 function ExpenseForm({ expense }: { expense?: ApiExpense }) {
   const isEdit = !!expense
+  const [params] = useSearchParams()
+  const presetCategory = params.get('category')
   const navigate = useNavigate()
   const queryClient = useQueryClient()
   const user = useAuthStore((s) => s.user)
@@ -78,9 +80,9 @@ function ExpenseForm({ expense }: { expense?: ApiExpense }) {
 
   const [scope, setScope] = useState<Scope>('shared')
   const [raw, setRaw] = useState(() => (expense ? centsToRaw(expense.amountCents) : ''))
-  const [title, setTitle] = useState(expense?.title ?? '')
+  const [title, setTitle] = useState(expense?.title ?? params.get('title')?.slice(0, 150) ?? '')
   const [category, setCategory] = useState<string>(
-    () => expense?.category ?? localStorage.getItem(LAST_CATEGORY_KEY) ?? 'groceries'
+    () => expense?.category ?? (CATEGORY_KEYS.includes(presetCategory as typeof CATEGORY_KEYS[number]) ? presetCategory! : localStorage.getItem(LAST_CATEGORY_KEY)) ?? 'groceries'
   )
   const [spentAt, setSpentAt] = useState(() => expense?.spentAt ?? defaultDateInMonth(year, month))
   const [paidByUserId, setPaidByUserId] = useState<number>(
@@ -94,7 +96,7 @@ function ExpenseForm({ expense }: { expense?: ApiExpense }) {
 
   // The month's weights come from the API, so the preview and the real
   // computation can never disagree.
-  const { data: balance } = useQuery({
+  const { data: balance, isError: balanceError, refetch: retryBalance } = useQuery({
     queryKey: ['balance', year, month],
     queryFn: () => monthsApi.balance(year, month),
     enabled: !!couple,
@@ -109,7 +111,7 @@ function ExpenseForm({ expense }: { expense?: ApiExpense }) {
     queryClient.invalidateQueries({ queryKey: ['overall'] })
     queryClient.invalidateQueries({ queryKey: ['personal'] })
     showToast(message, 'success')
-    navigate(personal ? '/personal' : '/expenses')
+    navigate(personal ? '/personal' : !isEdit && params.get('returnTo') === 'shopping' ? '/shopping' : '/expenses')
   }
 
   const onFailed = (err: unknown) =>
@@ -160,7 +162,9 @@ function ExpenseForm({ expense }: { expense?: ApiExpense }) {
 
   if (!couple || !user || !partner) return null
 
-  const weightSelf = balance?.members.find((m) => m.userId === user.id)?.weight ?? 0.5
+  const memberWeight = balance?.members.find((m) => m.userId === user.id)?.weight
+  const ratioUnavailable = scope === 'shared' && splitMode === 'prorata' && memberWeight === undefined
+  const weightSelf = memberWeight ?? 0
 
   /** Share of each member for the amount being typed. */
   const shares = (() => {
@@ -185,7 +189,7 @@ function ExpenseForm({ expense }: { expense?: ApiExpense }) {
   })()
 
   const isToday = spentAt === dayjs().format('YYYY-MM-DD')
-  const canSubmit = amountCents > 0 && title.trim().length >= 2
+  const canSubmit = amountCents > 0 && title.trim().length >= 2 && !ratioUnavailable
   const isSaving = createShared.isPending || createPersonal.isPending || updateShared.isPending
 
   const submit = () => {
@@ -198,6 +202,7 @@ function ExpenseForm({ expense }: { expense?: ApiExpense }) {
   const ctaLabel = () => {
     if (amountCents === 0) return 'Saisis un montant'
     if (title.trim().length < 2) return 'Donne un titre'
+    if (ratioUnavailable) return 'Répartition en attente'
     return `${isEdit ? 'Enregistrer' : 'Ajouter'} ${formatMoney(amountCents)}`
   }
 
@@ -376,6 +381,7 @@ function ExpenseForm({ expense }: { expense?: ApiExpense }) {
             padding="none"
             className="flex min-h-[60px] flex-col justify-center gap-2 px-4 py-3"
           >
+            {ratioUnavailable ? <div role="status" className="text-sm text-muted">{balanceError ? 'La répartition est indisponible.' : 'Chargement de la répartition…'}{balanceError && <button type="button" className="ml-2 min-h-11 font-bold text-ink underline" onClick={() => void retryBalance()}>Réessayer</button>}</div> : <>
             <SplitBar percentSelf={shares.percentSelf} height={6} />
             <div className="flex justify-between text-[13px]">
               <span>
@@ -387,6 +393,7 @@ function ExpenseForm({ expense }: { expense?: ApiExpense }) {
                 <strong className="text-laetitia-text">{formatMoney(shares.partner)}</strong>
               </span>
             </div>
+            </>}
           </Card>
         </>
       ) : (

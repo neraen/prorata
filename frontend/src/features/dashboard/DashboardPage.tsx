@@ -1,5 +1,6 @@
+import { ScreenState } from '../../components/ui/ScreenState'
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useAuthStore, useCoupleStore, useMonthStore, useToastStore } from '../../lib/stores'
 import { expensesApi, monthsApi, transfersApi } from '../../lib/api'
@@ -33,13 +34,13 @@ export function DashboardPage() {
 
   const [showCloseModal, setShowCloseModal] = useState(false)
 
-  const { data: balance } = useQuery({
+  const { data: balance, isPending: balancePending, isError: balanceError, refetch: balanceRetry } = useQuery({
     queryKey: ['balance', year, month],
     queryFn: () => monthsApi.balance(year, month),
     enabled: !!couple,
   })
 
-  const { data: expenseList } = useQuery({
+  const { data: expenseList, isPending: expensesPending, isError: expensesError, refetch: expensesRetry } = useQuery({
     queryKey: ['expenses', year, month],
     queryFn: () => expensesApi.list(year, month),
     enabled: !!couple,
@@ -74,6 +75,7 @@ export function DashboardPage() {
   })
 
   if (!couple || !user || !partner) return null
+  if (balancePending || balanceError || expensesPending || expensesError) return <ScreenState title="Notre budget" loading={balancePending || expensesPending} onRetry={() => { void balanceRetry(); void expensesRetry() }} />
 
   const expenses = expenseList?.items ?? []
   const isClosed = balance?.isClosed ?? false
@@ -140,12 +142,12 @@ export function DashboardPage() {
     <div className="flex flex-col gap-4">
       {/* Header */}
       <div className="flex h-12 items-center justify-between">
-        <div className="text-[22px] font-extrabold tracking-[-0.03em]">Prorata</div>
+        <h1 className="text-[28px] font-extrabold tracking-[-0.04em]">Notre budget</h1>
         <AvatarPair selfName={user.name} partnerName={partner.name} />
       </div>
 
-      <Link to="/expenses/new" className="flex h-[52px] items-center justify-center rounded-[16px] bg-ink text-[15px] font-bold text-white">Ajouter une dépense</Link>
-      <div className="no-scrollbar flex gap-2 overflow-x-auto pb-1">{[['/budget', 'Prorata'], ['/expenses', 'Dépenses'], ['/transfers', 'Virements'], ['/personal', 'Perso'], ['/settings', 'Réglages']].map(([to, label]) => <Link key={to} to={to} className="flex min-h-11 shrink-0 items-center rounded-full border bg-surface px-4 text-sm font-semibold">{label}</Link>)}</div>
+      <Link to="/expenses/new" className="action-link">Ajouter une dépense</Link>
+      <div className="flex flex-wrap gap-2">{[['/budget', 'Vue d’ensemble'], ['/expenses', 'Dépenses'], ['/transfers', 'Virements'], ['/personal', 'Personnel'], ['/settings', 'Réglages']].map(([to, label]) => <NavLink key={to} to={to} className={({ isActive }) => `flex min-h-11 items-center rounded-full border px-4 text-xs font-bold ${isActive ? 'bg-ink text-white' : 'bg-surface'}`}>{label}</NavLink>)}</div>
       <MonthSelector />
 
       {isClosed && (

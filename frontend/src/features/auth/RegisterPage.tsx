@@ -8,8 +8,8 @@ import { Button, Input, Card } from '../../components/ui'
 import { AuthLayout } from '../../components/AuthLayout'
 
 const schema = z.object({
-  name: z.string().min(2, 'Le nom doit faire au moins 2 caractères'),
-  email: z.string().email('Email invalide'),
+  name: z.string().trim().min(2, 'Le nom doit faire au moins 2 caractères'),
+  email: z.string().trim().email('Email invalide'),
   password: z.string().min(8, 'Le mot de passe doit faire au moins 8 caractères'),
 })
 
@@ -48,14 +48,14 @@ export function RegisterPage() {
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           {error && (
-            <div className="p-3 rounded-[12px] bg-negative-bg text-negative text-sm text-center">
+            <div role="alert" className="p-3 rounded-[12px] bg-negative-bg text-negative text-sm text-center">
               {error}
             </div>
           )}
 
           <Input
             label="Prénom"
-            type="text"
+            type="text" autoComplete="given-name"
             placeholder="Votre prénom"
             error={errors.name?.message}
             {...register('name')}
@@ -64,6 +64,7 @@ export function RegisterPage() {
           <Input
             label="Email"
             type="email"
+            autoComplete="email" inputMode="email" autoCapitalize="none" spellCheck={false}
             placeholder="votre@email.com"
             error={errors.email?.message}
             {...register('email')}
@@ -72,6 +73,7 @@ export function RegisterPage() {
           <Input
             label="Mot de passe"
             type="password"
+            autoComplete="new-password"
             placeholder="8 caractères minimum"
             error={errors.password?.message}
             {...register('password')}

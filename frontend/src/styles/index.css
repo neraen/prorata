@@ -35,18 +35,18 @@
 /* Design tokens — values come straight from the handoff (tokens.css). */
 @theme {
   /* Surfaces */
-  --color-bg: #F5F5F1;
+  --color-bg: #F8F7F2;
   --color-surface: #FFFFFF;
   --color-surface-sunken: #FAFAF8;
-  --color-segment-bg: #E9E8E2;
+  --color-segment-bg: #EEEFE9;
   --color-segment-bg-alt: #F0EFEA;
   --color-track: #EEEDE8;
-  --color-border: #E6E5DF;
-  --color-disabled: #DCDBD5;
+  --color-border: #E5E9E2;
+  --color-disabled: #E2E5DE;
 
   /* Texte */
-  --color-ink: #15171C;
-  --color-muted: #5E6270;
+  --color-ink: #263D34;
+  --color-muted: #626C65;
   --color-placeholder: #8A8E99;
   --color-nav-inactive: #6B6F7B;
   --color-on-ink-muted: #B8BCC8;
@@ -67,13 +67,13 @@
   --color-laetitia-strong: #7A3E0B;
 
   /* Sémantique */
-  --color-positive: #1F7A4D;
-  --color-positive-bg: #E3F4EA;
+  --color-positive: #2E654B;
+  --color-positive-bg: #EAF2E8;
   --color-negative: #A3311C;
   --color-negative-bg: #FBE7E3;
 
   /* Catégories : couleur d'icône / fond de tuile */
-  --color-cat-courses: #1F7A4D;
+  --color-cat-courses: #2E654B;
   --color-cat-courses-bg: #E6F2EC;
   --color-cat-loisirs: #6A3FC1;
   --color-cat-loisirs-bg: #EFE9FB;
@@ -85,6 +85,12 @@
   --color-cat-sante-bg: #FBE7EA;
   --color-cat-autres: #4A4E59;
   --color-cat-autres-bg: #EEEDE8;
+
+  --color-pastel-sage: #EAF2E8;
+  --color-pastel-peach: #F9EBDD;
+  --color-pastel-lilac: #EEEAF6;
+  --color-pastel-blue: #E7EFF5;
+  --shadow-card: 0 8px 28px rgba(38, 61, 52, 0.045);
 
   /* Ombres */
   --shadow-segment: 0 1px 3px rgba(0, 0, 0, 0.08);
@@ -157,3 +163,19 @@ input::placeholder {
     scroll-behavior: auto !important;
   }
 }
+
+/* Quiet depth and tactile feedback, with dark text on every pastel surface. */
+.premium-hero { background: linear-gradient(135deg, #edf4e8 0%, #e4eee4 62%, #e9e6f2 100%); }
+.action-link { display: flex; min-height: 52px; align-items: center; justify-content: center; gap: 8px; border-radius: 17px; padding: 12px 18px; background: var(--color-ink); color: white; font-size: 15px; font-weight: 700; line-height: 1.35; text-align: center; box-shadow: 0 5px 12px rgba(38,61,52,.1); transition: background-color .15s, transform .15s; }
+.action-link:hover { background: #344f42; }
+.action-link:active { transform: translateY(1px); }
+.action-link-secondary { background: white; color: var(--color-ink); border: 1px solid var(--color-border); box-shadow: none; }
+.action-link-secondary:hover { background: var(--color-pastel-sage); }
+main:focus { outline: none; }
+summary { list-style-position: inside; }
+input:not([type=checkbox]):not([type=radio]), select, textarea { scroll-margin-block: 100px; }
+
+progress { appearance: none; overflow: hidden; border: 0; border-radius: 999px; background: #d9e4d9; }
+progress::-webkit-progress-bar { background: #d9e4d9; border-radius: 999px; }
+progress::-webkit-progress-value { background: var(--color-positive); border-radius: 999px; }
+progress::-moz-progress-bar { background: var(--color-positive); border-radius: 999px; }
