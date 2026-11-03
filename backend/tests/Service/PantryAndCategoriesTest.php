@@ -80,7 +80,7 @@ class PantryAndCategoriesTest extends TestCase
         $recipe = array_find($state['recipes'], fn ($r) => $r['id'] === $original['id']);
         self::assertSame('pleasure', $recipe['category']);
         self::assertSame($original['ingredients'], $recipe['ingredients']);
-        self::assertNull($service->read(2)['recipes'][0]['category'] ?? null);
+        self::assertSame($original['category'] ?? null, $service->read(2)['recipes'][0]['category'] ?? null);
     }
 
 }

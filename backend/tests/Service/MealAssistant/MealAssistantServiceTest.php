@@ -167,7 +167,7 @@ class MealAssistantServiceTest extends TestCase
         try { $service->accept(1, 7, $draft['id']); self::fail('Collision accepted'); }
         catch (ConflictHttpException) {
             $state = $this->household->read(1);
-            self::assertCount(3, $state['recipes']);
+            self::assertFalse(array_any($state['recipes'], fn ($r) => ($r['origin'] ?? null) === 'ai'));
             self::assertSame('app-pasta', $state['meals'][$slot['date'].'-'.$slot['slot']]['recipeId']);
         }
     }

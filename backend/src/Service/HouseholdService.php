@@ -31,6 +31,7 @@ class HouseholdService
         }
         $state = $row['household_data'] ? json_decode($row['household_data'], true, 512, JSON_THROW_ON_ERROR) : self::emptyState();
         $state = array_replace(self::emptyState(), $state);
+        $state['recipes'] = RecipeCatalog::merge($state['recipes']);
         $state['foodProfile'] = FoodProfile::normalize($state['foodProfile']);
         $state['revision'] = (int) $row['household_revision'];
         return $state;

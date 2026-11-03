@@ -8,7 +8,7 @@ export const AISLES = { produce: 'Fruits & légumes', meat: 'Viande & poisson', 
 export const UNITS = { g: 'g', kg: 'kg', ml: 'ml', l: 'l', piece: 'pièce(s)' } as const
 export interface FoodReference { source: 'openfoodfacts'; type: 'ingredient' | 'product'; id: string }
 export interface Ingredient { name: string; quantity: number; unit: keyof typeof UNITS; aisle: keyof typeof AISLES; reference?: FoodReference | null }
-export interface Recipe { id: string; title: string; servings: number; minutes: number; instructions: string; authorId: number; source: 'personal' | 'app'; ingredients: Ingredient[]; category?: MealCategory | null; categorySource?: 'user' | 'ai' | null; categoryReason?: string | null; origin?: 'ai' | null; equipment?: string[] }
+export interface Recipe { id: string; title: string; servings: number; minutes: number; instructions: string; authorId: number; source: 'personal' | 'app'; ingredients: Ingredient[]; category?: MealCategory | null; categorySource?: 'user' | 'ai' | 'catalog' | null; categoryReason?: string | null; illustration?: string; origin?: 'ai' | null; equipment?: string[] }
 export interface Meal { date: string; slot: 'lunch' | 'dinner'; recipeId: string; servings: number; category?: MealCategory | null }
 export interface ShoppingItem extends Ingredient { id: string; checked: boolean; week: string | null }
 export interface Household { recipes: Recipe[]; meals: Record<string, Meal>; shopping: ShoppingItem[]; revision: number; foodProfile?: FoodProfile }

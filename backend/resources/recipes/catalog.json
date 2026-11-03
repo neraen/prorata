@@ -1,0 +1,1059 @@
+[
+  {
+    "id": "app-lentil-salad",
+    "title": "Salade de lentilles, carottes et feta",
+    "servings": 2,
+    "minutes": 20,
+    "source": "app",
+    "authorId": 0,
+    "category": "balanced",
+    "categorySource": "catalog",
+    "illustration": "bowl",
+    "equipment": [],
+    "ingredients": [
+      {
+        "name": "Lentilles cuites",
+        "quantity": 300,
+        "unit": "g",
+        "aisle": "pantry"
+      },
+      {
+        "name": "Carottes",
+        "quantity": 200,
+        "unit": "g",
+        "aisle": "produce"
+      },
+      {
+        "name": "Feta",
+        "quantity": 80,
+        "unit": "g",
+        "aisle": "dairy"
+      },
+      {
+        "name": "Citron",
+        "quantity": 1,
+        "unit": "piece",
+        "aisle": "produce"
+      },
+      {
+        "name": "Huile d’olive",
+        "quantity": 15,
+        "unit": "ml",
+        "aisle": "pantry"
+      }
+    ],
+    "instructions": "1. Égoutter et rincer les lentilles cuites. Laver, éplucher et râper les carottes.\n2. Mélanger le jus du citron et l’huile. Incorporer aux lentilles et aux carottes.\n3. Émietter la feta sur la salade. Servir frais ; garder au réfrigérateur si préparé à l’avance.",
+    "diet": "vegetarian"
+  },
+  {
+    "id": "app-chicken-rice",
+    "title": "Poulet, riz et courgettes à la poêle",
+    "servings": 2,
+    "minutes": 30,
+    "source": "app",
+    "authorId": 0,
+    "category": "balanced",
+    "categorySource": "catalog",
+    "illustration": "skillet",
+    "equipment": [
+      "Plaques de cuisson"
+    ],
+    "ingredients": [
+      {
+        "name": "Filet de poulet",
+        "quantity": 300,
+        "unit": "g",
+        "aisle": "meat"
+      },
+      {
+        "name": "Riz",
+        "quantity": 140,
+        "unit": "g",
+        "aisle": "pantry"
+      },
+      {
+        "name": "Courgettes",
+        "quantity": 400,
+        "unit": "g",
+        "aisle": "produce"
+      },
+      {
+        "name": "Huile d’olive",
+        "quantity": 15,
+        "unit": "ml",
+        "aisle": "pantry"
+      },
+      {
+        "name": "Paprika",
+        "quantity": 3,
+        "unit": "g",
+        "aisle": "pantry"
+      }
+    ],
+    "instructions": "1. Cuire le riz selon le paquet. Laver et couper les courgettes en petits dés.\n2. Couper le poulet en morceaux sur une planche dédiée. Nettoyer les ustensiles ayant touché la viande crue.\n3. Chauffer l’huile dans une poêle, saisir le poulet puis ajouter les courgettes et le paprika. Cuire environ 12 à 15 minutes en remuant, jusqu’à ce que le poulet soit complètement cuit à cœur.\n4. Servir avec le riz. Prolonger la cuisson si les morceaux de poulet sont épais.",
+    "diet": "omnivore"
+  },
+  {
+    "id": "app-salmon-potatoes",
+    "title": "Saumon, pommes de terre et brocoli au four",
+    "servings": 2,
+    "minutes": 40,
+    "source": "app",
+    "authorId": 0,
+    "category": "balanced",
+    "categorySource": "catalog",
+    "illustration": "oven",
+    "equipment": [
+      "Four"
+    ],
+    "ingredients": [
+      {
+        "name": "Filet de saumon",
+        "quantity": 280,
+        "unit": "g",
+        "aisle": "meat"
+      },
+      {
+        "name": "Pommes de terre",
+        "quantity": 400,
+        "unit": "g",
+        "aisle": "produce"
+      },
+      {
+        "name": "Brocoli",
+        "quantity": 350,
+        "unit": "g",
+        "aisle": "produce"
+      },
+      {
+        "name": "Citron",
+        "quantity": 1,
+        "unit": "piece",
+        "aisle": "produce"
+      },
+      {
+        "name": "Huile d’olive",
+        "quantity": 20,
+        "unit": "ml",
+        "aisle": "pantry"
+      }
+    ],
+    "instructions": "1. Préchauffer le four à 200 °C. Laver et couper les pommes de terre en petits morceaux. Les mélanger avec la moitié de l’huile dans un plat. Enfourner 20 minutes.\n2. Ajouter les fleurettes de brocoli, le saumon et le reste d’huile. Ajouter des rondelles de citron.\n3. Poursuivre 15 à 20 minutes, jusqu’à ce que les pommes de terre soient tendres et le saumon cuit à cœur ; adapter à son épaisseur.",
+    "diet": "pescatarian"
+  },
+  {
+    "id": "app-bolognese",
+    "title": "Spaghetti à la bolognaise express",
+    "servings": 2,
+    "minutes": 30,
+    "source": "app",
+    "authorId": 0,
+    "category": "everyday",
+    "categorySource": "catalog",
+    "illustration": "pasta",
+    "equipment": [
+      "Plaques de cuisson"
+    ],
+    "ingredients": [
+      {
+        "name": "Spaghetti",
+        "quantity": 180,
+        "unit": "g",
+        "aisle": "pantry"
+      },
+      {
+        "name": "Bœuf haché",
+        "quantity": 250,
+        "unit": "g",
+        "aisle": "meat"
+      },
+      {
+        "name": "Tomates concassées",
+        "quantity": 400,
+        "unit": "g",
+        "aisle": "pantry"
+      },
+      {
+        "name": "Oignon",
+        "quantity": 1,
+        "unit": "piece",
+        "aisle": "produce"
+      },
+      {
+        "name": "Huile d’olive",
+        "quantity": 15,
+        "unit": "ml",
+        "aisle": "pantry"
+      },
+      {
+        "name": "Herbes de Provence",
+        "quantity": 2,
+        "unit": "g",
+        "aisle": "pantry"
+      }
+    ],
+    "instructions": "1. Émincer l’oignon. Le faire revenir 5 minutes avec l’huile dans une sauteuse.\n2. Ajouter le bœuf haché et l’émietter. Cuire complètement avant d’ajouter les tomates et les herbes. Laisser mijoter 15 minutes.\n3. Pendant ce temps, cuire les spaghetti selon le paquet. Égoutter et mélanger avec la sauce.",
+    "diet": "omnivore"
+  },
+  {
+    "id": "app-pesto-pasta",
+    "title": "Pâtes au pesto et petits pois",
+    "servings": 2,
+    "minutes": 20,
+    "source": "app",
+    "authorId": 0,
+    "category": "everyday",
+    "categorySource": "catalog",
+    "illustration": "pasta",
+    "equipment": [
+      "Plaques de cuisson"
+    ],
+    "ingredients": [
+      {
+        "name": "Pâtes",
+        "quantity": 180,
+        "unit": "g",
+        "aisle": "pantry"
+      },
+      {
+        "name": "Petits pois surgelés",
+        "quantity": 200,
+        "unit": "g",
+        "aisle": "frozen"
+      },
+      {
+        "name": "Pesto",
+        "quantity": 50,
+        "unit": "g",
+        "aisle": "pantry"
+      },
+      {
+        "name": "Parmesan",
+        "quantity": 30,
+        "unit": "g",
+        "aisle": "dairy"
+      }
+    ],
+    "instructions": "1. Cuire les pâtes dans l’eau bouillante selon le paquet.\n2. Ajouter les petits pois encore surgelés dans la casserole environ 5 minutes avant la fin, ou suivre leur temps de cuisson indiqué.\n3. Réserver un peu d’eau de cuisson. Égoutter puis mélanger avec le pesto et un peu de cette eau. Servir avec le parmesan.",
+    "diet": "vegetarian"
+  },
+  {
+    "id": "app-vegetable-soup",
+    "title": "Velouté de carottes et lentilles corail",
+    "servings": 2,
+    "minutes": 30,
+    "source": "app",
+    "authorId": 0,
+    "category": "balanced",
+    "categorySource": "catalog",
+    "illustration": "soup",
+    "equipment": [
+      "Plaques de cuisson",
+      "Mixeur"
+    ],
+    "ingredients": [
+      {
+        "name": "Carottes",
+        "quantity": 400,
+        "unit": "g",
+        "aisle": "produce"
+      },
+      {
+        "name": "Lentilles corail sèches",
+        "quantity": 100,
+        "unit": "g",
+        "aisle": "pantry"
+      },
+      {
+        "name": "Oignon",
+        "quantity": 1,
+        "unit": "piece",
+        "aisle": "produce"
+      },
+      {
+        "name": "Bouillon de légumes en cube",
+        "quantity": 1,
+        "unit": "piece",
+        "aisle": "pantry"
+      },
+      {
+        "name": "Huile d’olive",
+        "quantity": 15,
+        "unit": "ml",
+        "aisle": "pantry"
+      },
+      {
+        "name": "Pain complet",
+        "quantity": 120,
+        "unit": "g",
+        "aisle": "pantry"
+      }
+    ],
+    "instructions": "1. Éplucher les carottes et l’oignon puis les couper en petits morceaux. Rincer les lentilles corail.\n2. Faire revenir l’oignon dans l’huile 3 minutes. Ajouter les carottes, les lentilles, le cube de bouillon et 700 ml d’eau.\n3. Cuire environ 20 minutes à frémissement, jusqu’à ce que les carottes et les lentilles soient tendres. Mixer avec précaution, en laissant la vapeur s’échapper.\n4. Ajuster la texture avec un peu d’eau si nécessaire et servir avec le pain.",
+    "diet": "vegan"
+  },
+  {
+    "id": "app-chili",
+    "title": "Chili végétarien et riz",
+    "servings": 2,
+    "minutes": 30,
+    "source": "app",
+    "authorId": 0,
+    "category": "balanced",
+    "categorySource": "catalog",
+    "illustration": "bowl",
+    "equipment": [
+      "Plaques de cuisson"
+    ],
+    "ingredients": [
+      {
+        "name": "Haricots rouges cuits",
+        "quantity": 300,
+        "unit": "g",
+        "aisle": "pantry"
+      },
+      {
+        "name": "Tomates concassées",
+        "quantity": 400,
+        "unit": "g",
+        "aisle": "pantry"
+      },
+      {
+        "name": "Maïs égoutté",
+        "quantity": 100,
+        "unit": "g",
+        "aisle": "pantry"
+      },
+      {
+        "name": "Riz",
+        "quantity": 120,
+        "unit": "g",
+        "aisle": "pantry"
+      },
+      {
+        "name": "Oignon",
+        "quantity": 1,
+        "unit": "piece",
+        "aisle": "produce"
+      },
+      {
+        "name": "Huile d’olive",
+        "quantity": 15,
+        "unit": "ml",
+        "aisle": "pantry"
+      },
+      {
+        "name": "Cumin",
+        "quantity": 3,
+        "unit": "g",
+        "aisle": "pantry"
+      }
+    ],
+    "instructions": "1. Cuire le riz selon le paquet. Égoutter et rincer les haricots et le maïs.\n2. Émincer l’oignon et le faire revenir 5 minutes dans l’huile. Ajouter le cumin puis les tomates.\n3. Ajouter les haricots et le maïs. Laisser mijoter 15 minutes, en ajoutant un peu d’eau si la sauce épaissit trop. Servir avec le riz.",
+    "diet": "vegan"
+  },
+  {
+    "id": "app-shakshuka",
+    "title": "Œufs à la tomate et aux poivrons",
+    "servings": 2,
+    "minutes": 30,
+    "source": "app",
+    "authorId": 0,
+    "category": "balanced",
+    "categorySource": "catalog",
+    "illustration": "skillet",
+    "equipment": [
+      "Plaques de cuisson"
+    ],
+    "ingredients": [
+      {
+        "name": "Œufs",
+        "quantity": 4,
+        "unit": "piece",
+        "aisle": "dairy"
+      },
+      {
+        "name": "Tomates concassées",
+        "quantity": 400,
+        "unit": "g",
+        "aisle": "pantry"
+      },
+      {
+        "name": "Poivrons",
+        "quantity": 250,
+        "unit": "g",
+        "aisle": "produce"
+      },
+      {
+        "name": "Oignon",
+        "quantity": 1,
+        "unit": "piece",
+        "aisle": "produce"
+      },
+      {
+        "name": "Huile d’olive",
+        "quantity": 15,
+        "unit": "ml",
+        "aisle": "pantry"
+      },
+      {
+        "name": "Paprika",
+        "quantity": 3,
+        "unit": "g",
+        "aisle": "pantry"
+      },
+      {
+        "name": "Pain complet",
+        "quantity": 120,
+        "unit": "g",
+        "aisle": "pantry"
+      }
+    ],
+    "instructions": "1. Émincer l’oignon et les poivrons lavés. Les faire revenir 8 minutes avec l’huile.\n2. Ajouter les tomates et le paprika. Laisser mijoter 10 minutes.\n3. Faire quatre petits creux dans la sauce et casser un œuf dans chaque creux. Couvrir et poursuivre la cuisson jusqu’à ce que les blancs et les jaunes soient pris. Servir avec le pain.",
+    "diet": "vegetarian"
+  },
+  {
+    "id": "app-stuffed-potatoes",
+    "title": "Pommes de terre garnies au fromage blanc",
+    "servings": 2,
+    "minutes": 45,
+    "source": "app",
+    "authorId": 0,
+    "category": "everyday",
+    "categorySource": "catalog",
+    "illustration": "oven",
+    "equipment": [
+      "Four"
+    ],
+    "ingredients": [
+      {
+        "name": "Pommes de terre",
+        "quantity": 600,
+        "unit": "g",
+        "aisle": "produce"
+      },
+      {
+        "name": "Fromage blanc",
+        "quantity": 200,
+        "unit": "g",
+        "aisle": "dairy"
+      },
+      {
+        "name": "Ciboulette",
+        "quantity": 5,
+        "unit": "g",
+        "aisle": "produce"
+      },
+      {
+        "name": "Salade verte",
+        "quantity": 100,
+        "unit": "g",
+        "aisle": "produce"
+      },
+      {
+        "name": "Huile d’olive",
+        "quantity": 15,
+        "unit": "ml",
+        "aisle": "pantry"
+      }
+    ],
+    "instructions": "1. Préchauffer le four à 210 °C. Laver les pommes de terre, les couper en deux dans la longueur et les huiler. Les poser face coupée sur une plaque.\n2. Cuire 35 à 40 minutes, jusqu’à ce qu’une lame entre sans résistance ; prolonger selon leur taille.\n3. Mélanger le fromage blanc et la ciboulette ciselée. Laver et essorer la salade.\n4. Garnir les demi-pommes de terre chaudes de fromage blanc et servir avec la salade.",
+    "diet": "vegetarian"
+  },
+  {
+    "id": "app-chicken-wrap",
+    "title": "Wraps au poulet et crudités",
+    "servings": 2,
+    "minutes": 25,
+    "source": "app",
+    "authorId": 0,
+    "category": "everyday",
+    "categorySource": "catalog",
+    "illustration": "quick",
+    "equipment": [
+      "Plaques de cuisson"
+    ],
+    "ingredients": [
+      {
+        "name": "Tortillas de blé",
+        "quantity": 4,
+        "unit": "piece",
+        "aisle": "pantry"
+      },
+      {
+        "name": "Filet de poulet",
+        "quantity": 250,
+        "unit": "g",
+        "aisle": "meat"
+      },
+      {
+        "name": "Carottes",
+        "quantity": 150,
+        "unit": "g",
+        "aisle": "produce"
+      },
+      {
+        "name": "Salade verte",
+        "quantity": 80,
+        "unit": "g",
+        "aisle": "produce"
+      },
+      {
+        "name": "Yaourt nature",
+        "quantity": 125,
+        "unit": "g",
+        "aisle": "dairy"
+      },
+      {
+        "name": "Citron",
+        "quantity": 1,
+        "unit": "piece",
+        "aisle": "produce"
+      },
+      {
+        "name": "Huile d’olive",
+        "quantity": 10,
+        "unit": "ml",
+        "aisle": "pantry"
+      }
+    ],
+    "instructions": "1. Laver les crudités et râper les carottes. Mélanger le yaourt avec un peu de jus de citron.\n2. Couper le poulet en fines lanières, puis laver les ustensiles ayant touché la viande crue. Les faire revenir dans l’huile jusqu’à cuisson complète à cœur, environ 10 minutes selon l’épaisseur.\n3. Réchauffer les tortillas selon le paquet. Répartir la sauce, les crudités et le poulet cuit. Rouler et servir.",
+    "diet": "omnivore"
+  },
+  {
+    "id": "app-tuna-rice",
+    "title": "Salade de riz, thon et tomates",
+    "servings": 2,
+    "minutes": 25,
+    "source": "app",
+    "authorId": 0,
+    "category": "everyday",
+    "categorySource": "catalog",
+    "illustration": "bowl",
+    "equipment": [
+      "Plaques de cuisson"
+    ],
+    "ingredients": [
+      {
+        "name": "Riz",
+        "quantity": 150,
+        "unit": "g",
+        "aisle": "pantry"
+      },
+      {
+        "name": "Thon au naturel égoutté",
+        "quantity": 140,
+        "unit": "g",
+        "aisle": "pantry"
+      },
+      {
+        "name": "Tomates",
+        "quantity": 250,
+        "unit": "g",
+        "aisle": "produce"
+      },
+      {
+        "name": "Concombre",
+        "quantity": 200,
+        "unit": "g",
+        "aisle": "produce"
+      },
+      {
+        "name": "Maïs égoutté",
+        "quantity": 100,
+        "unit": "g",
+        "aisle": "pantry"
+      },
+      {
+        "name": "Huile d’olive",
+        "quantity": 15,
+        "unit": "ml",
+        "aisle": "pantry"
+      },
+      {
+        "name": "Citron",
+        "quantity": 1,
+        "unit": "piece",
+        "aisle": "produce"
+      }
+    ],
+    "instructions": "1. Cuire le riz selon le paquet, l’égoutter puis le refroidir rapidement sous l’eau froide.\n2. Laver et couper les tomates et le concombre. Égoutter le thon et le maïs.\n3. Mélanger avec le riz, l’huile et le jus du citron. Servir aussitôt ou placer rapidement au réfrigérateur dans un récipient fermé.",
+    "diet": "pescatarian"
+  },
+  {
+    "id": "app-potato-gratin",
+    "title": "Gratin de pommes de terre et reblochon",
+    "servings": 2,
+    "minutes": 55,
+    "source": "app",
+    "authorId": 0,
+    "category": "pleasure",
+    "categorySource": "catalog",
+    "illustration": "oven",
+    "equipment": [
+      "Four",
+      "Plaques de cuisson"
+    ],
+    "ingredients": [
+      {
+        "name": "Pommes de terre",
+        "quantity": 600,
+        "unit": "g",
+        "aisle": "produce"
+      },
+      {
+        "name": "Reblochon",
+        "quantity": 150,
+        "unit": "g",
+        "aisle": "dairy"
+      },
+      {
+        "name": "Crème fraîche",
+        "quantity": 100,
+        "unit": "g",
+        "aisle": "dairy"
+      },
+      {
+        "name": "Oignon",
+        "quantity": 1,
+        "unit": "piece",
+        "aisle": "produce"
+      },
+      {
+        "name": "Huile d’olive",
+        "quantity": 10,
+        "unit": "ml",
+        "aisle": "pantry"
+      }
+    ],
+    "instructions": "1. Préchauffer le four à 200 °C. Éplucher les pommes de terre, les couper en rondelles et les précuire 12 minutes à l’eau frémissante.\n2. Émincer l’oignon et le faire revenir dans l’huile. Égoutter les pommes de terre.\n3. Répartir pommes de terre, oignon et crème dans un plat. Ajouter le reblochon coupé en tranches.\n4. Enfourner 25 à 30 minutes jusqu’à ce que les pommes de terre soient fondantes et le dessus doré.",
+    "diet": "vegetarian"
+  },
+  {
+    "id": "app-risotto",
+    "title": "Risotto aux champignons et parmesan",
+    "servings": 2,
+    "minutes": 35,
+    "source": "app",
+    "authorId": 0,
+    "category": "pleasure",
+    "categorySource": "catalog",
+    "illustration": "bowl",
+    "equipment": [
+      "Plaques de cuisson"
+    ],
+    "ingredients": [
+      {
+        "name": "Riz à risotto",
+        "quantity": 160,
+        "unit": "g",
+        "aisle": "pantry"
+      },
+      {
+        "name": "Champignons",
+        "quantity": 250,
+        "unit": "g",
+        "aisle": "produce"
+      },
+      {
+        "name": "Parmesan",
+        "quantity": 50,
+        "unit": "g",
+        "aisle": "dairy"
+      },
+      {
+        "name": "Oignon",
+        "quantity": 1,
+        "unit": "piece",
+        "aisle": "produce"
+      },
+      {
+        "name": "Bouillon de légumes en cube",
+        "quantity": 1,
+        "unit": "piece",
+        "aisle": "pantry"
+      },
+      {
+        "name": "Huile d’olive",
+        "quantity": 15,
+        "unit": "ml",
+        "aisle": "pantry"
+      },
+      {
+        "name": "Beurre",
+        "quantity": 15,
+        "unit": "g",
+        "aisle": "dairy"
+      }
+    ],
+    "instructions": "1. Préparer 650 ml de bouillon chaud avec le cube. Émincer l’oignon et les champignons nettoyés.\n2. Dans une sauteuse, faire revenir les champignons dans la moitié de l’huile puis réserver. Faire revenir l’oignon dans le reste d’huile.\n3. Ajouter le riz et remuer 1 minute. Verser le bouillon une louche à la fois en remuant régulièrement, environ 18 à 22 minutes, jusqu’à ce que le riz soit tendre.\n4. Ajouter les champignons, le beurre et le parmesan. Mélanger et servir aussitôt.",
+    "diet": "vegetarian"
+  },
+  {
+    "id": "app-burger",
+    "title": "Burgers maison au fromage",
+    "servings": 2,
+    "minutes": 30,
+    "source": "app",
+    "authorId": 0,
+    "category": "pleasure",
+    "categorySource": "catalog",
+    "illustration": "quick",
+    "equipment": [
+      "Plaques de cuisson"
+    ],
+    "ingredients": [
+      {
+        "name": "Pains à burger",
+        "quantity": 2,
+        "unit": "piece",
+        "aisle": "pantry"
+      },
+      {
+        "name": "Bœuf haché",
+        "quantity": 250,
+        "unit": "g",
+        "aisle": "meat"
+      },
+      {
+        "name": "Cheddar",
+        "quantity": 40,
+        "unit": "g",
+        "aisle": "dairy"
+      },
+      {
+        "name": "Tomates",
+        "quantity": 150,
+        "unit": "g",
+        "aisle": "produce"
+      },
+      {
+        "name": "Salade verte",
+        "quantity": 50,
+        "unit": "g",
+        "aisle": "produce"
+      },
+      {
+        "name": "Ketchup",
+        "quantity": 30,
+        "unit": "g",
+        "aisle": "pantry"
+      },
+      {
+        "name": "Huile d’olive",
+        "quantity": 10,
+        "unit": "ml",
+        "aisle": "pantry"
+      }
+    ],
+    "instructions": "1. Laver et couper la tomate et la salade. Former deux steaks avec le bœuf haché.\n2. Cuire les steaks dans l’huile jusqu’à cuisson complète à cœur, en les retournant. Poser le cheddar dessus en fin de cuisson.\n3. Réchauffer les pains à sec dans une autre poêle. Garnir avec ketchup, salade, tomate et steak cuit. Servir aussitôt.",
+    "diet": "omnivore"
+  },
+  {
+    "id": "app-quiche",
+    "title": "Quiche aux poireaux et fromage",
+    "servings": 2,
+    "minutes": 50,
+    "source": "app",
+    "authorId": 0,
+    "category": "pleasure",
+    "categorySource": "catalog",
+    "illustration": "oven",
+    "equipment": [
+      "Four",
+      "Plaques de cuisson"
+    ],
+    "ingredients": [
+      {
+        "name": "Pâte brisée",
+        "quantity": 1,
+        "unit": "piece",
+        "aisle": "pantry"
+      },
+      {
+        "name": "Poireaux",
+        "quantity": 400,
+        "unit": "g",
+        "aisle": "produce"
+      },
+      {
+        "name": "Œufs",
+        "quantity": 3,
+        "unit": "piece",
+        "aisle": "dairy"
+      },
+      {
+        "name": "Crème fraîche",
+        "quantity": 150,
+        "unit": "g",
+        "aisle": "dairy"
+      },
+      {
+        "name": "Fromage râpé",
+        "quantity": 60,
+        "unit": "g",
+        "aisle": "dairy"
+      },
+      {
+        "name": "Huile d’olive",
+        "quantity": 15,
+        "unit": "ml",
+        "aisle": "pantry"
+      }
+    ],
+    "instructions": "1. Préchauffer le four à 180 °C. Laver soigneusement les poireaux, les émincer et les faire revenir 12 minutes dans l’huile avec un petit fond d’eau.\n2. Garnir un petit moule à tarte de pâte brisée. Piquer le fond.\n3. Battre les œufs et la crème, puis incorporer les poireaux égouttés et le fromage. Verser sur la pâte.\n4. Enfourner 30 à 35 minutes, jusqu’à ce que la pâte soit dorée et la garniture prise. Cette petite quiche convient à deux portions généreuses.",
+    "diet": "vegetarian"
+  },
+  {
+    "id": "app-croque",
+    "title": "Croque-monsieur et salade",
+    "servings": 2,
+    "minutes": 20,
+    "source": "app",
+    "authorId": 0,
+    "category": "pleasure",
+    "categorySource": "catalog",
+    "illustration": "quick",
+    "equipment": [
+      "Four"
+    ],
+    "ingredients": [
+      {
+        "name": "Pain de mie",
+        "quantity": 4,
+        "unit": "piece",
+        "aisle": "pantry"
+      },
+      {
+        "name": "Jambon blanc",
+        "quantity": 2,
+        "unit": "piece",
+        "aisle": "meat"
+      },
+      {
+        "name": "Fromage râpé",
+        "quantity": 80,
+        "unit": "g",
+        "aisle": "dairy"
+      },
+      {
+        "name": "Crème fraîche",
+        "quantity": 40,
+        "unit": "g",
+        "aisle": "dairy"
+      },
+      {
+        "name": "Salade verte",
+        "quantity": 100,
+        "unit": "g",
+        "aisle": "produce"
+      }
+    ],
+    "instructions": "1. Préchauffer le four à 200 °C. Mélanger la crème et le fromage râpé.\n2. Répartir la moitié du mélange sur deux tranches de pain, ajouter le jambon puis fermer avec les deux autres tranches. Étaler le reste de crème au fromage dessus.\n3. Enfourner environ 12 minutes jusqu’à ce que les croques soient dorés et bien chauds. Laver et essorer la salade pour les accompagner.",
+    "diet": "omnivore"
+  },
+  {
+    "id": "app-pizza-frozen",
+    "title": "Pizza surgelée à partager",
+    "servings": 2,
+    "minutes": 25,
+    "source": "app",
+    "authorId": 0,
+    "category": "joker",
+    "categorySource": "catalog",
+    "illustration": "quick",
+    "equipment": [
+      "Four"
+    ],
+    "ingredients": [
+      {
+        "name": "Pizza surgelée au fromage",
+        "quantity": 1,
+        "unit": "piece",
+        "aisle": "frozen"
+      }
+    ],
+    "instructions": "1. Préchauffer le four à la température indiquée sur l’emballage.\n2. Retirer tous les emballages et cuire la pizza selon la notice. Le temps total inclut le préchauffage ; adapter si le produit demande plus de temps.\n3. Couper en deux portions et partager. Une grande pizza est prévue pour deux ; vérifier la portion sur le paquet.",
+    "diet": "vegetarian"
+  },
+  {
+    "id": "app-ravioli-tin",
+    "title": "Raviolis de dépannage",
+    "servings": 2,
+    "minutes": 10,
+    "source": "app",
+    "authorId": 0,
+    "category": "joker",
+    "categorySource": "catalog",
+    "illustration": "bowl",
+    "equipment": [
+      "Plaques de cuisson"
+    ],
+    "ingredients": [
+      {
+        "name": "Raviolis au bœuf en conserve",
+        "quantity": 800,
+        "unit": "g",
+        "aisle": "pantry"
+      }
+    ],
+    "instructions": "1. Verser les raviolis dans une casserole.\n2. Réchauffer à feu doux en remuant, en suivant les indications du fabricant. Vérifier qu’ils sont bien chauds et répartir dans deux assiettes.",
+    "diet": "omnivore"
+  },
+  {
+    "id": "app-gnocchi-ready",
+    "title": "Gnocchis poêlés à la sauce tomate",
+    "servings": 2,
+    "minutes": 15,
+    "source": "app",
+    "authorId": 0,
+    "category": "joker",
+    "categorySource": "catalog",
+    "illustration": "skillet",
+    "equipment": [
+      "Plaques de cuisson"
+    ],
+    "ingredients": [
+      {
+        "name": "Gnocchis à poêler",
+        "quantity": 400,
+        "unit": "g",
+        "aisle": "dairy"
+      },
+      {
+        "name": "Sauce tomate cuisinée",
+        "quantity": 200,
+        "unit": "g",
+        "aisle": "pantry"
+      },
+      {
+        "name": "Huile d’olive",
+        "quantity": 10,
+        "unit": "ml",
+        "aisle": "pantry"
+      }
+    ],
+    "instructions": "1. Chauffer l’huile dans une poêle. Ajouter les gnocchis à poêler et les cuire selon leur notice, en les retournant régulièrement.\n2. Ajouter la sauce tomate cuisinée et réchauffer quelques minutes. Vérifier que l’ensemble est bien chaud avant de servir.",
+    "diet": "vegetarian"
+  },
+  {
+    "id": "app-red-lentil-dal",
+    "title": "Dahl de lentilles corail et riz",
+    "servings": 2,
+    "minutes": 30,
+    "source": "app",
+    "authorId": 0,
+    "category": "balanced",
+    "categorySource": "catalog",
+    "illustration": "bowl",
+    "equipment": [
+      "Plaques de cuisson"
+    ],
+    "ingredients": [
+      {
+        "name": "Lentilles corail sèches",
+        "quantity": 140,
+        "unit": "g",
+        "aisle": "pantry"
+      },
+      {
+        "name": "Riz",
+        "quantity": 100,
+        "unit": "g",
+        "aisle": "pantry"
+      },
+      {
+        "name": "Tomates concassées",
+        "quantity": 200,
+        "unit": "g",
+        "aisle": "pantry"
+      },
+      {
+        "name": "Lait de coco",
+        "quantity": 150,
+        "unit": "ml",
+        "aisle": "pantry"
+      },
+      {
+        "name": "Oignon",
+        "quantity": 1,
+        "unit": "piece",
+        "aisle": "produce"
+      },
+      {
+        "name": "Curry en poudre",
+        "quantity": 4,
+        "unit": "g",
+        "aisle": "pantry"
+      },
+      {
+        "name": "Huile d’olive",
+        "quantity": 15,
+        "unit": "ml",
+        "aisle": "pantry"
+      }
+    ],
+    "instructions": "1. Cuire le riz selon le paquet. Rincer les lentilles corail.\n2. Émincer l’oignon et le faire revenir dans l’huile pendant 5 minutes. Ajouter le curry, les tomates et les lentilles.\n3. Ajouter le lait de coco et 250 ml d’eau. Laisser mijoter environ 18 minutes en remuant, jusqu’à ce que les lentilles soient tendres. Ajouter de l’eau si nécessaire. Servir avec le riz.",
+    "diet": "vegan"
+  },
+  {
+    "id": "app-vegetable-couscous",
+    "title": "Couscous aux légumes et pois chiches",
+    "servings": 2,
+    "minutes": 30,
+    "source": "app",
+    "authorId": 0,
+    "category": "balanced",
+    "categorySource": "catalog",
+    "illustration": "bowl",
+    "equipment": [
+      "Plaques de cuisson"
+    ],
+    "ingredients": [
+      {
+        "name": "Semoule de couscous",
+        "quantity": 150,
+        "unit": "g",
+        "aisle": "pantry"
+      },
+      {
+        "name": "Pois chiches cuits",
+        "quantity": 250,
+        "unit": "g",
+        "aisle": "pantry"
+      },
+      {
+        "name": "Carottes",
+        "quantity": 200,
+        "unit": "g",
+        "aisle": "produce"
+      },
+      {
+        "name": "Courgettes",
+        "quantity": 250,
+        "unit": "g",
+        "aisle": "produce"
+      },
+      {
+        "name": "Tomates concassées",
+        "quantity": 200,
+        "unit": "g",
+        "aisle": "pantry"
+      },
+      {
+        "name": "Huile d’olive",
+        "quantity": 15,
+        "unit": "ml",
+        "aisle": "pantry"
+      },
+      {
+        "name": "Ras el-hanout",
+        "quantity": 4,
+        "unit": "g",
+        "aisle": "pantry"
+      }
+    ],
+    "instructions": "1. Laver les légumes, éplucher les carottes et couper le tout en petits morceaux.\n2. Faire revenir les carottes dans l’huile 5 minutes. Ajouter les courgettes, les tomates, les épices et 200 ml d’eau. Laisser mijoter environ 15 minutes.\n3. Ajouter les pois chiches égouttés pour les réchauffer. Pendant ce temps, préparer la semoule avec l’eau bouillante selon le paquet.\n4. Égrainer la semoule à la fourchette et servir avec les légumes et leur bouillon.",
+    "diet": "vegan"
+  }
+]

@@ -54,7 +54,7 @@ export default defineConfig({
         ]
       },
       workbox: {
-        globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2,ttf}'],
+        globPatterns: ['**/*.{js,css,html,ico,png,webp,svg,woff2,ttf}'],
         cleanupOutdatedCaches: true,
         runtimeCaching: [
           {

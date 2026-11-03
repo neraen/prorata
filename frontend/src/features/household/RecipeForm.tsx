@@ -14,7 +14,7 @@ export function RecipeForm({ recipe, onSave, onClose }: { recipe?: Recipe; onSav
   const [title, setTitle] = useState(recipe?.title ?? '')
   const [servings, setServings] = useState(recipe?.servings ?? 2)
   const [category, setCategory] = useState<MealCategory | ''>(recipe?.category ?? '')
-  const [categorySource, setCategorySource] = useState<'user' | 'ai'>(recipe?.categorySource ?? 'user')
+  const [categorySource, setCategorySource] = useState<'user' | 'ai'>(recipe?.categorySource === 'ai' ? 'ai' : 'user')
   const [categoryReason, setCategoryReason] = useState(recipe?.categoryReason ?? '')
   const [automatic, setAutomatic] = useState(true)
   const [minutes, setMinutes] = useState(recipe?.minutes ?? 30)

@@ -6,7 +6,7 @@ import { fieldClass } from './RecipeForm'
 
 export function RecipeCategoryEditor({ recipe, onSave }: { recipe: Recipe; onSave: (payload: Record<string, unknown>) => Promise<unknown> }) {
   const [category, setCategory] = useState<MealCategory | ''>(recipe.category ?? '')
-  const [source, setSource] = useState<'user' | 'ai'>(recipe.categorySource ?? 'user')
+  const [source, setSource] = useState<'user' | 'ai'>(recipe.categorySource === 'ai' ? 'ai' : 'user')
   const [reason, setReason] = useState(recipe.categoryReason ?? '')
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState('')

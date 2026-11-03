@@ -35,7 +35,8 @@ class MealContextBuilderTest extends TestCase
         $state = HouseholdService::emptyState();
         $state['foodProfile'] = [...FoodProfile::defaults(), 'diet' => 'vegan'];
         $context = (new MealContextBuilder())->build($state, ['instructions' => '', 'slots' => [['date' => '2026-11-02', 'slot' => 'dinner']]], '2026-11-01');
-        self::assertSame(['app-curry'], array_column($context['retrievedRecipes'], 'id'));
+        self::assertContains('app-curry', array_column($context['retrievedRecipes'], 'id'));
+        foreach (['app-pasta', 'app-omelette', 'app-lentil-salad', 'app-pizza-frozen', 'app-ravioli-tin'] as $id) self::assertNotContains($id, array_column($context['retrievedRecipes'], 'id'));
     }
 
     public function testRetrievalIsBoundedAndDoesNotSendTheEntireLibrary(): void
@@ -67,7 +68,7 @@ class MealContextBuilderTest extends TestCase
         $state['foodProfile'] = [...FoodProfile::defaults(), 'equipment' => ['Four', 'Plaques de cuisson']];
         $context = (new MealContextBuilder())->build($state, ['instructions' => 'Une soupe', 'slots' => [['date' => '2026-11-02', 'slot' => 'dinner']]], '2026-11-01');
         self::assertNotContains('soup', array_column($context['retrievedRecipes'], 'id'));
-        self::assertContains('Mixeur', MealContextBuilder::requiredEquipment($state['recipes'][3]));
+        self::assertContains('Mixeur', MealContextBuilder::requiredEquipment(array_find($state['recipes'], fn ($r) => $r['id'] === 'soup')));
     }
 
 }

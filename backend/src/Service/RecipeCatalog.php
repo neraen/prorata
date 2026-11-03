@@ -8,7 +8,7 @@ final class RecipeCatalog
 {
     public static function recipes(): array
     {
-        return [
+        $recipes = [
             [
                 'id' => 'app-pasta', 'title' => 'Pâtes aux tomates et mozzarella', 'servings' => 2, 'minutes' => 20,
                 'source' => 'app', 'authorId' => 0,
@@ -45,5 +45,34 @@ final class RecipeCatalog
                 ],
             ],
         ];
+        $metadata = [
+            'app-pasta' => ['diet' => 'vegetarian', 'category' => 'everyday', 'illustration' => 'pasta', 'equipment' => ['Plaques de cuisson']],
+            'app-curry' => ['diet' => 'vegan', 'category' => 'balanced', 'illustration' => 'bowl', 'equipment' => ['Plaques de cuisson']],
+            'app-omelette' => ['diet' => 'vegetarian', 'category' => 'everyday', 'illustration' => 'skillet', 'equipment' => ['Plaques de cuisson']],
+        ];
+        $recipes = array_map(fn ($recipe) => [...$recipe, ...$metadata[$recipe['id']], 'categorySource' => 'catalog'], $recipes);
+        $extra = json_decode(file_get_contents(dirname(__DIR__, 2).'/resources/recipes/catalog.json'), true, 64, JSON_THROW_ON_ERROR);
+        return [...$recipes, ...$extra];
+    }
+
+    /** Refresh app content for existing couples while keeping personal recipes and category choices. */
+    public static function merge(array $saved): array
+    {
+        $catalog = array_column(self::recipes(), null, 'id');
+        $merged = [];
+        foreach ($saved as $recipe) {
+            $id = $recipe['id'];
+            if (isset($catalog[$id]) && ($recipe['source'] ?? null) === 'app') {
+                $fresh = $catalog[$id];
+                // An explicit null is also a choice to leave this recipe unclassified.
+                if (array_key_exists('category', $recipe) && ($recipe['categorySource'] ?? null) !== 'catalog') {
+                    foreach (['category', 'categorySource', 'categoryReason'] as $field) $fresh[$field] = $recipe[$field] ?? null;
+                }
+                $recipe = $fresh;
+            }
+            $merged[] = $recipe;
+            unset($catalog[$id]);
+        }
+        return [...$merged, ...array_values($catalog)];
     }
 }

@@ -79,7 +79,7 @@ final class MealProposalValidator
                 foreach ($ingredients as &$ingredient) $ingredient['quantity'] = round($ingredient['quantity'] * $profile['servings'] / $baseServings, 3);
                 unset($ingredient);
             }
-            if (self::hasObviousConflict($ingredients, $profile)) throw new BadRequestHttpException();
+            if (self::hasRecipeConflict([...$recipe, 'ingredients' => $ingredients], $profile)) throw new BadRequestHttpException();
             $equipment = FoodProfile::strings(MealContextBuilder::requiredEquipment($recipe), 10, 80);
             // Exact equipment identifiers are supplied in the context.
             if ($profile['equipment'] && array_diff(array_map(FoodProfile::fold(...), $equipment), array_map(FoodProfile::fold(...), $profile['equipment']))) throw new BadRequestHttpException();
@@ -149,10 +149,25 @@ final class MealProposalValidator
     }
 
     /** Reject obvious conflicts; this is not a complete allergen or nutrition database. */
+    public static function hasRecipeConflict(array $recipe, array $profile): bool
+    {
+        $diet = $recipe['diet'] ?? null;
+        if ($diet !== null) {
+            $allowed = match ($profile['diet']) {
+                'vegan' => ['vegan'],
+                'vegetarian' => ['vegan', 'vegetarian'],
+                'pescatarian' => ['vegan', 'vegetarian', 'pescatarian'],
+                default => ['vegan', 'vegetarian', 'pescatarian', 'omnivore'],
+            };
+            if (!in_array($diet, $allowed, true)) return true;
+        }
+        return self::hasObviousConflict($recipe['ingredients'], $profile);
+    }
+
     public static function hasObviousConflict(array $ingredients, array $profile): bool
     {
         $groups = [
-            'lait' => ['lait', 'beurre', 'creme', 'fromage', 'mozzarella', 'yaourt', 'parmesan'],
+            'lait' => ['lait', 'beurre', 'creme', 'fromage', 'mozzarella', 'yaourt', 'parmesan', 'feta', 'reblochon', 'cheddar', 'emmental', 'comte', 'ricotta', 'mascarpone', 'gruyere'],
             'oeuf' => ['oeuf', 'oeufs', 'mayonnaise'],
             'arachide' => ['arachide', 'cacahuete', 'cacahuetes'],
             'gluten' => ['ble', 'orge', 'seigle', 'boulgour', 'couscous'],

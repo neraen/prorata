@@ -20,7 +20,7 @@ final class MealContextBuilder
         $terms = array_unique(array_filter(preg_split('/[^\p{L}\p{N}]+/u', $search), fn ($t) => mb_strlen($t) > 2));
         $ranked = [];
         foreach ($state['recipes'] as $recipe) {
-            if (count($recipe['ingredients']) > 40 || MealProposalValidator::hasObviousConflict($recipe['ingredients'], $profile)) continue;
+            if (count($recipe['ingredients']) > 40 || MealProposalValidator::hasRecipeConflict($recipe, $profile)) continue;
             $recipe['equipment'] = self::requiredEquipment($recipe);
             if ($profile['equipment'] && array_diff($recipe['equipment'], $profile['equipment'])) continue;
             $body = FoodProfile::fold($recipe['title'].' '.implode(' ', array_column($recipe['ingredients'], 'name')));
