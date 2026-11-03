@@ -83,7 +83,7 @@ export function MealsPage() {
   }
   return <div className="flex flex-col gap-5">
     <header><p className="mb-1 text-xs font-bold uppercase tracking-widest text-positive">À table, à deux</p><h1 className="text-[30px] font-extrabold tracking-tight">Nos repas</h1><p className="mt-1 text-sm text-muted">De l’idée à l’assiette, une semaine bien préparée.</p></header>
-    <Link to={`/meals/assistant?week=${weekDates(offset)[0]}`} className="flex min-h-[60px] items-center justify-between gap-3 rounded-[18px] bg-positive-bg px-4 py-3 text-sm font-bold text-positive"><span>✦ Préparer nos repas avec l’assistant</span><span aria-hidden="true">→</span></Link>
+    <Link to={`/meals/assistant?week=${weekDates(offset)[0]}`} className="flex min-h-[60px] items-center justify-between gap-3 rounded-[18px] bg-positive-bg px-4 py-3 text-sm font-bold text-positive"><span>✦ Organiser notre semaine</span><span aria-hidden="true">→</span></Link>
     <Link to="/meals/stock" className="flex min-h-12 items-center justify-between rounded-[16px] border bg-surface px-4 text-sm font-bold"><span>Notre stock · {data?.foodProfile?.pantry.length ?? 0} aliments</span><span aria-hidden="true">→</span></Link>
     <div className="grid grid-cols-2 gap-1 rounded-[16px] bg-segment-bg p-1">{([['week', 'Ma semaine'], ['recipes', 'Les recettes']] as const).map(([value, label]) => <button key={value} type="button" aria-pressed={tab === value} onClick={() => setTab(value)} className={`h-11 rounded-[12px] text-sm font-bold ${tab === value ? 'bg-surface shadow-segment' : 'text-muted'}`}>{label}</button>)}</div>
     <HouseholdStatus loading={household.isPending} error={household.isError && !data} retry={() => void household.refetch()} />

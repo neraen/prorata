@@ -79,6 +79,68 @@ class MealAssistantServiceTest extends TestCase
         self::assertNull($service->status(1)['draft']);
     }
 
+    public function testApprovalCanCreateShoppingOnceAndPreservesManualArticles(): void
+    {
+        $service = $this->service();
+        $this->household->execute(1, 7, ['id' => 'manual', 'type' => 'shopping.add', 'payload' => ['id' => 'soap', 'name' => 'Savon', 'quantity' => 1, 'unit' => 'piece', 'aisle' => 'other']]);
+        $draft = $service->generate(1, 7, $this->request);
+        $state = $service->accept(1, 7, $draft['id'], true);
+        self::assertCount(2, $state['shopping']);
+        self::assertTrue(array_any($state['shopping'], fn ($i) => $i['id'] === 'soap'));
+        self::assertSame($state['revision'], $service->accept(1, 7, $draft['id'], true)['revision']);
+        self::assertCount(2, $service->accept(1, 7, $draft['id'], true)['shopping']);
+    }
+
+    public function testReplacementIsValidatedAndDoesNotSpendAnotherAiCall(): void
+    {
+        $recipe = ['id' => 'replacement', 'title' => 'Autres raviolis', 'category' => 'joker', 'minutes' => 15, 'servings' => 4, 'instructions' => 'Réchauffer au four.', 'ingredients' => [['name' => 'Raviolis', 'quantity' => 800, 'unit' => 'g', 'aisle' => 'pantry']]];
+        $this->household->execute(1, 7, ['id' => 'saved-recipe', 'type' => 'recipe.save', 'payload' => $recipe]);
+        $service = $this->service();
+        $draft = $service->generate(1, 7, $this->request);
+        $changed = $service->replace(1, 7, $draft['id'], [...$this->request['slots'][0], 'recipeId' => 'replacement']);
+        self::assertSame('Autres raviolis', $changed['proposal']['meals'][0]['title']);
+        self::assertEquals(400, $changed['proposal']['meals'][0]['ingredients'][0]['quantity']);
+        self::assertNull($changed['proposal']['meals'][0]['estimatedCostCents']);
+        self::assertSame(19, $service->status(1)['remaining']);
+        $accepted = $service->accept(1, 7, $draft['id']);
+        self::assertSame('replacement', array_values($accepted['meals'])[0]['recipeId']);
+        $this->expectException(ConflictHttpException::class);
+        $service->replace(1, 7, $draft['id'], [...$this->request['slots'][0], 'recipeId' => 'replacement']);
+    }
+
+    public function testIncompatibleReplacementLeavesTheSavedDraftUnchanged(): void
+    {
+        $recipe = ['id' => 'too-long', 'title' => 'Plat long', 'minutes' => 120, 'servings' => 2, 'instructions' => 'Réchauffer au four.', 'ingredients' => [['name' => 'Raviolis', 'quantity' => 500, 'unit' => 'g', 'aisle' => 'pantry']]];
+        $this->household->execute(1, 7, ['id' => 'long-recipe', 'type' => 'recipe.save', 'payload' => $recipe]);
+        $service = $this->service();
+        $draft = $service->generate(1, 7, $this->request);
+        try { $service->replace(1, 7, $draft['id'], [...$this->request['slots'][0], 'recipeId' => 'too-long']); self::fail('Incompatible replacement expected'); }
+        catch (\Symfony\Component\HttpKernel\Exception\ServiceUnavailableHttpException) {
+            self::assertSame($draft['proposal'], $service->status(1)['draft']['proposal']);
+            self::assertSame(19, $service->status(1)['remaining']);
+        }
+    }
+
+    public function testOtherCoupleCannotReplaceDraft(): void
+    {
+        $service = $this->service();
+        $draft = $service->generate(1, 7, $this->request);
+        $this->expectException(NotFoundHttpException::class);
+        $service->replace(2, 9, $draft['id'], [...$this->request['slots'][0], 'recipeId' => 'app-pasta']);
+    }
+
+    public function testRequestedServingsAreAppliedWithoutChangingProfile(): void
+    {
+        $this->request['servings'] = 4;
+        $this->proposal['meals'][0]['servings'] = 4;
+        $service = $this->service();
+        $draft = $service->generate(1, 7, $this->request);
+        self::assertSame(4, $draft['proposal']['meals'][0]['servings']);
+        self::assertSame(2, $this->household->read(1)['foodProfile']['servings']);
+        $state = $service->accept(1, 7, $draft['id']);
+        self::assertSame(4, array_values($state['meals'])[0]['servings']);
+    }
+
     public function testAnotherCoupleCannotApproveDraft(): void
     {
         $service = $this->service();

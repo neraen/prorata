@@ -25,7 +25,7 @@ class MealOpenAiClient
     {
         $instructions = file_get_contents($this->promptPath);
         if ($instructions === false) throw new \RuntimeException('Prompt de l’assistant introuvable.');
-        return $this->structured($instructions, ['request' => $request, 'householdContext' => $context], MealProposalSchema::schema(), 'household_meal_proposal', 10000);
+        return $this->structured($instructions, ['request' => $request, 'householdContext' => $context], MealProposalSchema::schema(), 'household_meal_proposal', count($request['slots'] ?? []) > 7 ? 16000 : 10000);
     }
 
     public function classify(array $recipe): array

@@ -44,10 +44,21 @@ class MealAssistantController extends AbstractApiController
         return new JsonResponse($assistant->generate($couple->getId(), $this->getCurrentUser()->getId(), $request->toArray()), headers: ['Cache-Control' => 'private, no-store']);
     }
 
-    #[Route('/proposals/{id}/accept', name: 'api_meal_assistant_accept', methods: ['POST'])]
-    public function accept(string $id, MealAssistantService $assistant): JsonResponse
+    #[Route('/proposals/{id}/replace', name: 'api_meal_assistant_replace', methods: ['POST'])]
+    public function replace(string $id, Request $request, MealAssistantService $assistant): JsonResponse
     {
-        $state = $assistant->accept($this->requireCouple()->getId(), $this->getCurrentUser()->getId(), $id);
+        $couple = $this->requireCouple();
+        if (strlen($request->getContent()) > 2000) throw new BadRequestHttpException('Demande trop longue.');
+        return new JsonResponse($assistant->replace($couple->getId(), $this->getCurrentUser()->getId(), $id, $request->toArray()), headers: ['Cache-Control' => 'private, no-store']);
+    }
+
+    #[Route('/proposals/{id}/accept', name: 'api_meal_assistant_accept', methods: ['POST'])]
+    public function accept(string $id, Request $request, MealAssistantService $assistant): JsonResponse
+    {
+        if (strlen($request->getContent()) > 1000) throw new BadRequestHttpException('Demande trop longue.');
+        $input = $request->getContent() === '' ? [] : $request->toArray();
+        if (isset($input['createShoppingList']) && !is_bool($input['createShoppingList'])) throw new BadRequestHttpException('Choix de liste invalide.');
+        $state = $assistant->accept($this->requireCouple()->getId(), $this->getCurrentUser()->getId(), $id, $input['createShoppingList'] ?? false);
         unset($state['appliedCommands']);
         $state['meals'] = (object) $state['meals'];
         return new JsonResponse($state, headers: ['Cache-Control' => 'private, no-store']);

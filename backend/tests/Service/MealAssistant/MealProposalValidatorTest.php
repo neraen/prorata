@@ -30,6 +30,19 @@ class MealProposalValidatorTest extends TestCase
 
     private function context(): array { return ['profile' => [...FoodProfile::defaults(), 'equipment' => ['Four']], 'retrievedRecipes' => []]; }
 
+    public function testAFullWeekCanContainLunchAndDinnerWithExplicitServings(): void
+    {
+        $slots = [];
+        for ($day = 2; $day <= 8; ++$day) foreach (['lunch', 'dinner'] as $slot) $slots[] = ['date' => '2026-11-0'.$day, 'slot' => $slot];
+        $input = [...self::requestData(), 'slots' => $slots, 'servings' => 3, 'mix' => ['everyday' => 14, 'balanced' => 0, 'pleasure' => 0, 'joker' => 0]];
+        $request = (new MealProposalValidator())->request($input, HouseholdService::emptyState(), '2026-11-01');
+        self::assertCount(14, $request['slots']);
+        self::assertSame(3, $request['servings']);
+        $input['slots'][] = ['date' => '2026-11-09', 'slot' => 'dinner'];
+        $this->expectException(BadRequestHttpException::class);
+        (new MealProposalValidator())->request($input, HouseholdService::emptyState(), '2026-11-01');
+    }
+
     public function testJokerRemainsOneReadyMadeProduct(): void
     {
         $result = (new MealProposalValidator())->proposal(self::proposalData(), self::requestData(), $this->context());

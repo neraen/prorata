@@ -24,12 +24,13 @@ export interface Proposal {
 }
 export interface AssistantDraft { id: string; proposal: Proposal; model: string; createdAt: string }
 export interface AssistantStatus { enabled: boolean; model: string; dailyLimit: number; remaining: number; draft: AssistantDraft | null }
-export interface AssistantRequest { id: string; slots: { date: string; slot: Meal['slot'] }[]; mix: Record<MealCategory, number>; instructions: string; budgetCents: number | null }
+export interface AssistantRequest { id: string; slots: { date: string; slot: Meal['slot'] }[]; mix: Record<MealCategory, number>; instructions: string; budgetCents: number | null; servings?: number }
 export const assistantApi = {
   classify: (request: { id: string; recipe: { title: string; servings: number; minutes: number; instructions: string; ingredients: Ingredient[] } }) => apiFetch<{ id: string; category: MealCategory | null; reason: string; confidence: 'low' | 'medium' | 'high' }>('/household/assistant/classify', { method: 'POST', body: JSON.stringify(request) }),
   status: () => apiFetch<AssistantStatus>('/household/assistant', { cache: 'no-store' }),
   generate: (request: AssistantRequest) => apiFetch<AssistantDraft>('/household/assistant/proposals', { method: 'POST', body: JSON.stringify(request) }),
-  accept: (id: string) => apiFetch<Household>(`/household/assistant/proposals/${encodeURIComponent(id)}/accept`, { method: 'POST' }),
+  replace: (id: string, request: { date: string; slot: Meal['slot']; recipeId: string }) => apiFetch<AssistantDraft>(`/household/assistant/proposals/${encodeURIComponent(id)}/replace`, { method: 'POST', body: JSON.stringify(request) }),
+  accept: (id: string, createShoppingList = false) => apiFetch<Household>(`/household/assistant/proposals/${encodeURIComponent(id)}/accept`, { method: 'POST', body: JSON.stringify({ createShoppingList }) }),
 }
 export function dateKey(date = new Date()) { return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}` }
 export function datesFrom(start: string) { return Array.from({ length: 7 }, (_, i) => { const d = new Date(`${start}T12:00:00`); d.setDate(d.getDate() + i); return dateKey(d) }) }

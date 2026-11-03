@@ -12,7 +12,7 @@ final class MealProposalValidator
     public function request(array $input, array $state, string $today): array
     {
         $slots = $input['slots'] ?? null;
-        if (!is_array($slots) || !array_is_list($slots) || count($slots) < 1 || count($slots) > 7) throw new BadRequestHttpException('Sélectionne entre 1 et 7 repas.');
+        if (!is_array($slots) || !array_is_list($slots) || count($slots) < 1 || count($slots) > 14) throw new BadRequestHttpException('Sélectionne entre 1 et 14 repas.');
         $max = (new \DateTimeImmutable($today))->modify('+90 days')->format('Y-m-d');
         $keys = [];
         $slots = array_map(function ($slot) use ($state, $today, $max, &$keys) {
@@ -27,9 +27,9 @@ final class MealProposalValidator
         }, $slots);
         if (!is_array($input['mix'] ?? null)) throw new BadRequestHttpException('Répartition invalide.');
         $mix = [];
-        foreach (FoodProfile::CATEGORIES as $category) $mix[$category] = FoodProfile::integer($input['mix'][$category] ?? 0, 0, 7);
+        foreach (FoodProfile::CATEGORIES as $category) $mix[$category] = FoodProfile::integer($input['mix'][$category] ?? 0, 0, 14);
         if (array_sum($mix) !== count($slots)) throw new BadRequestHttpException('La répartition doit correspondre au nombre de repas sélectionnés.');
-        return ['slots' => $slots, 'mix' => $mix, 'instructions' => FoodProfile::text($input['instructions'] ?? '', 1500, true), 'budgetCents' => ($input['budgetCents'] ?? null) === null ? null : FoodProfile::integer($input['budgetCents'], 100, 1000000)];
+        return ['slots' => $slots, 'mix' => $mix, 'instructions' => FoodProfile::text($input['instructions'] ?? '', 1500, true), 'servings' => FoodProfile::integer($input['servings'] ?? ($state['foodProfile']['servings'] ?? 2), 1, 20), 'budgetCents' => ($input['budgetCents'] ?? null) === null ? null : FoodProfile::integer($input['budgetCents'], 100, 1000000)];
     }
 
     public function proposal(array $data, array $request, array $context): array
@@ -43,7 +43,7 @@ final class MealProposalValidator
         $result = ['summary' => FoodProfile::text($data['summary'] ?? null, 1500)];
         foreach (['warnings', 'assumptions', 'questions'] as $key) $result[$key] = FoodProfile::strings($data[$key] ?? null, 12, 800);
         $result['optimizationTips'] = FoodProfile::strings($data['optimizationTips'] ?? null, 5, 800);
-        if (!is_array($data['meals'] ?? null) || !array_is_list($data['meals']) || count($data['meals']) > 7) throw new BadRequestHttpException();
+        if (!is_array($data['meals'] ?? null) || !array_is_list($data['meals']) || count($data['meals']) > 14) throw new BadRequestHttpException();
         if (!$data['meals']) {
             if (!$result['questions'] && !$result['warnings']) throw new BadRequestHttpException();
             return [...$result, 'meals' => []];

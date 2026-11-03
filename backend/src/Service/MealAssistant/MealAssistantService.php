@@ -66,9 +66,9 @@ class MealAssistantService
         }
     }
 
-    public function accept(int $coupleId, int $userId, string $id): array
+    public function accept(int $coupleId, int $userId, string $id, bool $createShoppingList = false): array
     {
-        return $this->connection->transactional(function () use ($coupleId, $userId, $id) {
+        return $this->connection->transactional(function () use ($coupleId, $userId, $id, $createShoppingList) {
             $this->connection->executeStatement('UPDATE couple SET household_revision = household_revision WHERE id = ?', [$coupleId]);
             $run = $this->connection->fetchAssociative('SELECT * FROM meal_assistant_run WHERE id = ? AND couple_id = ?', [$id, $coupleId]);
             if (!$run || ($run['purpose'] ?? 'plan') !== 'plan') throw new NotFoundHttpException('Proposition introuvable.');
@@ -89,7 +89,63 @@ class MealAssistantService
 
             $state = $this->household->execute($coupleId, $userId, ['id' => 'ai-accept-'.$id, 'type' => 'assistant.accept', 'payload' => ['runId' => $id, 'meals' => $proposal['meals']]], true);
             $this->connection->update('meal_assistant_run', ['accepted_at' => gmdate('Y-m-d H:i:s')], ['id' => $id, 'couple_id' => $coupleId]);
+            if ($createShoppingList) {
+                $weeks = [];
+                foreach ($proposal['meals'] as $meal) {
+                    $date = new \DateTimeImmutable($meal['date']);
+                    $week = $date->modify('-'.((int) $date->format('N') - 1).' days')->format('Y-m-d');
+                    $weeks[$week] = true;
+                }
+                foreach (array_keys($weeks) as $week) {
+                    $state = $this->household->execute($coupleId, $userId, ['id' => 'ai-shopping-'.$id.'-'.$week, 'type' => 'shopping.generate', 'payload' => ['week' => $week]]);
+                }
+            }
             return $state;
+        });
+    }
+
+    public function replace(int $coupleId, int $userId, string $id, array $input): array
+    {
+        return $this->connection->transactional(function () use ($coupleId, $id, $input) {
+            $this->connection->executeStatement('UPDATE couple SET household_revision = household_revision WHERE id = ?', [$coupleId]);
+            $run = $this->connection->fetchAssociative('SELECT * FROM meal_assistant_run WHERE id = ? AND couple_id = ?', [$id, $coupleId]);
+            if (!$run || ($run['purpose'] ?? 'plan') !== 'plan') throw new NotFoundHttpException('Proposition introuvable.');
+            if ($run['status'] !== 'ready' || $run['accepted_at'] !== null) throw new ConflictHttpException('Cette proposition ne peut plus être modifiée.');
+            $state = $this->household->read($coupleId);
+            if ($run['context_hash'] !== $this->profileHash($state)) throw new ConflictHttpException('Votre stock ou vos préférences ont changé. Prépare une nouvelle proposition.');
+            $date = FoodProfile::date($input['date'] ?? null);
+            $slot = FoodProfile::choice($input['slot'] ?? null, ['lunch', 'dinner']);
+            $recipeId = FoodProfile::text($input['recipeId'] ?? null, 100);
+            $recipe = array_find($state['recipes'], fn ($r) => $r['id'] === $recipeId);
+            if (!$recipe) throw new BadRequestHttpException('Recette introuvable.');
+            $proposal = json_decode($run['result'], true, 64, JSON_THROW_ON_ERROR);
+            $found = false;
+            foreach ($proposal['meals'] as &$meal) {
+                if ($meal['date'] !== $date || $meal['slot'] !== $slot) continue;
+                $found = true;
+                $meal = [...$meal, 'existingRecipeId' => $recipeId, 'category' => $recipe['category'] ?? $meal['category'], 'pantryUsed' => [], 'estimatedCostCents' => null];
+            }
+            unset($meal);
+            if (!$found) throw new BadRequestHttpException('Repas introuvable dans cette proposition.');
+            $mix = array_fill_keys(FoodProfile::CATEGORIES, 0);
+            foreach ($proposal['meals'] as $meal) ++$mix[$meal['category']];
+            $request = $this->validator->request(['slots' => array_map(fn ($m) => ['date' => $m['date'], 'slot' => $m['slot']], $proposal['meals']), 'mix' => $mix, 'instructions' => '', 'servings' => $proposal['meals'][0]['servings']], $state, (new \DateTimeImmutable('now', new \DateTimeZone('Europe/Paris')))->format('Y-m-d'));
+            $context = $this->contextBuilder->build($state, $request, gmdate('Y-m-d'));
+            $ids = array_column($proposal['meals'], 'existingRecipeId');
+            $context['retrievedRecipes'] = array_values(array_filter($state['recipes'], fn ($r) => in_array($r['id'], $ids, true)));
+            // Advice about the replaced dish is no longer reliable. Rebuild
+            // deterministic warnings from the current recipes and profile.
+            foreach (['warnings', 'assumptions', 'questions', 'optimizationTips'] as $field) $proposal[$field] = [];
+            $updated = $this->present($this->validator->proposal($proposal, $request, $context));
+            $updated['context'] = $proposal['context'];
+            $updated['summary'] = 'Vos propositions, avec les remplacements que vous avez choisis.';
+            $updated['optimizationTips'] = [];
+            $updated['warnings'][] = 'Après un remplacement, vérifiez les ingrédients, l’équipement et le budget de votre semaine. Les conseils de la première proposition ont été retirés.';
+            $updated['warnings'] = array_values(array_unique($updated['warnings']));
+            $updated['recipeFingerprints'] = [];
+            foreach ($context['retrievedRecipes'] as $entry) $updated['recipeFingerprints'][$entry['id']] = hash('sha256', json_encode($entry, JSON_THROW_ON_ERROR));
+            $this->connection->update('meal_assistant_run', ['result' => json_encode($updated, JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE)], ['id' => $id, 'couple_id' => $coupleId]);
+            return ['id' => $id, 'proposal' => $updated, 'model' => $run['model'], 'createdAt' => $run['created_at']];
         });
     }
 

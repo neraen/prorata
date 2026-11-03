@@ -10,6 +10,7 @@ final class MealContextBuilder
     public function build(array $state, array $request, string $today): array
     {
         $profile = FoodProfile::normalize($state['foodProfile'] ?? []);
+        if (isset($request['servings'])) $profile['servings'] = FoodProfile::integer($request['servings'], 1, 20);
         $recentStart = (new \DateTimeImmutable($today))->modify('-42 days')->format('Y-m-d');
         $history = array_values(array_filter($state['meals'], fn ($m) => $m['date'] >= $recentStart && $m['date'] < $today));
         usort($history, fn ($a, $b) => strcmp($b['date'], $a['date']));
