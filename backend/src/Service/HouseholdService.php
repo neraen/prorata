@@ -25,6 +25,13 @@ class HouseholdService
         return ['recipes' => RecipeCatalog::recipes(), 'meals' => [], 'shopping' => [], 'appliedCommands' => [], 'foodProfile' => FoodProfile::defaults()];
     }
 
+    /** Shared responses must never contain any member’s personal task list. */
+    public static function publicState(array $state): array
+    {
+        unset($state['appliedCommands'], $state['personalTasks']);
+        return $state;
+    }
+
     public function read(int $coupleId): array
     {
         $row = $this->connection->fetchAssociative('SELECT household_data, household_revision FROM couple WHERE id = ?', [$coupleId]);
@@ -70,6 +77,11 @@ class HouseholdService
             throw new BadRequestHttpException('Données invalides.');
         }
         switch ($command['type'] ?? '') {
+            case 'task.add':
+            case 'task.set':
+            case 'task.archive':
+                $state['personalTasks'] = PersonalTasks::apply($state['personalTasks'] ?? [], $command['type'], $payload, $userId);
+                break;
             case 'pantry.import':
                 $items = $payload['items'] ?? null;
                 if (!is_array($items) || !array_is_list($items) || count($items) < 1 || count($items) > 40) throw new BadRequestHttpException('Sélectionne entre 1 et 40 aliments.');

@@ -33,6 +33,62 @@ class HouseholdServiceTest extends TestCase
         return ['id' => $id, 'title' => 'Recette test', 'servings' => 2, 'minutes' => 20, 'instructions' => 'Mélanger et cuire.', 'ingredients' => $ingredients];
     }
 
+    public function testPersonalTasksStayPrivatePersistAndSurviveSharedCommands(): void
+    {
+        $this->runCommand('task.add', ['id' => 'private-one', 'title' => 'Secret rendez-vous']);
+        $this->runCommand('task.add', ['id' => 'private-one', 'title' => 'Retry']);
+        $this->service->execute(1, 8, ['id' => 'partner-add', 'type' => 'task.add', 'payload' => ['id' => 'partner-one', 'title' => 'Autre tâche']]);
+        $state = $this->runCommand('shopping.add', ['id' => 'bread', 'name' => 'Pain', 'quantity' => 1, 'unit' => 'piece', 'aisle' => 'pantry']);
+        self::assertCount(2, $state['personalTasks']);
+        $own = \App\Service\PersonalTasks::visible($this->service->read(1)['personalTasks'], 7);
+        self::assertCount(1, $own);
+        self::assertSame('Secret rendez-vous', $own[0]['title']);
+        self::assertArrayNotHasKey('ownerId', $own[0]);
+        self::assertSame([], $this->service->read(2)['personalTasks'] ?? []);
+        $shared = HouseholdService::publicState($state);
+        self::assertArrayNotHasKey('personalTasks', $shared);
+        self::assertArrayNotHasKey('appliedCommands', $shared);
+        $context = (new \App\Service\MealAssistant\MealContextBuilder())->build($state, ['instructions' => '', 'slots' => [['date' => '2026-11-05', 'slot' => 'dinner']]], '2026-11-04');
+        self::assertStringNotContainsString('Secret rendez-vous', json_encode($context));
+    }
+
+    public function testTaskCompletionRenameAndReversibleRemoval(): void
+    {
+        $this->runCommand('task.add', ['id' => 'one', 'title' => ' Appeler ']);
+        $this->runCommand('task.set', ['id' => 'one', 'title' => 'Appeler demain', 'completed' => true]);
+        $this->runCommand('task.archive', ['id' => 'one', 'archived' => true]);
+        $state = $this->runCommand('task.archive', ['id' => 'one', 'archived' => false]);
+        self::assertSame('Appeler demain', $state['personalTasks'][0]['title']);
+        self::assertTrue($state['personalTasks'][0]['completed']);
+        self::assertFalse($state['personalTasks'][0]['archived']);
+    }
+
+    public function testPartnerCannotChangeAnyPersonalTaskField(): void
+    {
+        $before = $this->runCommand('task.add', ['id' => 'one', 'title' => 'Privé']);
+        foreach (['task.set' => ['completed' => true], 'task.archive' => ['archived' => true], 'task.add' => ['title' => 'Overwrite']] as $type => $payload) {
+            try {
+                $this->service->execute(1, 8, ['id' => uniqid(), 'type' => $type, 'payload' => ['id' => 'one', ...$payload]]);
+                self::fail('Partner write accepted');
+            } catch (\Symfony\Component\HttpKernel\Exception\NotFoundHttpException) {
+                self::assertSame($before, $this->service->read(1));
+            }
+        }
+    }
+
+    public function testInvalidTaskChangesDoNotPersist(): void
+    {
+        $before = $this->runCommand('task.add', ['id' => 'one', 'title' => 'Privé']);
+        foreach ([['title' => ' '], ['title' => str_repeat('é', 201)], ['completed' => 'false'], []] as $payload) {
+            try {
+                $this->runCommand('task.set', ['id' => 'one', ...$payload]);
+                self::fail('Invalid write accepted');
+            } catch (BadRequestHttpException) {
+                self::assertSame($before, $this->service->read(1));
+            }
+        }
+    }
+
     public function testRecipeAllowsOmittedPreparationAndOptionalPrice(): void
     {
         $payload = $this->recipe('no-steps', [['name' => 'Tomates', 'quantity' => 340, 'unit' => 'g', 'aisle' => 'produce']]);

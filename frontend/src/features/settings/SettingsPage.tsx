@@ -1,3 +1,4 @@
+import { PersonalTasksCard } from './PersonalTasksCard'
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAuthStore, useCoupleStore, useToastStore } from '../../lib/stores'
@@ -120,6 +121,8 @@ export function SettingsPage() {
       <h1 className="flex h-12 items-center text-[28px] font-extrabold tracking-[-0.03em]">
         Réglages
       </h1>
+
+      <PersonalTasksCard />
 
       {/* Répartition */}
       <Card radius="xl" className="flex flex-col gap-4">

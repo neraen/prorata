@@ -27,7 +27,7 @@ class HouseholdController extends AbstractApiController
 
     private function response(array $state): JsonResponse
     {
-        unset($state['appliedCommands']);
+        $state = \App\Service\HouseholdService::publicState($state);
         // An empty PHP map must stay an object in the client contract.
         $state['meals'] = (object) $state['meals'];
         return new JsonResponse($state, headers: ['Cache-Control' => 'private, no-store']);

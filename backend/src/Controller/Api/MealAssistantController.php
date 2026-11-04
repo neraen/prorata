@@ -59,7 +59,7 @@ class MealAssistantController extends AbstractApiController
         $input = $request->getContent() === '' ? [] : $request->toArray();
         if (isset($input['createShoppingList']) && !is_bool($input['createShoppingList'])) throw new BadRequestHttpException('Choix de liste invalide.');
         $state = $assistant->accept($this->requireCouple()->getId(), $this->getCurrentUser()->getId(), $id, $input['createShoppingList'] ?? false);
-        unset($state['appliedCommands']);
+        $state = \App\Service\HouseholdService::publicState($state);
         $state['meals'] = (object) $state['meals'];
         return new JsonResponse($state, headers: ['Cache-Control' => 'private, no-store']);
     }
