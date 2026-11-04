@@ -1,10 +1,7 @@
-import { PersonalTasksCard } from './PersonalTasksCard'
 import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
 import { useAuthStore, useCoupleStore, useToastStore } from '../../lib/stores'
 import type { CoupleSettings } from '../../lib/types'
 import { formatMoneyShort } from '../../lib/utils'
-import { ChevronRightIcon } from '../../components/icons'
 import { Avatar, Button, Card, SegmentedControl, SplitBar } from '../../components/ui'
 
 type Mode = 'income' | 'percentage' | 'equal'
@@ -32,7 +29,6 @@ function groupDigits(digits: string): string {
 
 export function SettingsPage() {
   const user = useAuthStore((s) => s.user)
-  const logout = useAuthStore((s) => s.logout)
   const { couple, partner, updateSettings } = useCoupleStore()
   const showToast = useToastStore((s) => s.show)
 
@@ -89,11 +85,6 @@ export function SettingsPage() {
     }
   }
 
-  const handleLogout = async () => {
-    await logout()
-    window.location.href = '/login'
-  }
-
   const incomeField = (
     person: { name: string },
     isSelf: boolean,
@@ -121,8 +112,6 @@ export function SettingsPage() {
       <h1 className="flex h-12 items-center text-[28px] font-extrabold tracking-[-0.03em]">
         Réglages
       </h1>
-
-      <PersonalTasksCard />
 
       {/* Répartition */}
       <Card radius="xl" className="flex flex-col gap-4">
@@ -176,33 +165,6 @@ export function SettingsPage() {
         </Button>
       </Card>
 
-      <Card className="grid gap-2 bg-pastel-sage!"><h2 className="font-bold">Votre quotidien à deux</h2><Link to="/meals/preferences" className="flex min-h-11 items-center justify-between text-sm font-semibold">Goûts, allergies et équipement<ChevronRightIcon size={18} /></Link><Link to="/meals/stock" className="flex min-h-11 items-center justify-between text-sm font-semibold">Notre frigo et nos placards<ChevronRightIcon size={18} /></Link></Card>
-      {/* Votre couple */}
-      <Card radius="xl" padding="none" className="flex flex-col px-5 py-2">
-        <div className="pt-3 pb-1 text-[13px] font-semibold uppercase tracking-[0.06em] text-muted">
-          Votre couple
-        </div>
-        <div className="flex h-[60px] items-center gap-3 border-b border-track">
-          <Avatar name={user.name} isSelf size={36} />
-          <span className="flex-1 text-[15px] font-semibold">
-            {user.name} <span className="font-medium text-muted">(vous)</span>
-          </span>
-        </div>
-        <div className="flex h-[60px] items-center gap-3 border-b border-track">
-          <Avatar name={partner.name} isSelf={false} size={36} />
-          <span className="flex-1 text-[15px] font-semibold">{partner.name}</span>
-        </div>
-        <Link to="/personal" className="flex h-[60px] items-center gap-3">
-          <span className="flex-1 text-[15px] font-semibold">Mes dépenses perso</span>
-          <span className="text-placeholder">
-            <ChevronRightIcon size={18} />
-          </span>
-        </Link>
-      </Card>
-
-      <Button variant="danger" onClick={handleLogout}>
-        Se déconnecter
-      </Button>
     </div>
   )
 }

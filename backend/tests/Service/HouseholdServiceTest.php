@@ -52,6 +52,41 @@ class HouseholdServiceTest extends TestCase
         self::assertStringNotContainsString('Secret rendez-vous', json_encode($context));
     }
 
+    public function testCoupleTasksAreVisibleEditableAndRestorableByBothMembers(): void
+    {
+        $state = $this->runCommand('task.add', ['id' => 'shared', 'title' => 'Préparer le week-end', 'scope' => 'couple']);
+        foreach ([7, 8] as $member) {
+            $visible = \App\Service\PersonalTasks::visible($state['personalTasks'], $member);
+            self::assertSame('couple', $visible[0]['scope']);
+            self::assertArrayNotHasKey('ownerId', $visible[0]);
+        }
+        $state = $this->service->execute(1, 8, ['id' => 'partner-complete', 'type' => 'task.set', 'payload' => ['id' => 'shared', 'completed' => true, 'title' => 'Week-end réservé']]);
+        self::assertTrue($state['personalTasks'][0]['completed']);
+        self::assertSame('Week-end réservé', $state['personalTasks'][0]['title']);
+        $this->service->execute(1, 8, ['id' => 'partner-remove', 'type' => 'task.archive', 'payload' => ['id' => 'shared', 'archived' => true]]);
+        $state = $this->runCommand('task.archive', ['id' => 'shared', 'archived' => false]);
+        self::assertFalse($state['personalTasks'][0]['archived']);
+        self::assertSame([], $this->service->read(2)['personalTasks'] ?? []);
+        self::assertArrayNotHasKey('personalTasks', HouseholdService::publicState($state));
+    }
+
+    public function testLegacyTasksRemainPrivateAndCannotBeSharedImplicitly(): void
+    {
+        $legacy = [['id' => 'old', 'title' => 'Privé', 'ownerId' => 7, 'completed' => false, 'archived' => false]];
+        self::assertSame('personal', \App\Service\PersonalTasks::visible($legacy, 7)[0]['scope']);
+        self::assertSame([], \App\Service\PersonalTasks::visible($legacy, 8));
+        $state = $this->runCommand('task.add', ['id' => 'personal', 'title' => 'Privé']);
+        $state = $this->runCommand('task.set', ['id' => 'personal', 'title' => 'Toujours privé', 'scope' => 'couple']);
+        self::assertSame([], \App\Service\PersonalTasks::visible($state['personalTasks'], 8));
+        self::assertSame('personal', $state['personalTasks'][0]['scope']);
+    }
+
+    public function testInvalidTaskScopeIsRejected(): void
+    {
+        $this->expectException(BadRequestHttpException::class);
+        $this->runCommand('task.add', ['id' => 'invalid', 'title' => 'Test', 'scope' => 'public']);
+    }
+
     public function testTaskCompletionRenameAndReversibleRemoval(): void
     {
         $this->runCommand('task.add', ['id' => 'one', 'title' => ' Appeler ']);

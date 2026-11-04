@@ -1,3 +1,4 @@
+import { AccountLink } from './AccountLink'
 import { useEffect, useRef } from 'react'
 import { NavLink, Outlet, useLocation } from 'react-router-dom'
 import { CartIcon, HomeIcon, ListIcon, MealIcon, StatsIcon } from './icons'
@@ -21,6 +22,7 @@ export function Layout() {
   return <div className="min-h-screen bg-bg">
     <a href="#main-content" className="sr-only focus:not-sr-only focus:fixed focus:left-3 focus:top-3 focus:z-50 focus:rounded-xl focus:bg-surface focus:p-3 focus:font-bold">Aller au contenu</a>
     <main ref={main} id="main-content" tabIndex={-1} className="mx-auto w-full max-w-[480px] px-5 pt-6 pb-[140px]">
+      {!['/', '/profile', '/budget'].includes(pathname) && <div className="mb-3 flex justify-end"><AccountLink /></div>}
       {inBudget && pathname !== '/budget' && <nav aria-label="Navigation budget" className="mb-5 flex flex-wrap gap-2">{[['/budget', 'Vue d’ensemble'], ['/expenses', 'Dépenses'], ['/transfers', 'Virements'], ['/personal', 'Personnel'], ['/settings', 'Réglages']].map(([to, label]) => <NavLink key={to} to={to} className={({ isActive }) => `flex min-h-11 shrink-0 items-center rounded-full border px-4 text-xs font-bold ${isActive ? 'bg-ink text-white' : 'bg-surface'}`}>{label}</NavLink>)}</nav>}
       <Outlet />
     </main>

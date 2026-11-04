@@ -1,3 +1,4 @@
+import { AccountLink } from '../../components/AccountLink'
 import { ScreenState } from '../../components/ui/ScreenState'
 import { useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
@@ -14,7 +15,6 @@ import {
 import { ArrowRightIcon, CopyIcon, LockIcon } from '../../components/icons'
 import {
   Avatar,
-  AvatarPair,
   Badge,
   Button,
   Card,
@@ -143,7 +143,7 @@ export function DashboardPage() {
       {/* Header */}
       <div className="flex h-12 items-center justify-between">
         <h1 className="text-[28px] font-extrabold tracking-[-0.04em]">Notre budget</h1>
-        <AvatarPair selfName={user.name} partnerName={partner.name} />
+        <AccountLink />
       </div>
 
       <Link to="/expenses/new" className="action-link">Ajouter une dépense</Link>

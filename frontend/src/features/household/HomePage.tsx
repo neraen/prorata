@@ -1,7 +1,8 @@
+import { AccountLink } from '../../components/AccountLink'
 import { Link } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 import { ActionLink, Card, Button } from '../../components/ui'
-import { ArrowRightIcon, SlidersIcon, PlusIcon, PackageIcon, MealIcon, CartIcon } from '../../components/icons'
+import { ArrowRightIcon, PlusIcon, PackageIcon, MealIcon, CartIcon } from '../../components/icons'
 import { useAuthStore, useCoupleStore, useMonthStore } from '../../lib/stores'
 import { monthsApi } from '../../lib/api'
 import { formatMoney, formatMonth } from '../../lib/utils'
@@ -33,7 +34,7 @@ export function HomePage() {
       : { title: 'Une petite avance pour la semaine.', description: 'Vos repas d’aujourd’hui sont prévus. Préparez la suite à votre rythme.', label: 'Préparer les prochains repas', to: '/meals/assistant', Icon: MealIcon }
   function currentMonth() { setMonth(now.getFullYear(), now.getMonth() + 1) }
   return <div className="grid gap-6">
-    <header className="flex items-center justify-between gap-3"><div><p className="mb-2 text-xs font-semibold capitalize tracking-wide text-muted">{todayLabel}</p><h1 className="text-[29px] font-extrabold tracking-[-0.04em]">Bonjour {user?.name}</h1></div><Link to="/settings" aria-label="Réglages" className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-white bg-surface shadow-card"><SlidersIcon size={20} /></Link></header>
+    <header className="flex items-center justify-between gap-3"><div><p className="mb-2 text-xs font-semibold capitalize tracking-wide text-muted">{todayLabel}</p><h1 className="text-[29px] font-extrabold tracking-[-0.04em]">Bonjour {user?.name}</h1></div><AccountLink /></header>
     <HouseholdStatus loading={household.isPending} error={household.isError && !data} retry={() => void household.refetch()} />
     {data && <>
       <Card className="premium-hero grid gap-4 border-white!" padding="lg"><div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.12em]"><next.Icon size={17} /> Pour aujourd’hui</div><h2 className="max-w-xs text-[28px] font-extrabold leading-[1.16] tracking-[-0.035em]">{next.title}</h2><p className="max-w-xs text-sm leading-relaxed text-muted">{next.description}</p><ActionLink to={next.to}>{next.label}<ArrowRightIcon size={18} /></ActionLink></Card>

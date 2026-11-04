@@ -14,6 +14,7 @@ import { ExpensesPage } from './features/expenses/ExpensesPage'
 import { ExpenseFormPage } from './features/expenses/ExpenseFormPage'
 import { PersonalPage } from './features/personal/PersonalPage'
 import { TransfersPage } from './features/transfers/TransfersPage'
+import { ProfilePage } from './features/settings/ProfilePage'
 import { SettingsPage } from './features/settings/SettingsPage'
 
 import { HomePage } from './features/household/HomePage'
@@ -62,6 +63,7 @@ function AppRoutes() {
         <Route path="/expenses" element={<ExpensesPage />} />
         <Route path="/transfers" element={<TransfersPage />} />
         <Route path="/personal" element={<PersonalPage />} />
+        <Route path="/profile" element={<ProfilePage />} />
         <Route path="/settings" element={<SettingsPage />} />
       </Route>
 
