@@ -1,0 +1,1072 @@
+{
+  "tool": "image_gen built-in",
+  "style": "Match a coherent premium food library: soft hand-painted gouache and colored pencil, natural muted pastel colors, fine paper grain, delicate soft shadow. Warm ivory background #F8F7F2. Square centered composition, isolated subject occupies about 65%, generous clear margins, recognizable at 48px. No text, no letters, no labels, no logos, no border, no collage. One ingredient illustration, no other unrelated foods or props.",
+  "assets": [
+    {
+      "id": "squid-ink-tin",
+      "name": "Calamars à l’encre noire en conserve",
+      "aisle": "meat",
+      "unit": "piece",
+      "subject": "an opened small oval food tin containing squid rings and small tentacles in glossy deep black squid ink sauce; peeled-back metal lid, plain muted cream and sage tin exterior",
+      "aliases": [
+        "Calamars à l’encre noire en conserve",
+        "Calamar à l’encre noire",
+        "Calamars à l’encre",
+        "Calamar dans son encre",
+        "Calamars dans leur encre",
+        "Calamar à l’encre en conserve",
+        "Calamar dans son encre noir en conserve",
+        "Calamar à l’encre noire en conserve",
+        "Calamars à l’encre noire",
+        "Calamar dans son encre noire en conserve"
+      ],
+      "path": "frontend/public/illustrations/ingredients/squid-ink-tin.webp",
+      "prompt": "Use case: stylized-concept. Asset type: standalone ingredient illustration for the Prorata French grocery app. Subject: an opened small oval food tin containing squid rings and small tentacles in glossy deep black squid ink sauce; peeled-back metal lid, plain muted cream and sage tin exterior. Match a coherent premium food library: soft hand-painted gouache and colored pencil, natural muted pastel colors, fine paper grain, delicate soft shadow. Warm ivory background #F8F7F2. Square centered composition, isolated subject occupies about 65%, generous clear margins, recognizable at 48px. No text, no letters, no labels, no logos, no border, no collage. One ingredient illustration, no other unrelated foods or props."
+    },
+    {
+      "id": "octopus",
+      "name": "Poulpe",
+      "aisle": "meat",
+      "unit": "g",
+      "subject": "a small cooked curled octopus tentacle with visible suction cups",
+      "aliases": [
+        "Poulpe",
+        "Tentacules de poulpe"
+      ],
+      "path": "frontend/public/illustrations/ingredients/octopus.webp",
+      "prompt": "Use case: stylized-concept. Asset type: standalone ingredient illustration for the Prorata French grocery app. Subject: a small cooked curled octopus tentacle with visible suction cups. Match a coherent premium food library: soft hand-painted gouache and colored pencil, natural muted pastel colors, fine paper grain, delicate soft shadow. Warm ivory background #F8F7F2. Square centered composition, isolated subject occupies about 65%, generous clear margins, recognizable at 48px. No text, no letters, no labels, no logos, no border, no collage. One ingredient illustration, no other unrelated foods or props."
+    },
+    {
+      "id": "cuttlefish",
+      "name": "Seiche",
+      "aisle": "meat",
+      "unit": "g",
+      "subject": "a cleaned pale cuttlefish mantle and its short curled tentacles",
+      "aliases": [
+        "Seiche",
+        "Seiches"
+      ],
+      "path": "frontend/public/illustrations/ingredients/cuttlefish.webp",
+      "prompt": "Use case: stylized-concept. Asset type: standalone ingredient illustration for the Prorata French grocery app. Subject: a cleaned pale cuttlefish mantle and its short curled tentacles. Match a coherent premium food library: soft hand-painted gouache and colored pencil, natural muted pastel colors, fine paper grain, delicate soft shadow. Warm ivory background #F8F7F2. Square centered composition, isolated subject occupies about 65%, generous clear margins, recognizable at 48px. No text, no letters, no labels, no logos, no border, no collage. One ingredient illustration, no other unrelated foods or props."
+    },
+    {
+      "id": "scallops",
+      "name": "Noix de Saint-Jacques",
+      "aisle": "meat",
+      "unit": "g",
+      "subject": "three ivory scallop meats with one small orange coral",
+      "aliases": [
+        "Noix de Saint-Jacques",
+        "Saint-Jacques",
+        "Noix de St Jacques"
+      ],
+      "path": "frontend/public/illustrations/ingredients/scallops.webp",
+      "prompt": "Use case: stylized-concept. Asset type: standalone ingredient illustration for the Prorata French grocery app. Subject: three ivory scallop meats with one small orange coral. Match a coherent premium food library: soft hand-painted gouache and colored pencil, natural muted pastel colors, fine paper grain, delicate soft shadow. Warm ivory background #F8F7F2. Square centered composition, isolated subject occupies about 65%, generous clear margins, recognizable at 48px. No text, no letters, no labels, no logos, no border, no collage. One ingredient illustration, no other unrelated foods or props."
+    },
+    {
+      "id": "crab",
+      "name": "Chair de crabe",
+      "aisle": "meat",
+      "unit": "g",
+      "subject": "a small mound of white crab meat with a red crab claw beside it",
+      "aliases": [
+        "Chair de crabe",
+        "Crabe"
+      ],
+      "path": "frontend/public/illustrations/ingredients/crab.webp",
+      "prompt": "Use case: stylized-concept. Asset type: standalone ingredient illustration for the Prorata French grocery app. Subject: a small mound of white crab meat with a red crab claw beside it. Match a coherent premium food library: soft hand-painted gouache and colored pencil, natural muted pastel colors, fine paper grain, delicate soft shadow. Warm ivory background #F8F7F2. Square centered composition, isolated subject occupies about 65%, generous clear margins, recognizable at 48px. No text, no letters, no labels, no logos, no border, no collage. One ingredient illustration, no other unrelated foods or props."
+    },
+    {
+      "id": "mackerel-tin",
+      "name": "Maquereaux en conserve",
+      "aisle": "meat",
+      "unit": "piece",
+      "subject": "an opened oval tin of silver-blue mackerel fillets in golden oil",
+      "aliases": [
+        "Maquereaux en conserve",
+        "Maquereau en conserve",
+        "Filets de maquereaux en conserve"
+      ],
+      "path": "frontend/public/illustrations/ingredients/mackerel-tin.webp",
+      "prompt": "Use case: stylized-concept. Asset type: standalone ingredient illustration for the Prorata French grocery app. Subject: an opened oval tin of silver-blue mackerel fillets in golden oil. Match a coherent premium food library: soft hand-painted gouache and colored pencil, natural muted pastel colors, fine paper grain, delicate soft shadow. Warm ivory background #F8F7F2. Square centered composition, isolated subject occupies about 65%, generous clear margins, recognizable at 48px. No text, no letters, no labels, no logos, no border, no collage. One ingredient illustration, no other unrelated foods or props."
+    },
+    {
+      "id": "anchovies",
+      "name": "Anchois",
+      "aisle": "meat",
+      "unit": "g",
+      "subject": "a tiny open glass jar with slender brown anchovy fillets in oil",
+      "aliases": [
+        "Anchois",
+        "Filets d’anchois"
+      ],
+      "path": "frontend/public/illustrations/ingredients/anchovies.webp",
+      "prompt": "Use case: stylized-concept. Asset type: standalone ingredient illustration for the Prorata French grocery app. Subject: a tiny open glass jar with slender brown anchovy fillets in oil. Match a coherent premium food library: soft hand-painted gouache and colored pencil, natural muted pastel colors, fine paper grain, delicate soft shadow. Warm ivory background #F8F7F2. Square centered composition, isolated subject occupies about 65%, generous clear margins, recognizable at 48px. No text, no letters, no labels, no logos, no border, no collage. One ingredient illustration, no other unrelated foods or props."
+    },
+    {
+      "id": "ravioli-tin",
+      "name": "Raviolis en conserve",
+      "aisle": "pantry",
+      "unit": "piece",
+      "subject": "an open plain tin showing several square ravioli in red tomato sauce",
+      "aliases": [
+        "Raviolis en conserve",
+        "Raviolis en boîte"
+      ],
+      "path": "frontend/public/illustrations/ingredients/ravioli-tin.webp",
+      "prompt": "Use case: stylized-concept. Asset type: standalone ingredient illustration for the Prorata French grocery app. Subject: an open plain tin showing several square ravioli in red tomato sauce. Match a coherent premium food library: soft hand-painted gouache and colored pencil, natural muted pastel colors, fine paper grain, delicate soft shadow. Warm ivory background #F8F7F2. Square centered composition, isolated subject occupies about 65%, generous clear margins, recognizable at 48px. No text, no letters, no labels, no logos, no border, no collage. One ingredient illustration, no other unrelated foods or props."
+    },
+    {
+      "id": "smoked-herring",
+      "name": "Hareng fumé",
+      "aisle": "meat",
+      "unit": "g",
+      "subject": "two golden-brown smoked herring fillets",
+      "aliases": [
+        "Hareng fumé",
+        "Filets de hareng fumé"
+      ],
+      "path": "frontend/public/illustrations/ingredients/smoked-herring.webp",
+      "prompt": "Use case: stylized-concept. Asset type: standalone ingredient illustration for the Prorata French grocery app. Subject: two golden-brown smoked herring fillets. Match a coherent premium food library: soft hand-painted gouache and colored pencil, natural muted pastel colors, fine paper grain, delicate soft shadow. Warm ivory background #F8F7F2. Square centered composition, isolated subject occupies about 65%, generous clear margins, recognizable at 48px. No text, no letters, no labels, no logos, no border, no collage. One ingredient illustration, no other unrelated foods or props."
+    },
+    {
+      "id": "sea-bass",
+      "name": "Bar",
+      "aisle": "meat",
+      "unit": "g",
+      "subject": "a whole silver sea bass fish with subtle blue-grey back",
+      "aliases": [
+        "Bar",
+        "Loup de mer",
+        "Filet de bar"
+      ],
+      "path": "frontend/public/illustrations/ingredients/sea-bass.webp",
+      "prompt": "Use case: stylized-concept. Asset type: standalone ingredient illustration for the Prorata French grocery app. Subject: a whole silver sea bass fish with subtle blue-grey back. Match a coherent premium food library: soft hand-painted gouache and colored pencil, natural muted pastel colors, fine paper grain, delicate soft shadow. Warm ivory background #F8F7F2. Square centered composition, isolated subject occupies about 65%, generous clear margins, recognizable at 48px. No text, no letters, no labels, no logos, no border, no collage. One ingredient illustration, no other unrelated foods or props."
+    },
+    {
+      "id": "hake",
+      "name": "Merlu",
+      "aisle": "meat",
+      "unit": "g",
+      "subject": "two pale hake fish fillets with a narrow silver skin edge",
+      "aliases": [
+        "Merlu",
+        "Filet de merlu"
+      ],
+      "path": "frontend/public/illustrations/ingredients/hake.webp",
+      "prompt": "Use case: stylized-concept. Asset type: standalone ingredient illustration for the Prorata French grocery app. Subject: two pale hake fish fillets with a narrow silver skin edge. Match a coherent premium food library: soft hand-painted gouache and colored pencil, natural muted pastel colors, fine paper grain, delicate soft shadow. Warm ivory background #F8F7F2. Square centered composition, isolated subject occupies about 65%, generous clear margins, recognizable at 48px. No text, no letters, no labels, no logos, no border, no collage. One ingredient illustration, no other unrelated foods or props."
+    },
+    {
+      "id": "pollock",
+      "name": "Lieu noir",
+      "aisle": "meat",
+      "unit": "g",
+      "subject": "a thick white pollock fillet with dark grey skin visible below",
+      "aliases": [
+        "Lieu noir",
+        "Filet de lieu noir"
+      ],
+      "path": "frontend/public/illustrations/ingredients/pollock.webp",
+      "prompt": "Use case: stylized-concept. Asset type: standalone ingredient illustration for the Prorata French grocery app. Subject: a thick white pollock fillet with dark grey skin visible below. Match a coherent premium food library: soft hand-painted gouache and colored pencil, natural muted pastel colors, fine paper grain, delicate soft shadow. Warm ivory background #F8F7F2. Square centered composition, isolated subject occupies about 65%, generous clear margins, recognizable at 48px. No text, no letters, no labels, no logos, no border, no collage. One ingredient illustration, no other unrelated foods or props."
+    },
+    {
+      "id": "duck-confit",
+      "name": "Confit de canard",
+      "aisle": "meat",
+      "unit": "piece",
+      "subject": "a cooked duck leg confit with golden brown crisp skin",
+      "aliases": [
+        "Confit de canard",
+        "Cuisse de canard confite"
+      ],
+      "path": "frontend/public/illustrations/ingredients/duck-confit.webp",
+      "prompt": "Use case: stylized-concept. Asset type: standalone ingredient illustration for the Prorata French grocery app. Subject: a cooked duck leg confit with golden brown crisp skin. Match a coherent premium food library: soft hand-painted gouache and colored pencil, natural muted pastel colors, fine paper grain, delicate soft shadow. Warm ivory background #F8F7F2. Square centered composition, isolated subject occupies about 65%, generous clear margins, recognizable at 48px. No text, no letters, no labels, no logos, no border, no collage. One ingredient illustration, no other unrelated foods or props."
+    },
+    {
+      "id": "rabbit",
+      "name": "Lapin",
+      "aisle": "meat",
+      "unit": "g",
+      "subject": "a raw pale pink rabbit leg portion",
+      "aliases": [
+        "Lapin",
+        "Cuisse de lapin"
+      ],
+      "path": "frontend/public/illustrations/ingredients/rabbit.webp",
+      "prompt": "Use case: stylized-concept. Asset type: standalone ingredient illustration for the Prorata French grocery app. Subject: a raw pale pink rabbit leg portion. Match a coherent premium food library: soft hand-painted gouache and colored pencil, natural muted pastel colors, fine paper grain, delicate soft shadow. Warm ivory background #F8F7F2. Square centered composition, isolated subject occupies about 65%, generous clear margins, recognizable at 48px. No text, no letters, no labels, no logos, no border, no collage. One ingredient illustration, no other unrelated foods or props."
+    },
+    {
+      "id": "ground-pork",
+      "name": "Porc haché",
+      "aisle": "meat",
+      "unit": "g",
+      "subject": "a small mound of pale pink ground pork",
+      "aliases": [
+        "Porc haché",
+        "Viande de porc hachée"
+      ],
+      "path": "frontend/public/illustrations/ingredients/ground-pork.webp",
+      "prompt": "Use case: stylized-concept. Asset type: standalone ingredient illustration for the Prorata French grocery app. Subject: a small mound of pale pink ground pork. Match a coherent premium food library: soft hand-painted gouache and colored pencil, natural muted pastel colors, fine paper grain, delicate soft shadow. Warm ivory background #F8F7F2. Square centered composition, isolated subject occupies about 65%, generous clear margins, recognizable at 48px. No text, no letters, no labels, no logos, no border, no collage. One ingredient illustration, no other unrelated foods or props."
+    },
+    {
+      "id": "meatballs",
+      "name": "Boulettes de bœuf",
+      "aisle": "meat",
+      "unit": "g",
+      "subject": "four round cooked beef meatballs",
+      "aliases": [
+        "Boulettes de bœuf",
+        "Boulettes de viande"
+      ],
+      "path": "frontend/public/illustrations/ingredients/meatballs.webp",
+      "prompt": "Use case: stylized-concept. Asset type: standalone ingredient illustration for the Prorata French grocery app. Subject: four round cooked beef meatballs. Match a coherent premium food library: soft hand-painted gouache and colored pencil, natural muted pastel colors, fine paper grain, delicate soft shadow. Warm ivory background #F8F7F2. Square centered composition, isolated subject occupies about 65%, generous clear margins, recognizable at 48px. No text, no letters, no labels, no logos, no border, no collage. One ingredient illustration, no other unrelated foods or props."
+    },
+    {
+      "id": "beef-steak",
+      "name": "Steak de bœuf",
+      "aisle": "meat",
+      "unit": "g",
+      "subject": "one raw marbled beef steak with a thin creamy fat edge",
+      "aliases": [
+        "Steak de bœuf",
+        "Entrecôte",
+        "Faux-filet"
+      ],
+      "path": "frontend/public/illustrations/ingredients/beef-steak.webp",
+      "prompt": "Use case: stylized-concept. Asset type: standalone ingredient illustration for the Prorata French grocery app. Subject: one raw marbled beef steak with a thin creamy fat edge. Match a coherent premium food library: soft hand-painted gouache and colored pencil, natural muted pastel colors, fine paper grain, delicate soft shadow. Warm ivory background #F8F7F2. Square centered composition, isolated subject occupies about 65%, generous clear margins, recognizable at 48px. No text, no letters, no labels, no logos, no border, no collage. One ingredient illustration, no other unrelated foods or props."
+    },
+    {
+      "id": "chicken-thigh",
+      "name": "Cuisses de poulet",
+      "aisle": "meat",
+      "unit": "piece",
+      "subject": "two raw chicken thighs with pale skin",
+      "aliases": [
+        "Cuisses de poulet",
+        "Cuisse de poulet",
+        "Hauts de cuisse de poulet"
+      ],
+      "path": "frontend/public/illustrations/ingredients/chicken-thigh.webp",
+      "prompt": "Use case: stylized-concept. Asset type: standalone ingredient illustration for the Prorata French grocery app. Subject: two raw chicken thighs with pale skin. Match a coherent premium food library: soft hand-painted gouache and colored pencil, natural muted pastel colors, fine paper grain, delicate soft shadow. Warm ivory background #F8F7F2. Square centered composition, isolated subject occupies about 65%, generous clear margins, recognizable at 48px. No text, no letters, no labels, no logos, no border, no collage. One ingredient illustration, no other unrelated foods or props."
+    },
+    {
+      "id": "ready-soup",
+      "name": "Soupe prête à réchauffer",
+      "aisle": "pantry",
+      "unit": "ml",
+      "subject": "a plain muted sage carton with an open cap beside a tiny bowl of orange vegetable soup",
+      "aliases": [
+        "Soupe prête à réchauffer",
+        "Soupe en brique"
+      ],
+      "path": "frontend/public/illustrations/ingredients/ready-soup.webp",
+      "prompt": "Use case: stylized-concept. Asset type: standalone ingredient illustration for the Prorata French grocery app. Subject: a plain muted sage carton with an open cap beside a tiny bowl of orange vegetable soup. Match a coherent premium food library: soft hand-painted gouache and colored pencil, natural muted pastel colors, fine paper grain, delicate soft shadow. Warm ivory background #F8F7F2. Square centered composition, isolated subject occupies about 65%, generous clear margins, recognizable at 48px. No text, no letters, no labels, no logos, no border, no collage. One ingredient illustration, no other unrelated foods or props."
+    },
+    {
+      "id": "salami",
+      "name": "Saucisson sec",
+      "aisle": "meat",
+      "unit": "g",
+      "subject": "a short dry cured salami with white casing and three marbled slices",
+      "aliases": [
+        "Saucisson sec",
+        "Saucisson"
+      ],
+      "path": "frontend/public/illustrations/ingredients/salami.webp",
+      "prompt": "Use case: stylized-concept. Asset type: standalone ingredient illustration for the Prorata French grocery app. Subject: a short dry cured salami with white casing and three marbled slices. Match a coherent premium food library: soft hand-painted gouache and colored pencil, natural muted pastel colors, fine paper grain, delicate soft shadow. Warm ivory background #F8F7F2. Square centered composition, isolated subject occupies about 65%, generous clear margins, recognizable at 48px. No text, no letters, no labels, no logos, no border, no collage. One ingredient illustration, no other unrelated foods or props."
+    },
+    {
+      "id": "cherry-tomato",
+      "name": "Tomates cerises",
+      "aisle": "produce",
+      "unit": "g",
+      "subject": "a small vine with five ripe red cherry tomatoes",
+      "aliases": [
+        "Tomates cerises",
+        "Tomate cerise"
+      ],
+      "path": "frontend/public/illustrations/ingredients/cherry-tomato.webp",
+      "prompt": "Use case: stylized-concept. Asset type: standalone ingredient illustration for the Prorata French grocery app. Subject: a small vine with five ripe red cherry tomatoes. Match a coherent premium food library: soft hand-painted gouache and colored pencil, natural muted pastel colors, fine paper grain, delicate soft shadow. Warm ivory background #F8F7F2. Square centered composition, isolated subject occupies about 65%, generous clear margins, recognizable at 48px. No text, no letters, no labels, no logos, no border, no collage. One ingredient illustration, no other unrelated foods or props."
+    },
+    {
+      "id": "yellow-pepper",
+      "name": "Poivron jaune",
+      "aisle": "produce",
+      "unit": "piece",
+      "subject": "one yellow bell pepper with a green stem",
+      "aliases": [
+        "Poivron jaune",
+        "Poivrons jaunes"
+      ],
+      "path": "frontend/public/illustrations/ingredients/yellow-pepper.webp",
+      "prompt": "Use case: stylized-concept. Asset type: standalone ingredient illustration for the Prorata French grocery app. Subject: one yellow bell pepper with a green stem. Match a coherent premium food library: soft hand-painted gouache and colored pencil, natural muted pastel colors, fine paper grain, delicate soft shadow. Warm ivory background #F8F7F2. Square centered composition, isolated subject occupies about 65%, generous clear margins, recognizable at 48px. No text, no letters, no labels, no logos, no border, no collage. One ingredient illustration, no other unrelated foods or props."
+    },
+    {
+      "id": "red-onion",
+      "name": "Oignon rouge",
+      "aisle": "produce",
+      "unit": "piece",
+      "subject": "one red onion and a cut half revealing purple rings",
+      "aliases": [
+        "Oignon rouge",
+        "Oignons rouges"
+      ],
+      "path": "frontend/public/illustrations/ingredients/red-onion.webp",
+      "prompt": "Use case: stylized-concept. Asset type: standalone ingredient illustration for the Prorata French grocery app. Subject: one red onion and a cut half revealing purple rings. Match a coherent premium food library: soft hand-painted gouache and colored pencil, natural muted pastel colors, fine paper grain, delicate soft shadow. Warm ivory background #F8F7F2. Square centered composition, isolated subject occupies about 65%, generous clear margins, recognizable at 48px. No text, no letters, no labels, no logos, no border, no collage. One ingredient illustration, no other unrelated foods or props."
+    },
+    {
+      "id": "spring-onion",
+      "name": "Oignons nouveaux",
+      "aisle": "produce",
+      "unit": "piece",
+      "subject": "three spring onions with white bulbs and long green leaves",
+      "aliases": [
+        "Oignons nouveaux",
+        "Oignon nouveau",
+        "Cébettes",
+        "Cébette"
+      ],
+      "path": "frontend/public/illustrations/ingredients/spring-onion.webp",
+      "prompt": "Use case: stylized-concept. Asset type: standalone ingredient illustration for the Prorata French grocery app. Subject: three spring onions with white bulbs and long green leaves. Match a coherent premium food library: soft hand-painted gouache and colored pencil, natural muted pastel colors, fine paper grain, delicate soft shadow. Warm ivory background #F8F7F2. Square centered composition, isolated subject occupies about 65%, generous clear margins, recognizable at 48px. No text, no letters, no labels, no logos, no border, no collage. One ingredient illustration, no other unrelated foods or props."
+    },
+    {
+      "id": "chard",
+      "name": "Blettes",
+      "aisle": "produce",
+      "unit": "g",
+      "subject": "two green Swiss chard leaves with thick ivory stems",
+      "aliases": [
+        "Blettes",
+        "Blette",
+        "Bette",
+        "Bettes"
+      ],
+      "path": "frontend/public/illustrations/ingredients/chard.webp",
+      "prompt": "Use case: stylized-concept. Asset type: standalone ingredient illustration for the Prorata French grocery app. Subject: two green Swiss chard leaves with thick ivory stems. Match a coherent premium food library: soft hand-painted gouache and colored pencil, natural muted pastel colors, fine paper grain, delicate soft shadow. Warm ivory background #F8F7F2. Square centered composition, isolated subject occupies about 65%, generous clear margins, recognizable at 48px. No text, no letters, no labels, no logos, no border, no collage. One ingredient illustration, no other unrelated foods or props."
+    },
+    {
+      "id": "kale",
+      "name": "Chou kale",
+      "aisle": "produce",
+      "unit": "g",
+      "subject": "two curly dark green kale leaves",
+      "aliases": [
+        "Chou kale",
+        "Kale"
+      ],
+      "path": "frontend/public/illustrations/ingredients/kale.webp",
+      "prompt": "Use case: stylized-concept. Asset type: standalone ingredient illustration for the Prorata French grocery app. Subject: two curly dark green kale leaves. Match a coherent premium food library: soft hand-painted gouache and colored pencil, natural muted pastel colors, fine paper grain, delicate soft shadow. Warm ivory background #F8F7F2. Square centered composition, isolated subject occupies about 65%, generous clear margins, recognizable at 48px. No text, no letters, no labels, no logos, no border, no collage. One ingredient illustration, no other unrelated foods or props."
+    },
+    {
+      "id": "pak-choi",
+      "name": "Pak choï",
+      "aisle": "produce",
+      "unit": "piece",
+      "subject": "one small bok choy with plump white stems and green leaves",
+      "aliases": [
+        "Pak choï",
+        "Bok choy"
+      ],
+      "path": "frontend/public/illustrations/ingredients/pak-choi.webp",
+      "prompt": "Use case: stylized-concept. Asset type: standalone ingredient illustration for the Prorata French grocery app. Subject: one small bok choy with plump white stems and green leaves. Match a coherent premium food library: soft hand-painted gouache and colored pencil, natural muted pastel colors, fine paper grain, delicate soft shadow. Warm ivory background #F8F7F2. Square centered composition, isolated subject occupies about 65%, generous clear margins, recognizable at 48px. No text, no letters, no labels, no logos, no border, no collage. One ingredient illustration, no other unrelated foods or props."
+    },
+    {
+      "id": "watercress",
+      "name": "Cresson",
+      "aisle": "produce",
+      "unit": "g",
+      "subject": "a small bunch of round-leaved fresh watercress",
+      "aliases": [
+        "Cresson",
+        "Cresson frais"
+      ],
+      "path": "frontend/public/illustrations/ingredients/watercress.webp",
+      "prompt": "Use case: stylized-concept. Asset type: standalone ingredient illustration for the Prorata French grocery app. Subject: a small bunch of round-leaved fresh watercress. Match a coherent premium food library: soft hand-painted gouache and colored pencil, natural muted pastel colors, fine paper grain, delicate soft shadow. Warm ivory background #F8F7F2. Square centered composition, isolated subject occupies about 65%, generous clear margins, recognizable at 48px. No text, no letters, no labels, no logos, no border, no collage. One ingredient illustration, no other unrelated foods or props."
+    },
+    {
+      "id": "arugula",
+      "name": "Roquette",
+      "aisle": "produce",
+      "unit": "g",
+      "subject": "a small loose bunch of jagged fresh arugula leaves",
+      "aliases": [
+        "Roquette",
+        "Roquette fraîche"
+      ],
+      "path": "frontend/public/illustrations/ingredients/arugula.webp",
+      "prompt": "Use case: stylized-concept. Asset type: standalone ingredient illustration for the Prorata French grocery app. Subject: a small loose bunch of jagged fresh arugula leaves. Match a coherent premium food library: soft hand-painted gouache and colored pencil, natural muted pastel colors, fine paper grain, delicate soft shadow. Warm ivory background #F8F7F2. Square centered composition, isolated subject occupies about 65%, generous clear margins, recognizable at 48px. No text, no letters, no labels, no logos, no border, no collage. One ingredient illustration, no other unrelated foods or props."
+    },
+    {
+      "id": "lambs-lettuce",
+      "name": "Mâche",
+      "aisle": "produce",
+      "unit": "g",
+      "subject": "three small rosettes of rounded lambs lettuce leaves",
+      "aliases": [
+        "Mâche",
+        "Mâche fraîche"
+      ],
+      "path": "frontend/public/illustrations/ingredients/lambs-lettuce.webp",
+      "prompt": "Use case: stylized-concept. Asset type: standalone ingredient illustration for the Prorata French grocery app. Subject: three small rosettes of rounded lambs lettuce leaves. Match a coherent premium food library: soft hand-painted gouache and colored pencil, natural muted pastel colors, fine paper grain, delicate soft shadow. Warm ivory background #F8F7F2. Square centered composition, isolated subject occupies about 65%, generous clear margins, recognizable at 48px. No text, no letters, no labels, no logos, no border, no collage. One ingredient illustration, no other unrelated foods or props."
+    },
+    {
+      "id": "radicchio",
+      "name": "Trévise",
+      "aisle": "produce",
+      "unit": "piece",
+      "subject": "a compact radicchio head with burgundy leaves and white veins",
+      "aliases": [
+        "Trévise",
+        "Radicchio",
+        "Salade trévise"
+      ],
+      "path": "frontend/public/illustrations/ingredients/radicchio.webp",
+      "prompt": "Use case: stylized-concept. Asset type: standalone ingredient illustration for the Prorata French grocery app. Subject: a compact radicchio head with burgundy leaves and white veins. Match a coherent premium food library: soft hand-painted gouache and colored pencil, natural muted pastel colors, fine paper grain, delicate soft shadow. Warm ivory background #F8F7F2. Square centered composition, isolated subject occupies about 65%, generous clear margins, recognizable at 48px. No text, no letters, no labels, no logos, no border, no collage. One ingredient illustration, no other unrelated foods or props."
+    },
+    {
+      "id": "rutabaga",
+      "name": "Rutabaga",
+      "aisle": "produce",
+      "unit": "g",
+      "subject": "one rounded purple and cream rutabaga root with a cut wedge",
+      "aliases": [
+        "Rutabaga",
+        "Rutabagas"
+      ],
+      "path": "frontend/public/illustrations/ingredients/rutabaga.webp",
+      "prompt": "Use case: stylized-concept. Asset type: standalone ingredient illustration for the Prorata French grocery app. Subject: one rounded purple and cream rutabaga root with a cut wedge. Match a coherent premium food library: soft hand-painted gouache and colored pencil, natural muted pastel colors, fine paper grain, delicate soft shadow. Warm ivory background #F8F7F2. Square centered composition, isolated subject occupies about 65%, generous clear margins, recognizable at 48px. No text, no letters, no labels, no logos, no border, no collage. One ingredient illustration, no other unrelated foods or props."
+    },
+    {
+      "id": "jerusalem-artichoke",
+      "name": "Topinambours",
+      "aisle": "produce",
+      "unit": "g",
+      "subject": "three small knobbly beige Jerusalem artichoke tubers",
+      "aliases": [
+        "Topinambours",
+        "Topinambour"
+      ],
+      "path": "frontend/public/illustrations/ingredients/jerusalem-artichoke.webp",
+      "prompt": "Use case: stylized-concept. Asset type: standalone ingredient illustration for the Prorata French grocery app. Subject: three small knobbly beige Jerusalem artichoke tubers. Match a coherent premium food library: soft hand-painted gouache and colored pencil, natural muted pastel colors, fine paper grain, delicate soft shadow. Warm ivory background #F8F7F2. Square centered composition, isolated subject occupies about 65%, generous clear margins, recognizable at 48px. No text, no letters, no labels, no logos, no border, no collage. One ingredient illustration, no other unrelated foods or props."
+    },
+    {
+      "id": "oyster-mushroom",
+      "name": "Pleurotes",
+      "aisle": "produce",
+      "unit": "g",
+      "subject": "a cluster of oyster mushrooms with fan-shaped beige caps",
+      "aliases": [
+        "Pleurotes",
+        "Pleurote"
+      ],
+      "path": "frontend/public/illustrations/ingredients/oyster-mushroom.webp",
+      "prompt": "Use case: stylized-concept. Asset type: standalone ingredient illustration for the Prorata French grocery app. Subject: a cluster of oyster mushrooms with fan-shaped beige caps. Match a coherent premium food library: soft hand-painted gouache and colored pencil, natural muted pastel colors, fine paper grain, delicate soft shadow. Warm ivory background #F8F7F2. Square centered composition, isolated subject occupies about 65%, generous clear margins, recognizable at 48px. No text, no letters, no labels, no logos, no border, no collage. One ingredient illustration, no other unrelated foods or props."
+    },
+    {
+      "id": "shiitake",
+      "name": "Shiitakés",
+      "aisle": "produce",
+      "unit": "g",
+      "subject": "three brown shiitake mushrooms with pale cracked caps",
+      "aliases": [
+        "Shiitakés",
+        "Shiitake"
+      ],
+      "path": "frontend/public/illustrations/ingredients/shiitake.webp",
+      "prompt": "Use case: stylized-concept. Asset type: standalone ingredient illustration for the Prorata French grocery app. Subject: three brown shiitake mushrooms with pale cracked caps. Match a coherent premium food library: soft hand-painted gouache and colored pencil, natural muted pastel colors, fine paper grain, delicate soft shadow. Warm ivory background #F8F7F2. Square centered composition, isolated subject occupies about 65%, generous clear margins, recognizable at 48px. No text, no letters, no labels, no logos, no border, no collage. One ingredient illustration, no other unrelated foods or props."
+    },
+    {
+      "id": "grapes",
+      "name": "Raisin frais",
+      "aisle": "produce",
+      "unit": "g",
+      "subject": "a small bunch of purple grapes with one green leaf",
+      "aliases": [
+        "Raisin frais",
+        "Raisins frais",
+        "Raisin"
+      ],
+      "path": "frontend/public/illustrations/ingredients/grapes.webp",
+      "prompt": "Use case: stylized-concept. Asset type: standalone ingredient illustration for the Prorata French grocery app. Subject: a small bunch of purple grapes with one green leaf. Match a coherent premium food library: soft hand-painted gouache and colored pencil, natural muted pastel colors, fine paper grain, delicate soft shadow. Warm ivory background #F8F7F2. Square centered composition, isolated subject occupies about 65%, generous clear margins, recognizable at 48px. No text, no letters, no labels, no logos, no border, no collage. One ingredient illustration, no other unrelated foods or props."
+    },
+    {
+      "id": "kiwi",
+      "name": "Kiwi",
+      "aisle": "produce",
+      "unit": "piece",
+      "subject": "one fuzzy brown kiwi fruit and a cut half showing green flesh and black seeds",
+      "aliases": [
+        "Kiwi",
+        "Kiwis"
+      ],
+      "path": "frontend/public/illustrations/ingredients/kiwi.webp",
+      "prompt": "Use case: stylized-concept. Asset type: standalone ingredient illustration for the Prorata French grocery app. Subject: one fuzzy brown kiwi fruit and a cut half showing green flesh and black seeds. Match a coherent premium food library: soft hand-painted gouache and colored pencil, natural muted pastel colors, fine paper grain, delicate soft shadow. Warm ivory background #F8F7F2. Square centered composition, isolated subject occupies about 65%, generous clear margins, recognizable at 48px. No text, no letters, no labels, no logos, no border, no collage. One ingredient illustration, no other unrelated foods or props."
+    },
+    {
+      "id": "pineapple",
+      "name": "Ananas",
+      "aisle": "produce",
+      "unit": "piece",
+      "subject": "a small pineapple with green crown and one yellow slice",
+      "aliases": [
+        "Ananas",
+        "Ananas frais"
+      ],
+      "path": "frontend/public/illustrations/ingredients/pineapple.webp",
+      "prompt": "Use case: stylized-concept. Asset type: standalone ingredient illustration for the Prorata French grocery app. Subject: a small pineapple with green crown and one yellow slice. Match a coherent premium food library: soft hand-painted gouache and colored pencil, natural muted pastel colors, fine paper grain, delicate soft shadow. Warm ivory background #F8F7F2. Square centered composition, isolated subject occupies about 65%, generous clear margins, recognizable at 48px. No text, no letters, no labels, no logos, no border, no collage. One ingredient illustration, no other unrelated foods or props."
+    },
+    {
+      "id": "mango",
+      "name": "Mangue",
+      "aisle": "produce",
+      "unit": "piece",
+      "subject": "one orange-red mango and a yellow cut half",
+      "aliases": [
+        "Mangue",
+        "Mangues"
+      ],
+      "path": "frontend/public/illustrations/ingredients/mango.webp",
+      "prompt": "Use case: stylized-concept. Asset type: standalone ingredient illustration for the Prorata French grocery app. Subject: one orange-red mango and a yellow cut half. Match a coherent premium food library: soft hand-painted gouache and colored pencil, natural muted pastel colors, fine paper grain, delicate soft shadow. Warm ivory background #F8F7F2. Square centered composition, isolated subject occupies about 65%, generous clear margins, recognizable at 48px. No text, no letters, no labels, no logos, no border, no collage. One ingredient illustration, no other unrelated foods or props."
+    },
+    {
+      "id": "peach",
+      "name": "Pêche",
+      "aisle": "produce",
+      "unit": "piece",
+      "subject": "one softly blushed peach and a cut half with brown pit",
+      "aliases": [
+        "Pêche",
+        "Pêches"
+      ],
+      "path": "frontend/public/illustrations/ingredients/peach.webp",
+      "prompt": "Use case: stylized-concept. Asset type: standalone ingredient illustration for the Prorata French grocery app. Subject: one softly blushed peach and a cut half with brown pit. Match a coherent premium food library: soft hand-painted gouache and colored pencil, natural muted pastel colors, fine paper grain, delicate soft shadow. Warm ivory background #F8F7F2. Square centered composition, isolated subject occupies about 65%, generous clear margins, recognizable at 48px. No text, no letters, no labels, no logos, no border, no collage. One ingredient illustration, no other unrelated foods or props."
+    },
+    {
+      "id": "apricot",
+      "name": "Abricots",
+      "aisle": "produce",
+      "unit": "g",
+      "subject": "two orange apricots and a half with a brown stone",
+      "aliases": [
+        "Abricots",
+        "Abricot"
+      ],
+      "path": "frontend/public/illustrations/ingredients/apricot.webp",
+      "prompt": "Use case: stylized-concept. Asset type: standalone ingredient illustration for the Prorata French grocery app. Subject: two orange apricots and a half with a brown stone. Match a coherent premium food library: soft hand-painted gouache and colored pencil, natural muted pastel colors, fine paper grain, delicate soft shadow. Warm ivory background #F8F7F2. Square centered composition, isolated subject occupies about 65%, generous clear margins, recognizable at 48px. No text, no letters, no labels, no logos, no border, no collage. One ingredient illustration, no other unrelated foods or props."
+    },
+    {
+      "id": "plum",
+      "name": "Prunes",
+      "aisle": "produce",
+      "unit": "g",
+      "subject": "two purple plums and a cut half with golden flesh",
+      "aliases": [
+        "Prunes",
+        "Prune"
+      ],
+      "path": "frontend/public/illustrations/ingredients/plum.webp",
+      "prompt": "Use case: stylized-concept. Asset type: standalone ingredient illustration for the Prorata French grocery app. Subject: two purple plums and a cut half with golden flesh. Match a coherent premium food library: soft hand-painted gouache and colored pencil, natural muted pastel colors, fine paper grain, delicate soft shadow. Warm ivory background #F8F7F2. Square centered composition, isolated subject occupies about 65%, generous clear margins, recognizable at 48px. No text, no letters, no labels, no logos, no border, no collage. One ingredient illustration, no other unrelated foods or props."
+    },
+    {
+      "id": "raspberry",
+      "name": "Framboises",
+      "aisle": "produce",
+      "unit": "g",
+      "subject": "a small cluster of ripe raspberry fruits",
+      "aliases": [
+        "Framboises",
+        "Framboise"
+      ],
+      "path": "frontend/public/illustrations/ingredients/raspberry.webp",
+      "prompt": "Use case: stylized-concept. Asset type: standalone ingredient illustration for the Prorata French grocery app. Subject: a small cluster of ripe raspberry fruits. Match a coherent premium food library: soft hand-painted gouache and colored pencil, natural muted pastel colors, fine paper grain, delicate soft shadow. Warm ivory background #F8F7F2. Square centered composition, isolated subject occupies about 65%, generous clear margins, recognizable at 48px. No text, no letters, no labels, no logos, no border, no collage. One ingredient illustration, no other unrelated foods or props."
+    },
+    {
+      "id": "blueberry",
+      "name": "Myrtilles",
+      "aisle": "produce",
+      "unit": "g",
+      "subject": "a small mound of dusty blue blueberries",
+      "aliases": [
+        "Myrtilles",
+        "Myrtille"
+      ],
+      "path": "frontend/public/illustrations/ingredients/blueberry.webp",
+      "prompt": "Use case: stylized-concept. Asset type: standalone ingredient illustration for the Prorata French grocery app. Subject: a small mound of dusty blue blueberries. Match a coherent premium food library: soft hand-painted gouache and colored pencil, natural muted pastel colors, fine paper grain, delicate soft shadow. Warm ivory background #F8F7F2. Square centered composition, isolated subject occupies about 65%, generous clear margins, recognizable at 48px. No text, no letters, no labels, no logos, no border, no collage. One ingredient illustration, no other unrelated foods or props."
+    },
+    {
+      "id": "clementine",
+      "name": "Clémentines",
+      "aisle": "produce",
+      "unit": "piece",
+      "subject": "one small clementine with green leaf and two peeled segments",
+      "aliases": [
+        "Clémentines",
+        "Clémentine"
+      ],
+      "path": "frontend/public/illustrations/ingredients/clementine.webp",
+      "prompt": "Use case: stylized-concept. Asset type: standalone ingredient illustration for the Prorata French grocery app. Subject: one small clementine with green leaf and two peeled segments. Match a coherent premium food library: soft hand-painted gouache and colored pencil, natural muted pastel colors, fine paper grain, delicate soft shadow. Warm ivory background #F8F7F2. Square centered composition, isolated subject occupies about 65%, generous clear margins, recognizable at 48px. No text, no letters, no labels, no logos, no border, no collage. One ingredient illustration, no other unrelated foods or props."
+    },
+    {
+      "id": "grapefruit",
+      "name": "Pamplemousse",
+      "aisle": "produce",
+      "unit": "piece",
+      "subject": "one yellow-pink grapefruit and a cut half with rose flesh",
+      "aliases": [
+        "Pamplemousse",
+        "Pamplemousses",
+        "Pomelo"
+      ],
+      "path": "frontend/public/illustrations/ingredients/grapefruit.webp",
+      "prompt": "Use case: stylized-concept. Asset type: standalone ingredient illustration for the Prorata French grocery app. Subject: one yellow-pink grapefruit and a cut half with rose flesh. Match a coherent premium food library: soft hand-painted gouache and colored pencil, natural muted pastel colors, fine paper grain, delicate soft shadow. Warm ivory background #F8F7F2. Square centered composition, isolated subject occupies about 65%, generous clear margins, recognizable at 48px. No text, no letters, no labels, no logos, no border, no collage. One ingredient illustration, no other unrelated foods or props."
+    },
+    {
+      "id": "lime",
+      "name": "Citron vert",
+      "aisle": "produce",
+      "unit": "piece",
+      "subject": "one green lime and a cut half",
+      "aliases": [
+        "Citron vert",
+        "Citrons verts",
+        "Lime"
+      ],
+      "path": "frontend/public/illustrations/ingredients/lime.webp",
+      "prompt": "Use case: stylized-concept. Asset type: standalone ingredient illustration for the Prorata French grocery app. Subject: one green lime and a cut half. Match a coherent premium food library: soft hand-painted gouache and colored pencil, natural muted pastel colors, fine paper grain, delicate soft shadow. Warm ivory background #F8F7F2. Square centered composition, isolated subject occupies about 65%, generous clear margins, recognizable at 48px. No text, no letters, no labels, no logos, no border, no collage. One ingredient illustration, no other unrelated foods or props."
+    },
+    {
+      "id": "watermelon",
+      "name": "Pastèque",
+      "aisle": "produce",
+      "unit": "g",
+      "subject": "one triangular watermelon slice with red flesh black seeds and green rind",
+      "aliases": [
+        "Pastèque",
+        "Pastèques"
+      ],
+      "path": "frontend/public/illustrations/ingredients/watermelon.webp",
+      "prompt": "Use case: stylized-concept. Asset type: standalone ingredient illustration for the Prorata French grocery app. Subject: one triangular watermelon slice with red flesh black seeds and green rind. Match a coherent premium food library: soft hand-painted gouache and colored pencil, natural muted pastel colors, fine paper grain, delicate soft shadow. Warm ivory background #F8F7F2. Square centered composition, isolated subject occupies about 65%, generous clear margins, recognizable at 48px. No text, no letters, no labels, no logos, no border, no collage. One ingredient illustration, no other unrelated foods or props."
+    },
+    {
+      "id": "melon",
+      "name": "Melon",
+      "aisle": "produce",
+      "unit": "piece",
+      "subject": "one small cantaloupe melon with a cut orange wedge",
+      "aliases": [
+        "Melon",
+        "Melons"
+      ],
+      "path": "frontend/public/illustrations/ingredients/melon.webp",
+      "prompt": "Use case: stylized-concept. Asset type: standalone ingredient illustration for the Prorata French grocery app. Subject: one small cantaloupe melon with a cut orange wedge. Match a coherent premium food library: soft hand-painted gouache and colored pencil, natural muted pastel colors, fine paper grain, delicate soft shadow. Warm ivory background #F8F7F2. Square centered composition, isolated subject occupies about 65%, generous clear margins, recognizable at 48px. No text, no letters, no labels, no logos, no border, no collage. One ingredient illustration, no other unrelated foods or props."
+    },
+    {
+      "id": "dates",
+      "name": "Dattes",
+      "aisle": "pantry",
+      "unit": "g",
+      "subject": "five soft brown dried dates with one cut open",
+      "aliases": [
+        "Dattes",
+        "Datte"
+      ],
+      "path": "frontend/public/illustrations/ingredients/dates.webp",
+      "prompt": "Use case: stylized-concept. Asset type: standalone ingredient illustration for the Prorata French grocery app. Subject: five soft brown dried dates with one cut open. Match a coherent premium food library: soft hand-painted gouache and colored pencil, natural muted pastel colors, fine paper grain, delicate soft shadow. Warm ivory background #F8F7F2. Square centered composition, isolated subject occupies about 65%, generous clear margins, recognizable at 48px. No text, no letters, no labels, no logos, no border, no collage. One ingredient illustration, no other unrelated foods or props."
+    },
+    {
+      "id": "raisins",
+      "name": "Raisins secs",
+      "aisle": "pantry",
+      "unit": "g",
+      "subject": "a small mound of golden and brown wrinkled raisins",
+      "aliases": [
+        "Raisins secs",
+        "Raisin sec"
+      ],
+      "path": "frontend/public/illustrations/ingredients/raisins.webp",
+      "prompt": "Use case: stylized-concept. Asset type: standalone ingredient illustration for the Prorata French grocery app. Subject: a small mound of golden and brown wrinkled raisins. Match a coherent premium food library: soft hand-painted gouache and colored pencil, natural muted pastel colors, fine paper grain, delicate soft shadow. Warm ivory background #F8F7F2. Square centered composition, isolated subject occupies about 65%, generous clear margins, recognizable at 48px. No text, no letters, no labels, no logos, no border, no collage. One ingredient illustration, no other unrelated foods or props."
+    },
+    {
+      "id": "dried-apricot",
+      "name": "Abricots secs",
+      "aisle": "pantry",
+      "unit": "g",
+      "subject": "five orange dried apricot halves",
+      "aliases": [
+        "Abricots secs",
+        "Abricot sec"
+      ],
+      "path": "frontend/public/illustrations/ingredients/dried-apricot.webp",
+      "prompt": "Use case: stylized-concept. Asset type: standalone ingredient illustration for the Prorata French grocery app. Subject: five orange dried apricot halves. Match a coherent premium food library: soft hand-painted gouache and colored pencil, natural muted pastel colors, fine paper grain, delicate soft shadow. Warm ivory background #F8F7F2. Square centered composition, isolated subject occupies about 65%, generous clear margins, recognizable at 48px. No text, no letters, no labels, no logos, no border, no collage. One ingredient illustration, no other unrelated foods or props."
+    },
+    {
+      "id": "hazelnut",
+      "name": "Noisettes",
+      "aisle": "pantry",
+      "unit": "g",
+      "subject": "two hazelnuts in shell and three shelled hazelnuts",
+      "aliases": [
+        "Noisettes",
+        "Noisette"
+      ],
+      "path": "frontend/public/illustrations/ingredients/hazelnut.webp",
+      "prompt": "Use case: stylized-concept. Asset type: standalone ingredient illustration for the Prorata French grocery app. Subject: two hazelnuts in shell and three shelled hazelnuts. Match a coherent premium food library: soft hand-painted gouache and colored pencil, natural muted pastel colors, fine paper grain, delicate soft shadow. Warm ivory background #F8F7F2. Square centered composition, isolated subject occupies about 65%, generous clear margins, recognizable at 48px. No text, no letters, no labels, no logos, no border, no collage. One ingredient illustration, no other unrelated foods or props."
+    },
+    {
+      "id": "pistachio",
+      "name": "Pistaches",
+      "aisle": "pantry",
+      "unit": "g",
+      "subject": "a handful of pistachios in open beige shells showing green kernels",
+      "aliases": [
+        "Pistaches",
+        "Pistache"
+      ],
+      "path": "frontend/public/illustrations/ingredients/pistachio.webp",
+      "prompt": "Use case: stylized-concept. Asset type: standalone ingredient illustration for the Prorata French grocery app. Subject: a handful of pistachios in open beige shells showing green kernels. Match a coherent premium food library: soft hand-painted gouache and colored pencil, natural muted pastel colors, fine paper grain, delicate soft shadow. Warm ivory background #F8F7F2. Square centered composition, isolated subject occupies about 65%, generous clear margins, recognizable at 48px. No text, no letters, no labels, no logos, no border, no collage. One ingredient illustration, no other unrelated foods or props."
+    },
+    {
+      "id": "cashew",
+      "name": "Noix de cajou",
+      "aisle": "pantry",
+      "unit": "g",
+      "subject": "a small mound of creamy curved cashew nuts",
+      "aliases": [
+        "Noix de cajou",
+        "Cajou"
+      ],
+      "path": "frontend/public/illustrations/ingredients/cashew.webp",
+      "prompt": "Use case: stylized-concept. Asset type: standalone ingredient illustration for the Prorata French grocery app. Subject: a small mound of creamy curved cashew nuts. Match a coherent premium food library: soft hand-painted gouache and colored pencil, natural muted pastel colors, fine paper grain, delicate soft shadow. Warm ivory background #F8F7F2. Square centered composition, isolated subject occupies about 65%, generous clear margins, recognizable at 48px. No text, no letters, no labels, no logos, no border, no collage. One ingredient illustration, no other unrelated foods or props."
+    },
+    {
+      "id": "peanut",
+      "name": "Cacahuètes",
+      "aisle": "pantry",
+      "unit": "g",
+      "subject": "two peanut shells and a few shelled peanut kernels",
+      "aliases": [
+        "Cacahuètes",
+        "Cacahuète",
+        "Arachides"
+      ],
+      "path": "frontend/public/illustrations/ingredients/peanut.webp",
+      "prompt": "Use case: stylized-concept. Asset type: standalone ingredient illustration for the Prorata French grocery app. Subject: two peanut shells and a few shelled peanut kernels. Match a coherent premium food library: soft hand-painted gouache and colored pencil, natural muted pastel colors, fine paper grain, delicate soft shadow. Warm ivory background #F8F7F2. Square centered composition, isolated subject occupies about 65%, generous clear margins, recognizable at 48px. No text, no letters, no labels, no logos, no border, no collage. One ingredient illustration, no other unrelated foods or props."
+    },
+    {
+      "id": "sesame",
+      "name": "Graines de sésame",
+      "aisle": "pantry",
+      "unit": "g",
+      "subject": "a small pale ceramic dish containing ivory sesame seeds",
+      "aliases": [
+        "Graines de sésame",
+        "Sésame",
+        "Sésame blanc"
+      ],
+      "path": "frontend/public/illustrations/ingredients/sesame.webp",
+      "prompt": "Use case: stylized-concept. Asset type: standalone ingredient illustration for the Prorata French grocery app. Subject: a small pale ceramic dish containing ivory sesame seeds. Match a coherent premium food library: soft hand-painted gouache and colored pencil, natural muted pastel colors, fine paper grain, delicate soft shadow. Warm ivory background #F8F7F2. Square centered composition, isolated subject occupies about 65%, generous clear margins, recognizable at 48px. No text, no letters, no labels, no logos, no border, no collage. One ingredient illustration, no other unrelated foods or props."
+    },
+    {
+      "id": "sunflower-seed",
+      "name": "Graines de tournesol",
+      "aisle": "pantry",
+      "unit": "g",
+      "subject": "a small pale ceramic dish of shelled sunflower seeds with two striped shells beside it",
+      "aliases": [
+        "Graines de tournesol",
+        "Tournesol décortiqué"
+      ],
+      "path": "frontend/public/illustrations/ingredients/sunflower-seed.webp",
+      "prompt": "Use case: stylized-concept. Asset type: standalone ingredient illustration for the Prorata French grocery app. Subject: a small pale ceramic dish of shelled sunflower seeds with two striped shells beside it. Match a coherent premium food library: soft hand-painted gouache and colored pencil, natural muted pastel colors, fine paper grain, delicate soft shadow. Warm ivory background #F8F7F2. Square centered composition, isolated subject occupies about 65%, generous clear margins, recognizable at 48px. No text, no letters, no labels, no logos, no border, no collage. One ingredient illustration, no other unrelated foods or props."
+    },
+    {
+      "id": "pumpkin-seed",
+      "name": "Graines de courge",
+      "aisle": "pantry",
+      "unit": "g",
+      "subject": "a small pale ceramic dish of flat dark green pumpkin seeds",
+      "aliases": [
+        "Graines de courge",
+        "Pépins de courge"
+      ],
+      "path": "frontend/public/illustrations/ingredients/pumpkin-seed.webp",
+      "prompt": "Use case: stylized-concept. Asset type: standalone ingredient illustration for the Prorata French grocery app. Subject: a small pale ceramic dish of flat dark green pumpkin seeds. Match a coherent premium food library: soft hand-painted gouache and colored pencil, natural muted pastel colors, fine paper grain, delicate soft shadow. Warm ivory background #F8F7F2. Square centered composition, isolated subject occupies about 65%, generous clear margins, recognizable at 48px. No text, no letters, no labels, no logos, no border, no collage. One ingredient illustration, no other unrelated foods or props."
+    },
+    {
+      "id": "chia",
+      "name": "Graines de chia",
+      "aisle": "pantry",
+      "unit": "g",
+      "subject": "a small pale ceramic dish of tiny mottled black and grey chia seeds",
+      "aliases": [
+        "Graines de chia",
+        "Chia"
+      ],
+      "path": "frontend/public/illustrations/ingredients/chia.webp",
+      "prompt": "Use case: stylized-concept. Asset type: standalone ingredient illustration for the Prorata French grocery app. Subject: a small pale ceramic dish of tiny mottled black and grey chia seeds. Match a coherent premium food library: soft hand-painted gouache and colored pencil, natural muted pastel colors, fine paper grain, delicate soft shadow. Warm ivory background #F8F7F2. Square centered composition, isolated subject occupies about 65%, generous clear margins, recognizable at 48px. No text, no letters, no labels, no logos, no border, no collage. One ingredient illustration, no other unrelated foods or props."
+    },
+    {
+      "id": "burrata",
+      "name": "Burrata",
+      "aisle": "dairy",
+      "unit": "g",
+      "subject": "a soft white burrata cheese ball with a tied top and one opened edge revealing cream",
+      "aliases": [
+        "Burrata",
+        "Burratas"
+      ],
+      "path": "frontend/public/illustrations/ingredients/burrata.webp",
+      "prompt": "Use case: stylized-concept. Asset type: standalone ingredient illustration for the Prorata French grocery app. Subject: a soft white burrata cheese ball with a tied top and one opened edge revealing cream. Match a coherent premium food library: soft hand-painted gouache and colored pencil, natural muted pastel colors, fine paper grain, delicate soft shadow. Warm ivory background #F8F7F2. Square centered composition, isolated subject occupies about 65%, generous clear margins, recognizable at 48px. No text, no letters, no labels, no logos, no border, no collage. One ingredient illustration, no other unrelated foods or props."
+    },
+    {
+      "id": "reblochon",
+      "name": "Reblochon",
+      "aisle": "dairy",
+      "unit": "g",
+      "subject": "a small wheel of reblochon with orange ivory rind and a creamy cut wedge",
+      "aliases": [
+        "Reblochon",
+        "Reblochon fermier"
+      ],
+      "path": "frontend/public/illustrations/ingredients/reblochon.webp",
+      "prompt": "Use case: stylized-concept. Asset type: standalone ingredient illustration for the Prorata French grocery app. Subject: a small wheel of reblochon with orange ivory rind and a creamy cut wedge. Match a coherent premium food library: soft hand-painted gouache and colored pencil, natural muted pastel colors, fine paper grain, delicate soft shadow. Warm ivory background #F8F7F2. Square centered composition, isolated subject occupies about 65%, generous clear margins, recognizable at 48px. No text, no letters, no labels, no logos, no border, no collage. One ingredient illustration, no other unrelated foods or props."
+    },
+    {
+      "id": "gruyere",
+      "name": "Gruyère",
+      "aisle": "dairy",
+      "unit": "g",
+      "subject": "a firm pale yellow gruyere cheese wedge with a brown rind and very few small holes",
+      "aliases": [
+        "Gruyère",
+        "Gruyère suisse"
+      ],
+      "path": "frontend/public/illustrations/ingredients/gruyere.webp",
+      "prompt": "Use case: stylized-concept. Asset type: standalone ingredient illustration for the Prorata French grocery app. Subject: a firm pale yellow gruyere cheese wedge with a brown rind and very few small holes. Match a coherent premium food library: soft hand-painted gouache and colored pencil, natural muted pastel colors, fine paper grain, delicate soft shadow. Warm ivory background #F8F7F2. Square centered composition, isolated subject occupies about 65%, generous clear margins, recognizable at 48px. No text, no letters, no labels, no logos, no border, no collage. One ingredient illustration, no other unrelated foods or props."
+    },
+    {
+      "id": "pecorino",
+      "name": "Pecorino",
+      "aisle": "dairy",
+      "unit": "g",
+      "subject": "a crumbly ivory pecorino cheese wedge with dark natural rind",
+      "aliases": [
+        "Pecorino",
+        "Pecorino romano"
+      ],
+      "path": "frontend/public/illustrations/ingredients/pecorino.webp",
+      "prompt": "Use case: stylized-concept. Asset type: standalone ingredient illustration for the Prorata French grocery app. Subject: a crumbly ivory pecorino cheese wedge with dark natural rind. Match a coherent premium food library: soft hand-painted gouache and colored pencil, natural muted pastel colors, fine paper grain, delicate soft shadow. Warm ivory background #F8F7F2. Square centered composition, isolated subject occupies about 65%, generous clear margins, recognizable at 48px. No text, no letters, no labels, no logos, no border, no collage. One ingredient illustration, no other unrelated foods or props."
+    },
+    {
+      "id": "cream-cheese",
+      "name": "Fromage frais à tartiner",
+      "aisle": "dairy",
+      "unit": "g",
+      "subject": "an open plain cream tub containing smooth white spreadable cream cheese",
+      "aliases": [
+        "Fromage frais à tartiner",
+        "Cream cheese",
+        "Fromage à tartiner"
+      ],
+      "path": "frontend/public/illustrations/ingredients/cream-cheese.webp",
+      "prompt": "Use case: stylized-concept. Asset type: standalone ingredient illustration for the Prorata French grocery app. Subject: an open plain cream tub containing smooth white spreadable cream cheese. Match a coherent premium food library: soft hand-painted gouache and colored pencil, natural muted pastel colors, fine paper grain, delicate soft shadow. Warm ivory background #F8F7F2. Square centered composition, isolated subject occupies about 65%, generous clear margins, recognizable at 48px. No text, no letters, no labels, no logos, no border, no collage. One ingredient illustration, no other unrelated foods or props."
+    },
+    {
+      "id": "kefir",
+      "name": "Kéfir de lait",
+      "aisle": "dairy",
+      "unit": "ml",
+      "subject": "a small plain glass bottle of white milk kefir with a cream cap",
+      "aliases": [
+        "Kéfir de lait",
+        "Kéfir"
+      ],
+      "path": "frontend/public/illustrations/ingredients/kefir.webp",
+      "prompt": "Use case: stylized-concept. Asset type: standalone ingredient illustration for the Prorata French grocery app. Subject: a small plain glass bottle of white milk kefir with a cream cap. Match a coherent premium food library: soft hand-painted gouache and colored pencil, natural muted pastel colors, fine paper grain, delicate soft shadow. Warm ivory background #F8F7F2. Square centered composition, isolated subject occupies about 65%, generous clear margins, recognizable at 48px. No text, no letters, no labels, no logos, no border, no collage. One ingredient illustration, no other unrelated foods or props."
+    },
+    {
+      "id": "almond-milk",
+      "name": "Lait d’amande",
+      "aisle": "dairy",
+      "unit": "ml",
+      "subject": "a plain ivory carton with pale beige cap and three almonds beside it",
+      "aliases": [
+        "Lait d’amande",
+        "Boisson à l’amande"
+      ],
+      "path": "frontend/public/illustrations/ingredients/almond-milk.webp",
+      "prompt": "Use case: stylized-concept. Asset type: standalone ingredient illustration for the Prorata French grocery app. Subject: a plain ivory carton with pale beige cap and three almonds beside it. Match a coherent premium food library: soft hand-painted gouache and colored pencil, natural muted pastel colors, fine paper grain, delicate soft shadow. Warm ivory background #F8F7F2. Square centered composition, isolated subject occupies about 65%, generous clear margins, recognizable at 48px. No text, no letters, no labels, no logos, no border, no collage. One ingredient illustration, no other unrelated foods or props."
+    },
+    {
+      "id": "soy-milk",
+      "name": "Lait de soja",
+      "aisle": "dairy",
+      "unit": "ml",
+      "subject": "a plain sage carton with a cream cap and several beige soybeans beside it",
+      "aliases": [
+        "Lait de soja",
+        "Boisson au soja"
+      ],
+      "path": "frontend/public/illustrations/ingredients/soy-milk.webp",
+      "prompt": "Use case: stylized-concept. Asset type: standalone ingredient illustration for the Prorata French grocery app. Subject: a plain sage carton with a cream cap and several beige soybeans beside it. Match a coherent premium food library: soft hand-painted gouache and colored pencil, natural muted pastel colors, fine paper grain, delicate soft shadow. Warm ivory background #F8F7F2. Square centered composition, isolated subject occupies about 65%, generous clear margins, recognizable at 48px. No text, no letters, no labels, no logos, no border, no collage. One ingredient illustration, no other unrelated foods or props."
+    },
+    {
+      "id": "condensed-milk",
+      "name": "Lait concentré sucré",
+      "aisle": "dairy",
+      "unit": "g",
+      "subject": "an open plain cream tin containing thick glossy pale condensed milk",
+      "aliases": [
+        "Lait concentré sucré",
+        "Lait concentré"
+      ],
+      "path": "frontend/public/illustrations/ingredients/condensed-milk.webp",
+      "prompt": "Use case: stylized-concept. Asset type: standalone ingredient illustration for the Prorata French grocery app. Subject: an open plain cream tin containing thick glossy pale condensed milk. Match a coherent premium food library: soft hand-painted gouache and colored pencil, natural muted pastel colors, fine paper grain, delicate soft shadow. Warm ivory background #F8F7F2. Square centered composition, isolated subject occupies about 65%, generous clear margins, recognizable at 48px. No text, no letters, no labels, no logos, no border, no collage. One ingredient illustration, no other unrelated foods or props."
+    },
+    {
+      "id": "coconut-cream",
+      "name": "Crème de coco",
+      "aisle": "pantry",
+      "unit": "ml",
+      "subject": "an open small ivory tin of thick coconut cream beside a small coconut half",
+      "aliases": [
+        "Crème de coco"
+      ],
+      "path": "frontend/public/illustrations/ingredients/coconut-cream.webp",
+      "prompt": "Use case: stylized-concept. Asset type: standalone ingredient illustration for the Prorata French grocery app. Subject: an open small ivory tin of thick coconut cream beside a small coconut half. Match a coherent premium food library: soft hand-painted gouache and colored pencil, natural muted pastel colors, fine paper grain, delicate soft shadow. Warm ivory background #F8F7F2. Square centered composition, isolated subject occupies about 65%, generous clear margins, recognizable at 48px. No text, no letters, no labels, no logos, no border, no collage. One ingredient illustration, no other unrelated foods or props."
+    },
+    {
+      "id": "black-olives",
+      "name": "Olives noires",
+      "aisle": "pantry",
+      "unit": "g",
+      "subject": "a small pale ceramic dish of glossy black olives",
+      "aliases": [
+        "Olives noires",
+        "Olive noire"
+      ],
+      "path": "frontend/public/illustrations/ingredients/black-olives.webp",
+      "prompt": "Use case: stylized-concept. Asset type: standalone ingredient illustration for the Prorata French grocery app. Subject: a small pale ceramic dish of glossy black olives. Match a coherent premium food library: soft hand-painted gouache and colored pencil, natural muted pastel colors, fine paper grain, delicate soft shadow. Warm ivory background #F8F7F2. Square centered composition, isolated subject occupies about 65%, generous clear margins, recognizable at 48px. No text, no letters, no labels, no logos, no border, no collage. One ingredient illustration, no other unrelated foods or props."
+    },
+    {
+      "id": "pesto",
+      "name": "Pesto au basilic",
+      "aisle": "pantry",
+      "unit": "g",
+      "subject": "an open small glass jar of thick green basil pesto with a basil leaf beside it",
+      "aliases": [
+        "Pesto au basilic",
+        "Pesto",
+        "Pesto vert"
+      ],
+      "path": "frontend/public/illustrations/ingredients/pesto.webp",
+      "prompt": "Use case: stylized-concept. Asset type: standalone ingredient illustration for the Prorata French grocery app. Subject: an open small glass jar of thick green basil pesto with a basil leaf beside it. Match a coherent premium food library: soft hand-painted gouache and colored pencil, natural muted pastel colors, fine paper grain, delicate soft shadow. Warm ivory background #F8F7F2. Square centered composition, isolated subject occupies about 65%, generous clear margins, recognizable at 48px. No text, no letters, no labels, no logos, no border, no collage. One ingredient illustration, no other unrelated foods or props."
+    },
+    {
+      "id": "tahini",
+      "name": "Tahini",
+      "aisle": "pantry",
+      "unit": "g",
+      "subject": "an open small glass jar of smooth beige sesame paste with a tiny swirl on top",
+      "aliases": [
+        "Tahini",
+        "Tahin",
+        "Purée de sésame"
+      ],
+      "path": "frontend/public/illustrations/ingredients/tahini.webp",
+      "prompt": "Use case: stylized-concept. Asset type: standalone ingredient illustration for the Prorata French grocery app. Subject: an open small glass jar of smooth beige sesame paste with a tiny swirl on top. Match a coherent premium food library: soft hand-painted gouache and colored pencil, natural muted pastel colors, fine paper grain, delicate soft shadow. Warm ivory background #F8F7F2. Square centered composition, isolated subject occupies about 65%, generous clear margins, recognizable at 48px. No text, no letters, no labels, no logos, no border, no collage. One ingredient illustration, no other unrelated foods or props."
+    },
+    {
+      "id": "peanut-butter",
+      "name": "Beurre de cacahuètes",
+      "aisle": "pantry",
+      "unit": "g",
+      "subject": "an open small glass jar of tan peanut butter with two peanuts beside it",
+      "aliases": [
+        "Beurre de cacahuètes",
+        "Beurre de cacahuète",
+        "Purée de cacahuètes"
+      ],
+      "path": "frontend/public/illustrations/ingredients/peanut-butter.webp",
+      "prompt": "Use case: stylized-concept. Asset type: standalone ingredient illustration for the Prorata French grocery app. Subject: an open small glass jar of tan peanut butter with two peanuts beside it. Match a coherent premium food library: soft hand-painted gouache and colored pencil, natural muted pastel colors, fine paper grain, delicate soft shadow. Warm ivory background #F8F7F2. Square centered composition, isolated subject occupies about 65%, generous clear margins, recognizable at 48px. No text, no letters, no labels, no logos, no border, no collage. One ingredient illustration, no other unrelated foods or props."
+    },
+    {
+      "id": "balsamic-vinegar",
+      "name": "Vinaigre balsamique",
+      "aisle": "pantry",
+      "unit": "ml",
+      "subject": "a small rounded clear glass bottle of dark brown balsamic vinegar with a cream stopper",
+      "aliases": [
+        "Vinaigre balsamique",
+        "Balsamique"
+      ],
+      "path": "frontend/public/illustrations/ingredients/balsamic-vinegar.webp",
+      "prompt": "Use case: stylized-concept. Asset type: standalone ingredient illustration for the Prorata French grocery app. Subject: a small rounded clear glass bottle of dark brown balsamic vinegar with a cream stopper. Match a coherent premium food library: soft hand-painted gouache and colored pencil, natural muted pastel colors, fine paper grain, delicate soft shadow. Warm ivory background #F8F7F2. Square centered composition, isolated subject occupies about 65%, generous clear margins, recognizable at 48px. No text, no letters, no labels, no logos, no border, no collage. One ingredient illustration, no other unrelated foods or props."
+    },
+    {
+      "id": "sesame-oil",
+      "name": "Huile de sésame",
+      "aisle": "pantry",
+      "unit": "ml",
+      "subject": "a small clear glass bottle of amber sesame oil and a tiny scattering of sesame seeds",
+      "aliases": [
+        "Huile de sésame"
+      ],
+      "path": "frontend/public/illustrations/ingredients/sesame-oil.webp",
+      "prompt": "Use case: stylized-concept. Asset type: standalone ingredient illustration for the Prorata French grocery app. Subject: a small clear glass bottle of amber sesame oil and a tiny scattering of sesame seeds. Match a coherent premium food library: soft hand-painted gouache and colored pencil, natural muted pastel colors, fine paper grain, delicate soft shadow. Warm ivory background #F8F7F2. Square centered composition, isolated subject occupies about 65%, generous clear margins, recognizable at 48px. No text, no letters, no labels, no logos, no border, no collage. One ingredient illustration, no other unrelated foods or props."
+    },
+    {
+      "id": "red-wine",
+      "name": "Vin rouge de cuisine",
+      "aisle": "pantry",
+      "unit": "ml",
+      "subject": "a short dark glass wine bottle with plain muted burgundy neck foil and a little red wine visible in a small glass",
+      "aliases": [
+        "Vin rouge de cuisine",
+        "Vin rouge"
+      ],
+      "path": "frontend/public/illustrations/ingredients/red-wine.webp",
+      "prompt": "Use case: stylized-concept. Asset type: standalone ingredient illustration for the Prorata French grocery app. Subject: a short dark glass wine bottle with plain muted burgundy neck foil and a little red wine visible in a small glass. Match a coherent premium food library: soft hand-painted gouache and colored pencil, natural muted pastel colors, fine paper grain, delicate soft shadow. Warm ivory background #F8F7F2. Square centered composition, isolated subject occupies about 65%, generous clear margins, recognizable at 48px. No text, no letters, no labels, no logos, no border, no collage. One ingredient illustration, no other unrelated foods or props."
+    },
+    {
+      "id": "white-wine",
+      "name": "Vin blanc de cuisine",
+      "aisle": "pantry",
+      "unit": "ml",
+      "subject": "a short pale green glass wine bottle showing golden white wine with plain cream neck foil",
+      "aliases": [
+        "Vin blanc de cuisine",
+        "Vin blanc"
+      ],
+      "path": "frontend/public/illustrations/ingredients/white-wine.webp",
+      "prompt": "Use case: stylized-concept. Asset type: standalone ingredient illustration for the Prorata French grocery app. Subject: a short pale green glass wine bottle showing golden white wine with plain cream neck foil. Match a coherent premium food library: soft hand-painted gouache and colored pencil, natural muted pastel colors, fine paper grain, delicate soft shadow. Warm ivory background #F8F7F2. Square centered composition, isolated subject occupies about 65%, generous clear margins, recognizable at 48px. No text, no letters, no labels, no logos, no border, no collage. One ingredient illustration, no other unrelated foods or props."
+    },
+    {
+      "id": "fish-stock",
+      "name": "Fumet de poisson",
+      "aisle": "pantry",
+      "unit": "g",
+      "subject": "a small plain ivory jar of pale fish stock powder with a small silver fish silhouette decoration without lettering",
+      "aliases": [
+        "Fumet de poisson",
+        "Bouillon de poisson"
+      ],
+      "path": "frontend/public/illustrations/ingredients/fish-stock.webp",
+      "prompt": "Use case: stylized-concept. Asset type: standalone ingredient illustration for the Prorata French grocery app. Subject: a small plain ivory jar of pale fish stock powder with a small silver fish silhouette decoration without lettering. Match a coherent premium food library: soft hand-painted gouache and colored pencil, natural muted pastel colors, fine paper grain, delicate soft shadow. Warm ivory background #F8F7F2. Square centered composition, isolated subject occupies about 65%, generous clear margins, recognizable at 48px. No text, no letters, no labels, no logos, no border, no collage. One ingredient illustration, no other unrelated foods or props."
+    },
+    {
+      "id": "vanilla",
+      "name": "Gousse de vanille",
+      "aisle": "pantry",
+      "unit": "piece",
+      "subject": "two thin dark brown vanilla pods with one split open showing seeds",
+      "aliases": [
+        "Gousse de vanille",
+        "Gousses de vanille",
+        "Vanille en gousse"
+      ],
+      "path": "frontend/public/illustrations/ingredients/vanilla.webp",
+      "prompt": "Use case: stylized-concept. Asset type: standalone ingredient illustration for the Prorata French grocery app. Subject: two thin dark brown vanilla pods with one split open showing seeds. Match a coherent premium food library: soft hand-painted gouache and colored pencil, natural muted pastel colors, fine paper grain, delicate soft shadow. Warm ivory background #F8F7F2. Square centered composition, isolated subject occupies about 65%, generous clear margins, recognizable at 48px. No text, no letters, no labels, no logos, no border, no collage. One ingredient illustration, no other unrelated foods or props."
+    }
+  ]
+}

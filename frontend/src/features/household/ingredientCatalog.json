@@ -1350,5 +1350,751 @@
     ],
     "aisle": "pantry",
     "unit": "g"
+  },
+  {
+    "id": "squid-ink-tin",
+    "aliases": [
+      "Calamars à l’encre noire en conserve",
+      "Calamar à l’encre noire",
+      "Calamars à l’encre",
+      "Calamar dans son encre",
+      "Calamars dans leur encre",
+      "Calamar à l’encre en conserve",
+      "Calamar dans son encre noir en conserve",
+      "Calamar à l’encre noire en conserve",
+      "Calamars à l’encre noire",
+      "Calamar dans son encre noire en conserve"
+    ],
+    "aisle": "meat",
+    "unit": "piece"
+  },
+  {
+    "id": "octopus",
+    "aliases": [
+      "Poulpe",
+      "Tentacules de poulpe"
+    ],
+    "aisle": "meat",
+    "unit": "g"
+  },
+  {
+    "id": "cuttlefish",
+    "aliases": [
+      "Seiche",
+      "Seiches"
+    ],
+    "aisle": "meat",
+    "unit": "g"
+  },
+  {
+    "id": "scallops",
+    "aliases": [
+      "Noix de Saint-Jacques",
+      "Saint-Jacques",
+      "Noix de St Jacques"
+    ],
+    "aisle": "meat",
+    "unit": "g"
+  },
+  {
+    "id": "crab",
+    "aliases": [
+      "Chair de crabe",
+      "Crabe"
+    ],
+    "aisle": "meat",
+    "unit": "g"
+  },
+  {
+    "id": "mackerel-tin",
+    "aliases": [
+      "Maquereaux en conserve",
+      "Maquereau en conserve",
+      "Filets de maquereaux en conserve"
+    ],
+    "aisle": "meat",
+    "unit": "piece"
+  },
+  {
+    "id": "anchovies",
+    "aliases": [
+      "Anchois",
+      "Filets d’anchois"
+    ],
+    "aisle": "meat",
+    "unit": "g"
+  },
+  {
+    "id": "ravioli-tin",
+    "aliases": [
+      "Raviolis en conserve",
+      "Raviolis en boîte"
+    ],
+    "aisle": "pantry",
+    "unit": "piece"
+  },
+  {
+    "id": "smoked-herring",
+    "aliases": [
+      "Hareng fumé",
+      "Filets de hareng fumé"
+    ],
+    "aisle": "meat",
+    "unit": "g"
+  },
+  {
+    "id": "sea-bass",
+    "aliases": [
+      "Bar",
+      "Loup de mer",
+      "Filet de bar"
+    ],
+    "aisle": "meat",
+    "unit": "g"
+  },
+  {
+    "id": "hake",
+    "aliases": [
+      "Merlu",
+      "Filet de merlu"
+    ],
+    "aisle": "meat",
+    "unit": "g"
+  },
+  {
+    "id": "pollock",
+    "aliases": [
+      "Lieu noir",
+      "Filet de lieu noir"
+    ],
+    "aisle": "meat",
+    "unit": "g"
+  },
+  {
+    "id": "duck-confit",
+    "aliases": [
+      "Confit de canard",
+      "Cuisse de canard confite"
+    ],
+    "aisle": "meat",
+    "unit": "piece"
+  },
+  {
+    "id": "rabbit",
+    "aliases": [
+      "Lapin",
+      "Cuisse de lapin"
+    ],
+    "aisle": "meat",
+    "unit": "g"
+  },
+  {
+    "id": "ground-pork",
+    "aliases": [
+      "Porc haché",
+      "Viande de porc hachée"
+    ],
+    "aisle": "meat",
+    "unit": "g"
+  },
+  {
+    "id": "meatballs",
+    "aliases": [
+      "Boulettes de bœuf",
+      "Boulettes de viande"
+    ],
+    "aisle": "meat",
+    "unit": "g"
+  },
+  {
+    "id": "beef-steak",
+    "aliases": [
+      "Steak de bœuf",
+      "Entrecôte",
+      "Faux-filet"
+    ],
+    "aisle": "meat",
+    "unit": "g"
+  },
+  {
+    "id": "chicken-thigh",
+    "aliases": [
+      "Cuisses de poulet",
+      "Cuisse de poulet",
+      "Hauts de cuisse de poulet"
+    ],
+    "aisle": "meat",
+    "unit": "piece"
+  },
+  {
+    "id": "ready-soup",
+    "aliases": [
+      "Soupe prête à réchauffer",
+      "Soupe en brique"
+    ],
+    "aisle": "pantry",
+    "unit": "ml"
+  },
+  {
+    "id": "salami",
+    "aliases": [
+      "Saucisson sec",
+      "Saucisson"
+    ],
+    "aisle": "meat",
+    "unit": "g"
+  },
+  {
+    "id": "cherry-tomato",
+    "aliases": [
+      "Tomates cerises",
+      "Tomate cerise"
+    ],
+    "aisle": "produce",
+    "unit": "g"
+  },
+  {
+    "id": "yellow-pepper",
+    "aliases": [
+      "Poivron jaune",
+      "Poivrons jaunes"
+    ],
+    "aisle": "produce",
+    "unit": "piece"
+  },
+  {
+    "id": "red-onion",
+    "aliases": [
+      "Oignon rouge",
+      "Oignons rouges"
+    ],
+    "aisle": "produce",
+    "unit": "piece"
+  },
+  {
+    "id": "spring-onion",
+    "aliases": [
+      "Oignons nouveaux",
+      "Oignon nouveau",
+      "Cébettes",
+      "Cébette"
+    ],
+    "aisle": "produce",
+    "unit": "piece"
+  },
+  {
+    "id": "chard",
+    "aliases": [
+      "Blettes",
+      "Blette",
+      "Bette",
+      "Bettes"
+    ],
+    "aisle": "produce",
+    "unit": "g"
+  },
+  {
+    "id": "kale",
+    "aliases": [
+      "Chou kale",
+      "Kale"
+    ],
+    "aisle": "produce",
+    "unit": "g"
+  },
+  {
+    "id": "pak-choi",
+    "aliases": [
+      "Pak choï",
+      "Bok choy"
+    ],
+    "aisle": "produce",
+    "unit": "piece"
+  },
+  {
+    "id": "watercress",
+    "aliases": [
+      "Cresson",
+      "Cresson frais"
+    ],
+    "aisle": "produce",
+    "unit": "g"
+  },
+  {
+    "id": "arugula",
+    "aliases": [
+      "Roquette",
+      "Roquette fraîche"
+    ],
+    "aisle": "produce",
+    "unit": "g"
+  },
+  {
+    "id": "lambs-lettuce",
+    "aliases": [
+      "Mâche",
+      "Mâche fraîche"
+    ],
+    "aisle": "produce",
+    "unit": "g"
+  },
+  {
+    "id": "radicchio",
+    "aliases": [
+      "Trévise",
+      "Radicchio",
+      "Salade trévise"
+    ],
+    "aisle": "produce",
+    "unit": "piece"
+  },
+  {
+    "id": "rutabaga",
+    "aliases": [
+      "Rutabaga",
+      "Rutabagas"
+    ],
+    "aisle": "produce",
+    "unit": "g"
+  },
+  {
+    "id": "jerusalem-artichoke",
+    "aliases": [
+      "Topinambours",
+      "Topinambour"
+    ],
+    "aisle": "produce",
+    "unit": "g"
+  },
+  {
+    "id": "oyster-mushroom",
+    "aliases": [
+      "Pleurotes",
+      "Pleurote"
+    ],
+    "aisle": "produce",
+    "unit": "g"
+  },
+  {
+    "id": "shiitake",
+    "aliases": [
+      "Shiitakés",
+      "Shiitake"
+    ],
+    "aisle": "produce",
+    "unit": "g"
+  },
+  {
+    "id": "grapes",
+    "aliases": [
+      "Raisin frais",
+      "Raisins frais",
+      "Raisin"
+    ],
+    "aisle": "produce",
+    "unit": "g"
+  },
+  {
+    "id": "kiwi",
+    "aliases": [
+      "Kiwi",
+      "Kiwis"
+    ],
+    "aisle": "produce",
+    "unit": "piece"
+  },
+  {
+    "id": "pineapple",
+    "aliases": [
+      "Ananas",
+      "Ananas frais"
+    ],
+    "aisle": "produce",
+    "unit": "piece"
+  },
+  {
+    "id": "mango",
+    "aliases": [
+      "Mangue",
+      "Mangues"
+    ],
+    "aisle": "produce",
+    "unit": "piece"
+  },
+  {
+    "id": "peach",
+    "aliases": [
+      "Pêche",
+      "Pêches"
+    ],
+    "aisle": "produce",
+    "unit": "piece"
+  },
+  {
+    "id": "apricot",
+    "aliases": [
+      "Abricots",
+      "Abricot"
+    ],
+    "aisle": "produce",
+    "unit": "g"
+  },
+  {
+    "id": "plum",
+    "aliases": [
+      "Prunes",
+      "Prune"
+    ],
+    "aisle": "produce",
+    "unit": "g"
+  },
+  {
+    "id": "raspberry",
+    "aliases": [
+      "Framboises",
+      "Framboise"
+    ],
+    "aisle": "produce",
+    "unit": "g"
+  },
+  {
+    "id": "blueberry",
+    "aliases": [
+      "Myrtilles",
+      "Myrtille"
+    ],
+    "aisle": "produce",
+    "unit": "g"
+  },
+  {
+    "id": "clementine",
+    "aliases": [
+      "Clémentines",
+      "Clémentine"
+    ],
+    "aisle": "produce",
+    "unit": "piece"
+  },
+  {
+    "id": "grapefruit",
+    "aliases": [
+      "Pamplemousse",
+      "Pamplemousses",
+      "Pomelo"
+    ],
+    "aisle": "produce",
+    "unit": "piece"
+  },
+  {
+    "id": "lime",
+    "aliases": [
+      "Citron vert",
+      "Citrons verts",
+      "Lime"
+    ],
+    "aisle": "produce",
+    "unit": "piece"
+  },
+  {
+    "id": "watermelon",
+    "aliases": [
+      "Pastèque",
+      "Pastèques"
+    ],
+    "aisle": "produce",
+    "unit": "g"
+  },
+  {
+    "id": "melon",
+    "aliases": [
+      "Melon",
+      "Melons"
+    ],
+    "aisle": "produce",
+    "unit": "piece"
+  },
+  {
+    "id": "dates",
+    "aliases": [
+      "Dattes",
+      "Datte"
+    ],
+    "aisle": "pantry",
+    "unit": "g"
+  },
+  {
+    "id": "raisins",
+    "aliases": [
+      "Raisins secs",
+      "Raisin sec"
+    ],
+    "aisle": "pantry",
+    "unit": "g"
+  },
+  {
+    "id": "dried-apricot",
+    "aliases": [
+      "Abricots secs",
+      "Abricot sec"
+    ],
+    "aisle": "pantry",
+    "unit": "g"
+  },
+  {
+    "id": "hazelnut",
+    "aliases": [
+      "Noisettes",
+      "Noisette"
+    ],
+    "aisle": "pantry",
+    "unit": "g"
+  },
+  {
+    "id": "pistachio",
+    "aliases": [
+      "Pistaches",
+      "Pistache"
+    ],
+    "aisle": "pantry",
+    "unit": "g"
+  },
+  {
+    "id": "cashew",
+    "aliases": [
+      "Noix de cajou",
+      "Cajou"
+    ],
+    "aisle": "pantry",
+    "unit": "g"
+  },
+  {
+    "id": "peanut",
+    "aliases": [
+      "Cacahuètes",
+      "Cacahuète",
+      "Arachides"
+    ],
+    "aisle": "pantry",
+    "unit": "g"
+  },
+  {
+    "id": "sesame",
+    "aliases": [
+      "Graines de sésame",
+      "Sésame",
+      "Sésame blanc"
+    ],
+    "aisle": "pantry",
+    "unit": "g"
+  },
+  {
+    "id": "sunflower-seed",
+    "aliases": [
+      "Graines de tournesol",
+      "Tournesol décortiqué"
+    ],
+    "aisle": "pantry",
+    "unit": "g"
+  },
+  {
+    "id": "pumpkin-seed",
+    "aliases": [
+      "Graines de courge",
+      "Pépins de courge"
+    ],
+    "aisle": "pantry",
+    "unit": "g"
+  },
+  {
+    "id": "chia",
+    "aliases": [
+      "Graines de chia",
+      "Chia"
+    ],
+    "aisle": "pantry",
+    "unit": "g"
+  },
+  {
+    "id": "burrata",
+    "aliases": [
+      "Burrata",
+      "Burratas"
+    ],
+    "aisle": "dairy",
+    "unit": "g"
+  },
+  {
+    "id": "reblochon",
+    "aliases": [
+      "Reblochon",
+      "Reblochon fermier"
+    ],
+    "aisle": "dairy",
+    "unit": "g"
+  },
+  {
+    "id": "gruyere",
+    "aliases": [
+      "Gruyère",
+      "Gruyère suisse"
+    ],
+    "aisle": "dairy",
+    "unit": "g"
+  },
+  {
+    "id": "pecorino",
+    "aliases": [
+      "Pecorino",
+      "Pecorino romano"
+    ],
+    "aisle": "dairy",
+    "unit": "g"
+  },
+  {
+    "id": "cream-cheese",
+    "aliases": [
+      "Fromage frais à tartiner",
+      "Cream cheese",
+      "Fromage à tartiner"
+    ],
+    "aisle": "dairy",
+    "unit": "g"
+  },
+  {
+    "id": "kefir",
+    "aliases": [
+      "Kéfir de lait",
+      "Kéfir"
+    ],
+    "aisle": "dairy",
+    "unit": "ml"
+  },
+  {
+    "id": "almond-milk",
+    "aliases": [
+      "Lait d’amande",
+      "Boisson à l’amande"
+    ],
+    "aisle": "dairy",
+    "unit": "ml"
+  },
+  {
+    "id": "soy-milk",
+    "aliases": [
+      "Lait de soja",
+      "Boisson au soja"
+    ],
+    "aisle": "dairy",
+    "unit": "ml"
+  },
+  {
+    "id": "condensed-milk",
+    "aliases": [
+      "Lait concentré sucré",
+      "Lait concentré"
+    ],
+    "aisle": "dairy",
+    "unit": "g"
+  },
+  {
+    "id": "coconut-cream",
+    "aliases": [
+      "Crème de coco"
+    ],
+    "aisle": "pantry",
+    "unit": "ml"
+  },
+  {
+    "id": "black-olives",
+    "aliases": [
+      "Olives noires",
+      "Olive noire"
+    ],
+    "aisle": "pantry",
+    "unit": "g"
+  },
+  {
+    "id": "pesto",
+    "aliases": [
+      "Pesto au basilic",
+      "Pesto",
+      "Pesto vert"
+    ],
+    "aisle": "pantry",
+    "unit": "g"
+  },
+  {
+    "id": "tahini",
+    "aliases": [
+      "Tahini",
+      "Tahin",
+      "Purée de sésame"
+    ],
+    "aisle": "pantry",
+    "unit": "g"
+  },
+  {
+    "id": "peanut-butter",
+    "aliases": [
+      "Beurre de cacahuètes",
+      "Beurre de cacahuète",
+      "Purée de cacahuètes"
+    ],
+    "aisle": "pantry",
+    "unit": "g"
+  },
+  {
+    "id": "balsamic-vinegar",
+    "aliases": [
+      "Vinaigre balsamique",
+      "Balsamique"
+    ],
+    "aisle": "pantry",
+    "unit": "ml"
+  },
+  {
+    "id": "sesame-oil",
+    "aliases": [
+      "Huile de sésame"
+    ],
+    "aisle": "pantry",
+    "unit": "ml"
+  },
+  {
+    "id": "red-wine",
+    "aliases": [
+      "Vin rouge de cuisine",
+      "Vin rouge"
+    ],
+    "aisle": "pantry",
+    "unit": "ml"
+  },
+  {
+    "id": "white-wine",
+    "aliases": [
+      "Vin blanc de cuisine",
+      "Vin blanc"
+    ],
+    "aisle": "pantry",
+    "unit": "ml"
+  },
+  {
+    "id": "fish-stock",
+    "aliases": [
+      "Fumet de poisson",
+      "Bouillon de poisson"
+    ],
+    "aisle": "pantry",
+    "unit": "g"
+  },
+  {
+    "id": "vanilla",
+    "aliases": [
+      "Gousse de vanille",
+      "Gousses de vanille",
+      "Vanille en gousse"
+    ],
+    "aisle": "pantry",
+    "unit": "piece"
   }
 ]
