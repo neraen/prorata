@@ -10,6 +10,7 @@ import { ingredientVisual } from './ingredientVisual'
 import { FoodNameInput } from './FoodNameInput'
 import { useMonthStore, useToastStore } from '../../lib/stores'
 import { displayDate } from './household'
+import { currentPlanningStart, shiftPlanningDate, validPlanningDate } from './planningDates'
 import { fieldClass } from './RecipeForm'
 
 export function ShoppingPage() {
@@ -20,7 +21,7 @@ export function ShoppingPage() {
   const formRef = useRef<HTMLFormElement>(null)
   const addingId = useRef(crypto.randomUUID())
   const [search, setSearch] = useState('')
-  const [week, setWeek] = useState('all')
+  const [weekChoice, setWeek] = useState<string | null>(() => validPlanningDate(params.get('week')) ? params.get('week') : null)
   const { data, send, check, pendingCount } = household
   const [removing, setRemoving] = useState<{ id: string; name: string } | null>(null)
   const [adding, setAdding] = useState(() => params.get('add') === '1')
@@ -34,6 +35,8 @@ export function ShoppingPage() {
   const [error, setError] = useState('')
   const allItems = data?.shopping ?? []
   const weeks = [...new Set(allItems.flatMap((item) => item.week ? [item.week] : []))].sort()
+  const preferredWeek = currentPlanningStart(data?.planningStart)
+  const week = weekChoice ?? (data?.planningStart && weeks.includes(preferredWeek) ? preferredWeek : 'all')
   const items = allItems.filter((item) => week === 'all' || !item.week || item.week === week)
   const matches = items.filter((item) => item.name.toLocaleLowerCase('fr').includes(search.trim().toLocaleLowerCase('fr')))
   const done = items.filter((i) => i.checked).length
@@ -61,6 +64,7 @@ export function ShoppingPage() {
       <Card className="grid gap-3 bg-pastel-sage!"><div className="flex items-center justify-between gap-3"><div><p className="text-xs font-semibold text-muted">Votre liste partagée</p><p className="mt-1 text-3xl font-extrabold">{items.length - done}<span className="ml-2 text-sm font-semibold">à prendre</span></p></div><Button className="h-11! shrink-0 text-sm!" onClick={() => setAdding(true)}><PlusIcon size={17} /> Ajouter</Button></div><progress aria-label="Avancement des courses" className="h-2 w-full accent-positive" max={Math.max(1, items.length)} value={done} /><p role="status" className="text-xs leading-relaxed text-muted">{pendingCount ? `${pendingCount} modification(s) gardée(s) sur cet appareil, à partager dès le retour de la connexion.` : `${done} sur ${items.length} cochés. Coche les articles quand tu les mets dans le panier.`}</p></Card>
       <div className="flex flex-wrap items-center justify-between gap-2"><Link to="/meals/stock" className="flex min-h-11 items-center text-sm font-semibold text-positive">Vérifier le stock →</Link>{items.length > 0 && <label className="flex min-h-11 items-center gap-2 text-sm"><input type="checkbox" className="size-5 accent-positive" checked={hideChecked} onChange={(e) => setHideChecked(e.target.checked)} /> Masquer les achats</label>}</div>
       {allItems.length > 0 && <label className="grid gap-1"><span className="sr-only">Rechercher un article</span><input type="search" className={fieldClass} value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Trouver un article…" /></label>}
+      {week !== 'all' && <p role="status" className="rounded-2xl bg-pastel-sage p-3 text-sm font-semibold">Courses du {displayDate(week, { day: 'numeric', month: 'short' })} au {displayDate(shiftPlanningDate(week, 6), { day: 'numeric', month: 'short' })}</p>}
       {weeks.length > 1 && <details className="rounded-2xl border bg-surface px-4"><summary className="min-h-11 cursor-pointer py-3 text-sm font-semibold">{week === 'all' ? 'Plusieurs semaines dans la liste' : `Semaine du ${displayDate(week, { day: 'numeric', month: 'short' })}`}</summary><label className="mb-3 grid gap-2 text-sm">Afficher les courses<select className={fieldClass} value={week} onChange={(e) => { setWeek(e.target.value); setSearch('') }}><option value="all">Toute la liste</option>{weeks.map((value) => <option key={value} value={value}>Semaine du {displayDate(value, { day: 'numeric', month: 'short' })}</option>)}</select><span className="text-xs text-muted">Les articles ajoutés à la main restent visibles dans toutes les semaines.</span></label></details>}
       {!allItems.length && <Card className="grid gap-4 bg-pastel-peach!"><h2 className="text-lg font-extrabold">La liste commence ici.</h2><p className="text-sm text-muted">Ajoute un premier article, ou prépare tes repas : leurs ingrédients formeront la liste.</p><Button onClick={() => setAdding(true)}>Ajouter mon premier article</Button><ActionLink secondary to="/meals/assistant">Préparer les repas</ActionLink></Card>}
       {items.length > 0 && matches.length === 0 && <Card className="grid gap-3"><p className="text-sm text-muted">Aucun article ne correspond à cette recherche.</p><Button variant="secondary" onClick={() => setSearch('')}>Effacer la recherche</Button></Card>}

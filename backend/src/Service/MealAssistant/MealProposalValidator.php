@@ -25,11 +25,18 @@ final class MealProposalValidator
             $keys[$key] = true;
             return ['date' => $date, 'slot' => $part];
         }, $slots);
+        $planning = [];
+        if (array_key_exists('planningStart', $input)) {
+            $start = FoodProfile::date($input['planningStart']);
+            $end = (new \DateTimeImmutable($start))->modify('+6 days')->format('Y-m-d');
+            foreach ($slots as $slot) if ($slot['date'] < $start || $slot['date'] > $end) throw new BadRequestHttpException('Les repas doivent appartenir aux sept jours choisis.');
+            $planning['planningStart'] = $start;
+        }
         if (!is_array($input['mix'] ?? null)) throw new BadRequestHttpException('Répartition invalide.');
         $mix = [];
         foreach (FoodProfile::CATEGORIES as $category) $mix[$category] = FoodProfile::integer($input['mix'][$category] ?? 0, 0, 14);
         if (array_sum($mix) !== count($slots)) throw new BadRequestHttpException('La répartition doit correspondre au nombre de repas sélectionnés.');
-        return ['slots' => $slots, 'mix' => $mix, 'instructions' => FoodProfile::text($input['instructions'] ?? '', 1500, true), 'servings' => FoodProfile::integer($input['servings'] ?? ($state['foodProfile']['servings'] ?? 2), 1, 20), 'budgetCents' => ($input['budgetCents'] ?? null) === null ? null : FoodProfile::integer($input['budgetCents'], 100, 1000000)];
+        return [...$planning, 'slots' => $slots, 'mix' => $mix, 'instructions' => FoodProfile::text($input['instructions'] ?? '', 1500, true), 'servings' => FoodProfile::integer($input['servings'] ?? ($state['foodProfile']['servings'] ?? 2), 1, 20), 'budgetCents' => ($input['budgetCents'] ?? null) === null ? null : FoodProfile::integer($input['budgetCents'], 100, 1000000)];
     }
 
     public function proposal(array $data, array $request, array $context): array

@@ -245,12 +245,64 @@ class HouseholdServiceTest extends TestCase
         $this->runCommand('recipe.save', $this->recipe('not-food', [['name'=>'Savon','quantity'=>1,'unit'=>'piece','aisle'=>'household']]));
     }
 
-    public function testOnlyAuthorCanEditRecipe(): void
+    public function testBothMembersCanEditCustomRecipesWithoutChangingTheirIdentity(): void
     {
         $payload = $this->recipe('mine', [['name' => 'Riz', 'quantity' => 100, 'unit' => 'g', 'aisle' => 'pantry']]);
         $this->runCommand('recipe.save', $payload);
-        $this->expectException(BadRequestHttpException::class);
-        $this->service->execute(1, 8, ['id' => 'other-user-edit', 'type' => 'recipe.save', 'payload' => $payload]);
+        $this->runCommand('meal.set', ['date' => '2026-11-06', 'slot' => 'dinner', 'recipeId' => 'mine', 'servings' => 2]);
+        $payload['title'] = 'Riz modifié par mon partenaire';
+        $payload['category'] = 'everyday';
+        $payload['ingredients'][0]['quantity'] = 350;
+        $payload['instructions'] = '';
+        $state = $this->service->execute(1, 8, ['id' => 'partner-edit', 'type' => 'recipe.save', 'payload' => $payload]);
+        $matches = array_values(array_filter($state['recipes'], fn ($recipe) => $recipe['id'] === 'mine'));
+        self::assertCount(1, $matches);
+        self::assertSame(7, $matches[0]['authorId']);
+        self::assertSame($payload['title'], $matches[0]['title']);
+        self::assertEquals(350, $matches[0]['ingredients'][0]['quantity']);
+        self::assertSame('', $matches[0]['instructions']);
+        self::assertSame('mine', $state['meals']['2026-11-06-dinner']['recipeId']);
+        self::assertSame('everyday', $state['meals']['2026-11-06-dinner']['category']);
+        self::assertFalse(array_any($this->service->read(2)['recipes'], fn ($recipe) => $recipe['id'] === 'mine'));
+    }
+
+    public function testAppRecipeCannotBeOverwritten(): void
+    {
+        $before = $this->service->read(1);
+        try {
+            $this->runCommand('recipe.save', $this->recipe('app-pasta', [['name' => 'Riz', 'quantity' => 100, 'unit' => 'g', 'aisle' => 'pantry']]));
+            self::fail('Catalog recipe overwritten');
+        } catch (BadRequestHttpException) {
+            self::assertSame($before, $this->service->read(1));
+        }
+    }
+
+    public function testCustomPlanningStartPersistsAndShoppingUsesExactlySevenChosenDays(): void
+    {
+        $this->runCommand('recipe.save', $this->recipe('rice', [['name' => 'Riz', 'quantity' => 100, 'unit' => 'g', 'aisle' => 'pantry']]));
+        foreach (['2026-11-05', '2026-11-06', '2026-11-09', '2026-11-12', '2026-11-13'] as $date) {
+            $this->runCommand('meal.set', ['date' => $date, 'slot' => 'dinner', 'recipeId' => 'rice', 'servings' => 2]);
+        }
+        $before = $this->service->read(1)['meals'];
+        $this->runCommand('planning.start', ['date' => '2026-11-06']);
+        $state = $this->runCommand('shopping.generate', ['week' => '2026-11-06']);
+        self::assertSame('2026-11-06', $this->service->read(1)['planningStart']);
+        self::assertSame($before, $state['meals']);
+        self::assertCount(1, $state['shopping']);
+        self::assertEquals(300, $state['shopping'][0]['quantity']);
+        self::assertSame('2026-11-06', $state['shopping'][0]['week']);
+        self::assertArrayNotHasKey('planningStart', $this->service->read(2));
+    }
+
+    public function testImpossiblePlanningStartIsRejectedWithoutChangingState(): void
+    {
+        $before = $this->service->read(1);
+        try {
+            $this->runCommand('planning.start', ['date' => '2026-02-31']);
+            self::fail('Invalid date accepted');
+        } catch (BadRequestHttpException) {
+            self::assertSame($before, $this->service->read(1));
+        }
     }
 
     public function testInvalidDateDoesNotWriteState(): void

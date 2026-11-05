@@ -21,9 +21,10 @@ export function HomePage() {
   const now = new Date()
   const today = dateKey(now)
   const todayLabel = now.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' })
-  const days = weekDates()
+  const days = weekDates(0, data?.planningStart)
   const planned = Object.values(data?.meals ?? {}).filter((meal) => days.includes(meal.date)).length
-  const remaining = data?.shopping.filter((item) => !item.checked).length ?? 0
+  const shoppingWeek = data?.planningStart && data.shopping.some((item) => item.week === days[0]) ? days[0] : null
+  const remaining = data?.shopping.filter((item) => !item.checked && (!shoppingWeek || !item.week || item.week === shoppingWeek)).length ?? 0
   const dinner = data?.meals[`${today}-dinner`]
   const soon = dateKey(new Date(now.getFullYear(), now.getMonth(), now.getDate() + 3))
   const datesToCheck = data?.foodProfile?.pantry.filter((item) => item.expiresOn && item.expiresOn <= soon).length ?? 0

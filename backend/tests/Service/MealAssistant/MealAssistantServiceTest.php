@@ -91,6 +91,31 @@ class MealAssistantServiceTest extends TestCase
         self::assertCount(2, $service->accept(1, 7, $draft['id'], true)['shopping']);
     }
 
+    public function testAssistantKeepsCustomWindowWhenEarlyDaysWereExcluded(): void
+    {
+        $start = (new \DateTimeImmutable('today', new \DateTimeZone('Europe/Paris')))->modify('+3 days');
+        // The first generated meal is on day three, not the chosen first day.
+        $date = $start->modify('+2 days')->format('Y-m-d');
+        $this->request['planningStart'] = $start->format('Y-m-d');
+        $this->request['slots'][0]['date'] = $date;
+        $this->proposal['meals'][0]['date'] = $date;
+        $service = $this->service();
+        $draft = $service->generate(1, 7, $this->request);
+        $state = $service->accept(1, 8, $draft['id'], true);
+        self::assertSame($start->format('Y-m-d'), $state['planningStart']);
+        self::assertCount(1, $state['shopping']);
+        self::assertSame($start->format('Y-m-d'), $state['shopping'][0]['week']);
+        self::assertArrayHasKey($date.'-dinner', $state['meals']);
+        self::assertSame($state['revision'], $service->accept(1, 7, $draft['id'], true)['revision']);
+    }
+
+    public function testAssistantRejectsMealsOutsideTheChosenWindow(): void
+    {
+        $this->request['planningStart'] = (new \DateTimeImmutable('today', new \DateTimeZone('Europe/Paris')))->modify('+3 days')->format('Y-m-d');
+        $this->expectException(BadRequestHttpException::class);
+        $this->service(0)->generate(1, 7, $this->request);
+    }
+
     public function testReplacementIsValidatedAndDoesNotSpendAnotherAiCall(): void
     {
         $recipe = ['id' => 'replacement', 'title' => 'Autres raviolis', 'category' => 'joker', 'minutes' => 15, 'servings' => 4, 'instructions' => 'Réchauffer au four.', 'ingredients' => [['name' => 'Raviolis', 'quantity' => 800, 'unit' => 'g', 'aisle' => 'pantry']]];

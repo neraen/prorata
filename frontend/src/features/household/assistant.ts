@@ -24,7 +24,7 @@ export interface Proposal {
 }
 export interface AssistantDraft { id: string; proposal: Proposal; model: string; createdAt: string }
 export interface AssistantStatus { enabled: boolean; model: string; dailyLimit: number; remaining: number; draft: AssistantDraft | null }
-export interface AssistantRequest { id: string; slots: { date: string; slot: Meal['slot'] }[]; mix: Record<MealCategory, number>; instructions: string; budgetCents: number | null; servings?: number }
+export interface AssistantRequest { id: string; planningStart?: string; slots: { date: string; slot: Meal['slot'] }[]; mix: Record<MealCategory, number>; instructions: string; budgetCents: number | null; servings?: number }
 export const assistantApi = {
   classify: (request: { id: string; recipe: { title: string; servings: number; minutes: number; instructions: string; ingredients: Ingredient[] } }) => apiFetch<{ id: string; category: MealCategory | null; reason: string; confidence: 'low' | 'medium' | 'high' }>('/household/assistant/classify', { method: 'POST', body: JSON.stringify(request) }),
   status: () => apiFetch<AssistantStatus>('/household/assistant', { cache: 'no-store' }),

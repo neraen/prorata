@@ -77,6 +77,9 @@ class HouseholdService
             throw new BadRequestHttpException('Données invalides.');
         }
         switch ($command['type'] ?? '') {
+            case 'planning.start':
+                $state['planningStart'] = $this->date($payload['date'] ?? null);
+                break;
             case 'task.add':
             case 'task.set':
             case 'task.archive':
@@ -144,8 +147,8 @@ class HouseholdService
             case 'recipe.save':
                 $id = $this->text($payload['id'] ?? null, 100);
                 $existing = array_find($state['recipes'], fn ($r) => $r['id'] === $id);
-                if ($existing && $existing['authorId'] !== $userId) {
-                    throw new BadRequestHttpException('Seul l’auteur peut modifier sa recette.');
+                if ($existing && $existing['source'] !== 'personal') {
+                    throw new BadRequestHttpException('Les recettes de l’application ne peuvent pas être modifiées.');
                 }
                 $ingredients = $payload['ingredients'] ?? null;
                 if (!is_array($ingredients) || count($ingredients) < 1 || count($ingredients) > 100) {
@@ -158,8 +161,9 @@ class HouseholdService
                     'minutes' => $this->number($payload['minutes'] ?? null, 1, 1440),
                     'instructions' => $this->optionalText($payload['instructions'] ?? '', 10000),
                     'estimatedCostCents' => ($cost = array_key_exists('estimatedCostCents', $payload) ? $payload['estimatedCostCents'] : ($existing['estimatedCostCents'] ?? null)) === null ? null : $this->cost($cost),
-                    'authorId' => $userId,
+                    'authorId' => $existing['authorId'] ?? $userId,
                     'source' => 'personal',
+                    ...array_intersect_key($existing ?? [], ['illustration' => true]),
                     'category' => ($category = array_key_exists('category', $payload) ? $payload['category'] : ($existing['category'] ?? null)) === null ? null : $this->choice($category, FoodProfile::CATEGORIES),
                     'categorySource' => $category === null ? null : $this->choice($payload['categorySource'] ?? 'user', ['user', 'ai']),
                     'categoryReason' => isset($payload['categoryReason']) && $payload['categoryReason'] !== '' ? $this->text($payload['categoryReason'], 500) : null,
@@ -169,6 +173,10 @@ class HouseholdService
                 ];
                 $state['recipes'] = array_values(array_filter($state['recipes'], fn ($r) => $r['id'] !== $id));
                 $state['recipes'][] = $recipe;
+                foreach ($state['meals'] as &$planned) {
+                    if ($planned['recipeId'] === $id) $planned['category'] = $recipe['category'];
+                }
+                unset($planned);
                 break;
             case 'meal.set':
                 $date = $this->date($payload['date'] ?? null);

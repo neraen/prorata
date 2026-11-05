@@ -1,3 +1,4 @@
+import { planningDates, shiftPlanningDate, validPlanningDate } from './planningDates'
 import { useState } from 'react'
 import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { Button, Card } from '../../components/ui'
@@ -25,17 +26,28 @@ export function MealsPage() {
   const userId = useAuthStore((s) => s.user?.id)
   const showToast = useToastStore((s) => s.show)
   const navigate = useNavigate()
-  const [searchParams] = useSearchParams()
+  const [searchParams, setSearchParams] = useSearchParams()
   const [tab, setTab] = useState<'week' | 'recipes'>(() => searchParams.get('tab') === 'recipes' ? 'recipes' : 'week')
   const requestedDate = searchParams.get('date')
   const requestedSlot = searchParams.get('slot')
-  const directSlot = requestedDate && /^\d{4}-\d{2}-\d{2}$/.test(requestedDate) && ['lunch', 'dinner'].includes(requestedSlot ?? '') ? { date: requestedDate, slot: requestedSlot as Meal['slot'] } : null
-  const [offset, setOffset] = useState(() => {
-    const requested = searchParams.get('week') ?? requestedDate
-    if (!requested || !/^\d{4}-\d{2}-\d{2}$/.test(requested)) return 0
-    const day = new Date(`${requested}T12:00:00`); day.setDate(day.getDate() - (day.getDay() + 6) % 7)
-    return Math.round((Date.UTC(day.getFullYear(), day.getMonth(), day.getDate()) - Date.parse(`${weekDates()[0]}T00:00:00Z`)) / 604800000)
-  })
+  const directSlot = validPlanningDate(requestedDate) && ['lunch', 'dinner'].includes(requestedSlot ?? '') ? { date: requestedDate, slot: requestedSlot as Meal['slot'] } : null
+  const defaultStart = weekDates(0, data?.planningStart)[0]
+  const requestedStart = searchParams.get('week') ?? requestedDate
+  const start = validPlanningDate(requestedStart) ? requestedStart : defaultStart
+  const [dateDraft, setDateDraft] = useState<string | null>(null)
+  const [periodSaving, setPeriodSaving] = useState(false)
+  function showPeriod(date: string) {
+    setDateDraft(null)
+    setSearchParams((previous) => { const next = new URLSearchParams(previous); next.set('week', date); next.delete('date'); next.delete('slot'); return next })
+  }
+  async function savePeriod(event: React.FormEvent) {
+    event.preventDefault()
+    if (!validPlanningDate(dateDraft)) return
+    setPeriodSaving(true)
+    try { await send('planning.start', { date: dateDraft }); showPeriod(dateDraft); showToast('Votre semaine commence le ' + displayDate(dateDraft, { weekday: 'long' }), 'success') }
+    catch { /* Keep the chosen date for retry. */ }
+    finally { setPeriodSaving(false) }
+  }
   const [categoryFilter, setCategoryFilter] = useState('all')
   const [source, setSource] = useState('all')
   const [search, setSearch] = useState('')
@@ -48,7 +60,7 @@ export function MealsPage() {
   const [selected, setSelected] = useState('')
   const [portions, setPortions] = useState<number | null>(null)
   const [busy, setBusy] = useState(false)
-  const days = weekDates(offset)
+  const days = planningDates(start)
   const recipes = data?.recipes ?? []
   const effectiveSelected = selected || (slot ? data?.meals[`${slot.date}-${slot.slot}`]?.recipeId : '') || recipes[0]?.id || ''
   const effectivePortions = portions ?? (slot ? data?.meals[`${slot.date}-${slot.slot}`]?.servings : undefined) ?? data?.foodProfile?.servings ?? 2
@@ -64,20 +76,21 @@ export function MealsPage() {
   }
   async function generate() {
     setBusy(true)
-    try { await send('shopping.generate', { week: days[0] }); showToast('Liste de courses mise à jour', 'success'); navigate('/shopping') }
+    try { await send('shopping.generate', { week: days[0] }); showToast('Liste de courses mise à jour', 'success'); navigate(`/shopping?week=${days[0]}`) }
     catch { /* Error is shown by the shared command handler. */ }
     finally { setBusy(false) }
   }
   return <div className="flex flex-col gap-5">
     <header><h1 className="text-[30px] font-extrabold tracking-tight">{tab === 'recipes' ? 'Nos recettes' : 'Nos repas'}</h1><p className="mt-1 text-sm text-muted">{tab === 'recipes' ? 'À chaque envie, son petit plat.' : 'Une semaine à partager.'}</p></header>
-    {tab === 'week' && <><Link to={`/meals/assistant?week=${weekDates(offset)[0]}`} className="flex min-h-28 items-center justify-between overflow-hidden rounded-[22px] bg-[#EBF0E6] pl-5 text-ink"><span className="py-4"><span className="mb-1 block text-xs font-semibold text-positive">Quelques minutes pour s’organiser</span><span className="block text-lg font-extrabold">Organiser notre semaine</span><span className="mt-2 block text-sm font-semibold text-positive">C’est parti →</span></span><img src="/illustrations/recipe-quick.webp" alt="" aria-hidden="true" width={112} height={112} className="h-28 w-28 shrink-0 object-contain mix-blend-multiply" /></Link>
+    {tab === 'week' && <><Link to={`/meals/assistant?week=${days[0]}`} className="flex min-h-28 items-center justify-between overflow-hidden rounded-[22px] bg-[#EBF0E6] pl-5 text-ink"><span className="py-4"><span className="mb-1 block text-xs font-semibold text-positive">Quelques minutes pour s’organiser</span><span className="block text-lg font-extrabold">Organiser notre semaine</span><span className="mt-2 block text-sm font-semibold text-positive">C’est parti →</span></span><img src="/illustrations/recipe-quick.webp" alt="" aria-hidden="true" width={112} height={112} className="h-28 w-28 shrink-0 object-contain mix-blend-multiply" /></Link>
     <Link to="/meals/stock" className="flex min-h-12 items-center justify-between px-1 text-sm"><span className="font-bold">Notre stock <span className="ml-1 font-normal text-muted">{data?.foodProfile?.pantry.length ?? 0} aliments</span></span><span className="font-semibold text-positive">Voir →</span></Link></>}
     <div className="grid grid-cols-2 gap-1 rounded-[16px] bg-segment-bg p-1">{([['week', 'Ma semaine'], ['recipes', 'Les recettes']] as const).map(([value, label]) => <button key={value} type="button" aria-pressed={tab === value} onClick={() => setTab(value)} className={`h-11 rounded-[12px] text-sm font-bold ${tab === value ? 'bg-surface shadow-segment' : 'text-muted'}`}>{label}</button>)}</div>
     <HouseholdStatus loading={household.isPending} error={household.isError && !data} retry={() => void household.refetch()} />
     {data && (tab === 'week' ? <>
       <Card className="flex flex-col gap-4 border-0 bg-positive-bg!">
-        <div className="flex items-center justify-between gap-1"><button type="button" aria-label="Semaine précédente" className="flex h-11 w-11 shrink-0 items-center justify-center" onClick={() => setOffset((v) => v - 1)}><ChevronLeftIcon size={20} /></button><div className="text-center"><p className="text-sm font-bold">{displayDate(days[0], { day: 'numeric', month: 'short' })} – {displayDate(days[6], { day: 'numeric', month: 'short' })}</p><p className="mt-1 text-xs text-muted">{count} repas planifié{count > 1 ? 's' : ''}</p></div><button type="button" aria-label="Semaine suivante" className="flex h-11 w-11 shrink-0 items-center justify-center" onClick={() => setOffset((v) => v + 1)}><ChevronRightIcon size={20} /></button></div>
-        {offset !== 0 && <button type="button" onClick={() => setOffset(0)} className="min-h-11 text-sm font-bold text-positive underline">Revenir à cette semaine</button>}{!count && <p className="text-sm leading-relaxed text-muted">Pour commencer, touche « Choisir un plat » sur un jour, ou demande des idées à l’assistant. Tu pourras ensuite créer la liste de courses.</p>}<Button onClick={generate} disabled={!count} isLoading={busy}>Préparer les courses</Button>
+        <div className="flex items-center justify-between gap-1"><button type="button" aria-label="Semaine précédente" className="flex h-11 w-11 shrink-0 items-center justify-center" onClick={() => showPeriod(shiftPlanningDate(start, -7))}><ChevronLeftIcon size={20} /></button><div className="text-center"><p className="text-sm font-bold">{displayDate(days[0], { day: 'numeric', month: 'short' })} – {displayDate(days[6], { day: 'numeric', month: 'short' })}</p><p className="mt-1 text-xs text-muted">{count} repas planifié{count > 1 ? 's' : ''}</p></div><button type="button" aria-label="Semaine suivante" className="flex h-11 w-11 shrink-0 items-center justify-center" onClick={() => showPeriod(shiftPlanningDate(start, 7))}><ChevronRightIcon size={20} /></button></div>
+        <form onSubmit={savePeriod} className="grid gap-2 rounded-2xl bg-surface p-3"><label className="grid gap-2 text-sm font-bold">Commencer ma semaine le<input type="date" required className={fieldClass} value={dateDraft ?? start} disabled={periodSaving} onChange={(event) => setDateDraft(event.target.value)} /></label><p className="text-xs leading-relaxed text-muted">Sept jours à partir de cette date, selon votre jour de courses. Les repas déjà prévus gardent leur date.</p><Button type="submit" variant="secondary" isLoading={periodSaving} disabled={!validPlanningDate(dateDraft) || dateDraft === start}>Choisir ce départ</Button></form>
+        {start !== defaultStart && <button type="button" onClick={() => showPeriod(defaultStart)} className="min-h-11 text-sm font-bold text-positive underline">Revenir à notre semaine</button>}{!count && <p className="text-sm leading-relaxed text-muted">Pour commencer, touche « Choisir un plat » sur un jour, ou demande des idées à l’assistant. Tu pourras ensuite créer la liste de courses.</p>}<Button onClick={generate} disabled={!count} isLoading={busy}>Préparer les courses</Button>
         <p className="text-xs leading-relaxed text-muted">Crée la liste d’ingrédients pour les repas de cette semaine. Vérifie ensuite ce que tu as déjà à la maison.</p>
       </Card>
       {recipeToPlan && <Card className="grid gap-2 bg-positive-bg!"><p className="text-sm">Choisis un midi ou un soir ci-dessous pour planifier <strong>{recipeToPlan.title}</strong>.</p><button type="button" onClick={() => setRecipeToPlan(null)} className="min-h-11 text-left text-sm font-bold underline">Annuler ce choix</button></Card>}
@@ -98,8 +111,8 @@ export function MealsPage() {
       <p className="text-xs leading-relaxed text-muted">Le carnet signale une recette personnelle. L’assiette vide signale une recette sans image. Ces visuels génériques ne représentent pas les plats.</p>
     </>)}
     {viewingId && data && !viewing && <Card className="grid gap-3"><p className="text-sm text-muted">Cette recette n’est plus disponible. Tu peux en choisir une autre.</p><Button onClick={() => { setViewingId(null); setTab('recipes') }}>Voir les recettes</Button></Card>}
-    {editing && <HouseholdDialog title={editing === 'new' ? 'Créer une recette' : 'Modifier la recette'} onClose={() => setEditing(null)}><RecipeForm recipe={editing === 'new' ? undefined : editing} onClose={() => setEditing(null)} onSave={(payload) => send('recipe.save', payload)} /></HouseholdDialog>}
-    {viewing && <HouseholdDialog title={viewing.title} onClose={() => setViewing(null)}><RecipeIllustration recipe={viewing} eager className="mb-2 h-48 w-full rounded-2xl" />{recipeVisual(viewing).generic && <p className="mb-4 text-center text-xs text-muted">{recipeVisual(viewing).label} : ne représente pas le plat.</p>}<p className="mb-4 text-sm text-muted">{viewing.minutes} min · Pour {viewing.servings} personnes</p><p className="mb-4 text-xs font-semibold text-positive">{viewing.category ? MEAL_CATEGORIES[viewing.category] : 'À classer'}{viewing.categorySource === 'ai' ? ' · Suggestion IA, modifiable' : ''}</p><details className="mb-4 rounded-xl border px-3"><summary className="min-h-11 cursor-pointer py-3 text-sm font-semibold">Modifier le type de ce plat</summary><RecipeCategoryEditor recipe={viewing} onSave={async (payload) => { await send('recipe.category', payload); setViewing(null) }} /></details><h3 className="mb-2 font-bold">Ingrédients</h3><ul className="mb-5 divide-y divide-border">{viewing.ingredients.map((i, index) => <li className="flex justify-between gap-3 py-2 text-sm" key={index}><span className="flex items-center gap-2"><IngredientIllustration name={i.name} className="h-10 w-10" />{i.name}</span><span className="shrink-0 font-semibold">{quantityLabel(i)}</span></li>)}</ul><h3 className="mb-2 font-bold">Préparation</h3><p className="mb-5 whitespace-pre-wrap text-sm leading-relaxed text-muted">{viewing.instructions || 'Préparation non renseignée : cette recette peut être gardée simplement pour ses ingrédients.'}</p><Button className="w-full" onClick={() => { setRecipeToPlan(viewing); setViewing(null); setTab('week'); requestAnimationFrame(() => { window.scrollTo({ top: 0, behavior: 'instant' }); document.getElementById('main-content')?.focus({ preventScroll: true }) }) }}>Planifier dans la semaine</Button>{viewing.authorId === userId && <Button variant="secondary" className="mt-2 w-full" onClick={() => { setEditing(viewing); setViewing(null) }}>Modifier ma recette</Button>}</HouseholdDialog>}
+    {editing && <HouseholdDialog title={editing === 'new' ? 'Créer une recette' : 'Modifier la recette'} onClose={() => setEditing(null)}><RecipeForm recipe={editing === 'new' ? undefined : editing} onClose={() => setEditing(null)} onSave={async (payload) => { await send('recipe.save', payload); showToast(editing === 'new' ? 'Recette enregistrée' : 'Recette mise à jour', 'success'); if (editing !== 'new') setViewingId(String(payload.id)) }} /></HouseholdDialog>}
+    {viewing && <HouseholdDialog title={viewing.title} onClose={() => setViewing(null)}><RecipeIllustration recipe={viewing} eager className="mb-2 h-48 w-full rounded-2xl" />{recipeVisual(viewing).generic && <p className="mb-4 text-center text-xs text-muted">{recipeVisual(viewing).label} : ne représente pas le plat.</p>}<p className="mb-4 text-sm text-muted">{viewing.minutes} min · Pour {viewing.servings} personnes</p>{viewing.source === 'personal' && <Button variant="secondary" className="mb-4 w-full" onClick={() => { setEditing(viewing); setViewing(null) }}>Modifier cette recette</Button>}<p className="mb-4 text-xs font-semibold text-positive">{viewing.category ? MEAL_CATEGORIES[viewing.category] : 'À classer'}{viewing.categorySource === 'ai' ? ' · Suggestion IA, modifiable' : ''}</p><details className="mb-4 rounded-xl border px-3"><summary className="min-h-11 cursor-pointer py-3 text-sm font-semibold">Modifier le type de ce plat</summary><RecipeCategoryEditor recipe={viewing} onSave={async (payload) => { await send('recipe.category', payload); setViewing(null) }} /></details><h3 className="mb-2 font-bold">Ingrédients</h3><ul className="mb-5 divide-y divide-border">{viewing.ingredients.map((i, index) => <li className="flex justify-between gap-3 py-2 text-sm" key={index}><span className="flex items-center gap-2"><IngredientIllustration name={i.name} className="h-10 w-10" />{i.name}</span><span className="shrink-0 font-semibold">{quantityLabel(i)}</span></li>)}</ul><h3 className="mb-2 font-bold">Préparation</h3><p className="mb-5 whitespace-pre-wrap text-sm leading-relaxed text-muted">{viewing.instructions || 'Préparation non renseignée : cette recette peut être gardée simplement pour ses ingrédients.'}</p><Button className="w-full" onClick={() => { setRecipeToPlan(viewing); setViewing(null); setTab('week'); requestAnimationFrame(() => { window.scrollTo({ top: 0, behavior: 'instant' }); document.getElementById('main-content')?.focus({ preventScroll: true }) }) }}>Planifier dans la semaine</Button></HouseholdDialog>}
     {slot && <HouseholdDialog fixedLayout title={`${displayDate(slot.date)} · ${slot.slot === 'lunch' ? 'Déjeuner' : 'Dîner'}`} onClose={() => setSlot(null)}><div className="flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto">{recipeToPlan && data?.meals[`${slot.date}-${slot.slot}`] && <p className="rounded-xl bg-positive-bg p-3 text-sm">Ce repas est déjà prévu. Enregistrer remplacera le plat actuel par ta sélection.</p>}{recipes.length ? <><MealRecipePicker recipes={recipes} selected={effectiveSelected} onSelect={setSelected} disabled={busy} /><label className="grid shrink-0 gap-2 text-sm font-semibold">Nombre de portions<input className={fieldClass} type="number" min={1} max={20} step={1} value={effectivePortions || ''} onChange={(e) => setPortions(Number(e.target.value))} /></label><Button className="shrink-0" disabled={!selectedRecipe || !Number.isInteger(effectivePortions) || effectivePortions < 1 || effectivePortions > 20} isLoading={busy} onClick={() => void saveMeal()}>Enregistrer ce repas</Button></> : <><p className="text-sm text-muted">Commence par enregistrer une recette.</p><Button onClick={() => { setSlot(null); setEditing('new') }}>Créer une recette</Button></>}{data?.meals[`${slot.date}-${slot.slot}`] && <Button variant="danger" disabled={busy} onClick={() => void saveMeal(true)}>Retirer ce repas</Button>}</div></HouseholdDialog>}
   </div>
 }

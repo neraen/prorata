@@ -51,6 +51,7 @@ class MealAssistantService
             $response = $this->openAi->generate($context, $request);
             $this->connection->update('meal_assistant_run', ['model' => $response['model'], 'token_usage' => json_encode($response['usage'], JSON_THROW_ON_ERROR)], ['id' => $id, 'couple_id' => $coupleId]);
             $proposal = $this->present($this->validator->proposal($response['proposal'], $request, $context));
+            if (isset($request['planningStart'])) $proposal['planningStart'] = $request['planningStart'];
             $proposal['recipeFingerprints'] = [];
             foreach ($proposal['meals'] as $meal) {
                 if ($meal['existingRecipeId'] === null) continue;
@@ -89,9 +90,12 @@ class MealAssistantService
 
             $state = $this->household->execute($coupleId, $userId, ['id' => 'ai-accept-'.$id, 'type' => 'assistant.accept', 'payload' => ['runId' => $id, 'meals' => $proposal['meals']]], true);
             $this->connection->update('meal_assistant_run', ['accepted_at' => gmdate('Y-m-d H:i:s')], ['id' => $id, 'couple_id' => $coupleId]);
+            if (isset($proposal['planningStart'])) {
+                $state = $this->household->execute($coupleId, $userId, ['id' => 'ai-period-'.$id, 'type' => 'planning.start', 'payload' => ['date' => $proposal['planningStart']]]);
+            }
             if ($createShoppingList) {
-                $weeks = [];
-                foreach ($proposal['meals'] as $meal) {
+                $weeks = isset($proposal['planningStart']) ? [$proposal['planningStart'] => true] : [];
+                foreach (isset($proposal['planningStart']) ? [] : $proposal['meals'] as $meal) {
                     $date = new \DateTimeImmutable($meal['date']);
                     $week = $date->modify('-'.((int) $date->format('N') - 1).' days')->format('Y-m-d');
                     $weeks[$week] = true;

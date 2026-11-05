@@ -1,3 +1,4 @@
+import { currentPlanningStart, planningDates, shiftPlanningDate } from './planningDates'
 import type { FoodProfile, MealCategory } from './assistant'
 import { useEffect, useMemo, useSyncExternalStore } from 'react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
@@ -12,7 +13,7 @@ export interface Ingredient { name: string; quantity: number; unit: keyof typeof
 export interface Recipe { id: string; title: string; servings: number; minutes: number; instructions: string; estimatedCostCents?: number | null; authorId: number; source: 'personal' | 'app'; ingredients: Ingredient[]; category?: MealCategory | null; categorySource?: 'user' | 'ai' | 'catalog' | null; categoryReason?: string | null; illustration?: string; origin?: 'ai' | null; equipment?: string[] }
 export interface Meal { date: string; slot: 'lunch' | 'dinner'; recipeId: string; servings: number; category?: MealCategory | null }
 export interface ShoppingItem extends Ingredient { quantities?: { quantity: number; unit: Ingredient['unit'] }[]; id: string; checked: boolean; week: string | null }
-export interface Household { recipes: Recipe[]; meals: Record<string, Meal>; shopping: ShoppingItem[]; revision: number; foodProfile?: FoodProfile }
+export interface Household { recipes: Recipe[]; meals: Record<string, Meal>; shopping: ShoppingItem[]; revision: number; planningStart?: string | null; foodProfile?: FoodProfile }
 interface Command { id: string; type: string; payload: Record<string, unknown> }
 const listeners = new Set<() => void>()
 const flushing = new Set<string>()
@@ -108,14 +109,8 @@ export function useHousehold() {
   return { ...query, data, send, check, pendingCount: pending.length }
 }
 
-export function weekDates(offset = 0) {
-  const date = new Date()
-  date.setHours(12, 0, 0, 0)
-  date.setDate(date.getDate() - (date.getDay() + 6) % 7 + offset * 7)
-  return Array.from({ length: 7 }, (_, index) => {
-    const day = new Date(date); day.setDate(date.getDate() + index)
-    return `${day.getFullYear()}-${String(day.getMonth() + 1).padStart(2, '0')}-${String(day.getDate()).padStart(2, '0')}`
-  })
+export function weekDates(offset = 0, anchor?: string | null) {
+  return planningDates(shiftPlanningDate(currentPlanningStart(anchor), offset * 7))
 }
 export function displayDate(date: string, options: Intl.DateTimeFormatOptions = { weekday: 'long', day: 'numeric' }) {
   return new Date(`${date}T12:00:00`).toLocaleDateString('fr-FR', options)

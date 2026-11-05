@@ -78,6 +78,7 @@ export function RecipeForm({ recipe, onSave, onClose }: { recipe?: Recipe; onSav
     finally { setSaving(false) }
   }
   return <><form ref={form} onSubmit={submit}><fieldset disabled={busy} className="flex flex-col gap-4">
+    {recipe && <p className="rounded-xl bg-pastel-sage p-3 text-xs leading-relaxed">Tu modifies la recette du couple. Elle reste liée aux repas déjà prévus. Si ses ingrédients changent, prépare de nouveau les courses depuis Ma semaine.</p>}
     <label className="grid gap-1 text-sm font-semibold">Nom de la recette<input className={fieldClass} required maxLength={150} value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Ex. Gratin de légumes" /></label>
     <div className="grid grid-cols-2 gap-3">
       <label className="grid gap-1 text-sm font-semibold">Portions<input className={fieldClass} type="number" min={1} max={20} required value={servings} onChange={(e) => setServings(Number(e.target.value))} /></label>
