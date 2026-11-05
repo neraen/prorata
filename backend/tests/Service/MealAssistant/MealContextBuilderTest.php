@@ -30,6 +30,20 @@ class MealContextBuilderTest extends TestCase
         self::assertArrayNotHasKey('user', $context);
     }
 
+    public function testContextIncludesSecondDishInRecentAndAlreadyPlannedMeals(): void
+    {
+        $state = HouseholdService::emptyState();
+        $state['meals'] = [
+            'past' => ['date' => '2026-11-01', 'slot' => 'dinner', 'recipeId' => 'app-pasta', 'servings' => 2, 'extra' => ['recipeId' => 'app-curry', 'servings' => 1]],
+            'future' => ['date' => '2026-11-06', 'slot' => 'lunch', 'recipeId' => 'app-pasta', 'servings' => 2, 'extra' => ['recipeId' => 'app-curry', 'servings' => 3]],
+        ];
+        $context = (new MealContextBuilder())->build($state, ['instructions' => '', 'slots' => [['date' => '2026-11-06', 'slot' => 'dinner']]], '2026-11-05');
+        self::assertCount(1, $context['recentPlannedMeals']);
+        self::assertSame('app-curry', $context['recentPlannedMeals'][0]['extra']['recipeId']);
+        self::assertSame('Curry de pois chiches et épinards', $context['alreadyPlannedMeals'][0]['extra']['title']);
+        self::assertSame(1, array_find($context['retrievedRecipes'], fn ($recipe) => $recipe['id'] === 'app-curry')['timesPlannedRecently']);
+    }
+
     public function testObviousDietaryConflictsAreRemovedBeforeRetrieval(): void
     {
         $state = HouseholdService::emptyState();

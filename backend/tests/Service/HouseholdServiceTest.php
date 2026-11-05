@@ -305,6 +305,62 @@ class HouseholdServiceTest extends TestCase
         }
     }
 
+    public function testTwoDishesUseTheirOwnPortionsAndCombineShoppingQuantities(): void
+    {
+        $this->runCommand('recipe.save', $this->recipe('main', [
+            ['name' => 'Riz', 'quantity' => 100, 'unit' => 'g', 'aisle' => 'pantry'],
+            ['name' => 'Tomates', 'quantity' => 3, 'unit' => 'piece', 'aisle' => 'produce'],
+        ]));
+        $this->runCommand('recipe.save', $this->recipe('starter', [
+            ['name' => 'Riz', 'quantity' => 50, 'unit' => 'g', 'aisle' => 'pantry'],
+            ['name' => 'Tomates', 'quantity' => 350, 'unit' => 'g', 'aisle' => 'produce'],
+        ]));
+        $state = $this->runCommand('meal.set', ['date' => '2026-11-06', 'slot' => 'dinner', 'recipeId' => 'main', 'servings' => 4, 'extra' => ['recipeId' => 'starter', 'servings' => 1]]);
+        self::assertCount(1, $state['meals']);
+        self::assertSame('starter', $state['meals']['2026-11-06-dinner']['extra']['recipeId']);
+        self::assertSame([], $this->service->read(2)['meals']);
+        $state = $this->runCommand('shopping.generate', ['week' => '2026-11-06']);
+        self::assertCount(2, $state['shopping']);
+        $rice = array_find($state['shopping'], fn ($item) => $item['name'] === 'Riz');
+        $tomatoes = array_find($state['shopping'], fn ($item) => $item['name'] === 'Tomates');
+        self::assertEquals(225, $rice['quantity']);
+        self::assertEquals(['piece' => 6, 'g' => 175], array_column($tomatoes['quantities'], 'quantity', 'unit'));
+        self::assertCount(2, $this->runCommand('shopping.generate', ['week' => '2026-11-06'])['shopping']);
+        $this->runCommand('shopping.check', ['id' => $rice['id'], 'checked' => true]);
+        $this->runCommand('meal.set', ['date' => '2026-11-06', 'slot' => 'dinner', 'recipeId' => 'main', 'servings' => 4, 'extra' => ['recipeId' => 'starter', 'servings' => 4]]);
+        $state = $this->runCommand('shopping.generate', ['week' => '2026-11-06']);
+        self::assertFalse(array_find($state['shopping'], fn ($item) => $item['name'] === 'Riz')['checked']);
+    }
+
+    public function testLegacyMealEditsKeepExtraAndExplicitRemovalOnlyRemovesExtra(): void
+    {
+        $payload = ['date' => '2026-11-06', 'slot' => 'dinner', 'recipeId' => 'app-pasta', 'servings' => 2];
+        $this->runCommand('meal.set', [...$payload, 'extra' => ['recipeId' => 'app-curry', 'servings' => 3]]);
+        $state = $this->runCommand('meal.set', [...$payload, 'servings' => 4]);
+        self::assertSame('app-curry', $state['meals']['2026-11-06-dinner']['extra']['recipeId']);
+        self::assertEquals(3, $state['meals']['2026-11-06-dinner']['extra']['servings']);
+        $state = $this->runCommand('meal.set', [...$payload, 'extra' => null]);
+        self::assertSame('app-pasta', $state['meals']['2026-11-06-dinner']['recipeId']);
+        self::assertArrayNotHasKey('extra', $state['meals']['2026-11-06-dinner']);
+        $state = $this->runCommand('meal.set', [...$payload, 'recipeId' => null]);
+        self::assertSame([], $state['meals']);
+    }
+
+    public function testInvalidOrDuplicateSecondDishCannotModifyTheMeal(): void
+    {
+        $payload = ['date' => '2026-11-06', 'slot' => 'dinner', 'recipeId' => 'app-pasta', 'servings' => 2];
+        $this->runCommand('meal.set', $payload);
+        $before = $this->service->read(1);
+        foreach (['invalid', [], ['recipeId' => 'missing', 'servings' => 2], ['recipeId' => 'app-pasta', 'servings' => 2], ['recipeId' => 'app-curry', 'servings' => 0], ['recipeId' => 'app-curry', 'servings' => 21]] as $extra) {
+            try {
+                $this->runCommand('meal.set', [...$payload, 'extra' => $extra]);
+                self::fail('Invalid second dish accepted');
+            } catch (BadRequestHttpException) {
+                self::assertSame($before, $this->service->read(1));
+            }
+        }
+    }
+
     public function testInvalidDateDoesNotWriteState(): void
     {
         try {

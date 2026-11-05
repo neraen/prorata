@@ -175,6 +175,7 @@ class HouseholdService
                 $state['recipes'][] = $recipe;
                 foreach ($state['meals'] as &$planned) {
                     if ($planned['recipeId'] === $id) $planned['category'] = $recipe['category'];
+                    if (($planned['extra']['recipeId'] ?? null) === $id) $planned['extra']['category'] = $recipe['category'];
                 }
                 unset($planned);
                 break;
@@ -190,7 +191,17 @@ class HouseholdService
                 if (!$recipe) {
                     throw new BadRequestHttpException('Recette introuvable.');
                 }
+                // Old clients that only update the primary dish must not erase a second dish.
+                $extra = array_key_exists('extra', $payload) ? $payload['extra'] : ($state['meals'][$key]['extra'] ?? null);
+                if ($extra !== null) {
+                    if (!is_array($extra)) throw new BadRequestHttpException('Deuxième plat invalide.');
+                    $extraRecipe = array_find($state['recipes'], fn ($r) => $r['id'] === ($extra['recipeId'] ?? null));
+                    if (!$extraRecipe) throw new BadRequestHttpException('Deuxième recette introuvable.');
+                    if ($extraRecipe['id'] === $recipe['id']) throw new BadRequestHttpException('Ce plat est déjà choisi. Augmente plutôt ses portions.');
+                    $extra = ['recipeId' => $extraRecipe['id'], 'servings' => $this->number($extra['servings'] ?? null, 1, 20), 'category' => $extraRecipe['category'] ?? null];
+                }
                 $state['meals'][$key] = ['date' => $date, 'slot' => $slot, 'recipeId' => $recipe['id'], 'servings' => $this->number($payload['servings'] ?? null, 1, 20), 'category' => $recipe['category'] ?? null];
+                if ($extra !== null) $state['meals'][$key]['extra'] = $extra;
                 break;
             case 'shopping.generate':
                 $start = $this->date($payload['week'] ?? null);
@@ -198,23 +209,25 @@ class HouseholdService
                 $generated = [];
                 foreach ($state['meals'] as $meal) {
                     if ($meal['date'] < $start || $meal['date'] > $end) continue;
-                    $recipe = array_find($state['recipes'], fn ($r) => $r['id'] === $meal['recipeId']);
-                    if (!$recipe) continue;
-                    foreach ($recipe['ingredients'] as $ingredient) {
-                        $factor = $meal['servings'] / $recipe['servings'];
-                        [$quantity, $unit] = match ($ingredient['unit']) {
-                            'kg' => [$ingredient['quantity'] * 1000, 'g'],
-                            'l' => [$ingredient['quantity'] * 1000, 'ml'],
-                            default => [$ingredient['quantity'], $ingredient['unit']],
-                        };
-                        // Keep mass, volume and pieces as separate components of one grocery row.
-                        // A product reference prevents different branded products being merged.
-                        $identity = FoodName::shoppingIdentity($ingredient);
-                        $key = 'week-'.$start.'-'.hash('sha256', $identity);
-                        if (!isset($generated[$key])) {
-                            $generated[$key] = [...$ingredient, 'id' => $key, 'unit' => $unit, 'quantity' => 0, 'quantities' => [], 'checked' => false, 'week' => $start];
+                    foreach (isset($meal['extra']) ? [$meal, $meal['extra']] : [$meal] as $part) {
+                        $recipe = array_find($state['recipes'], fn ($r) => $r['id'] === $part['recipeId']);
+                        if (!$recipe) continue;
+                        foreach ($recipe['ingredients'] as $ingredient) {
+                            $factor = $part['servings'] / $recipe['servings'];
+                            [$quantity, $unit] = match ($ingredient['unit']) {
+                                'kg' => [$ingredient['quantity'] * 1000, 'g'],
+                                'l' => [$ingredient['quantity'] * 1000, 'ml'],
+                                default => [$ingredient['quantity'], $ingredient['unit']],
+                            };
+                            // Keep mass, volume and pieces as separate components of one grocery row.
+                            // A product reference prevents different branded products being merged.
+                            $identity = FoodName::shoppingIdentity($ingredient);
+                            $key = 'week-'.$start.'-'.hash('sha256', $identity);
+                            if (!isset($generated[$key])) {
+                                $generated[$key] = [...$ingredient, 'id' => $key, 'unit' => $unit, 'quantity' => 0, 'quantities' => [], 'checked' => false, 'week' => $start];
+                            }
+                            $generated[$key]['quantities'][$unit] = ($generated[$key]['quantities'][$unit] ?? 0) + $quantity * $factor;
                         }
-                        $generated[$key]['quantities'][$unit] = ($generated[$key]['quantities'][$unit] ?? 0) + $quantity * $factor;
                     }
                 }
                 $previousShopping = $state['shopping'];

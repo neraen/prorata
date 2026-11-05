@@ -15,7 +15,7 @@ final class MealContextBuilder
         $history = array_values(array_filter($state['meals'], fn ($m) => $m['date'] >= $recentStart && $m['date'] < $today));
         usort($history, fn ($a, $b) => strcmp($b['date'], $a['date']));
         $history = array_slice($history, 0, 60);
-        $frequency = array_count_values(array_column($history, 'recipeId'));
+        $frequency = array_count_values(array_merge(...array_map(fn ($meal) => isset($meal['extra']) ? [$meal['recipeId'], $meal['extra']['recipeId']] : [$meal['recipeId']], $history)));
         $search = FoodProfile::fold($request['instructions'].' '.implode(' ', $profile['favorites']).' '.implode(' ', array_column($profile['pantry'], 'name')));
         $terms = array_unique(array_filter(preg_split('/[^\p{L}\p{N}]+/u', $search), fn ($t) => mb_strlen($t) > 2));
         $ranked = [];
@@ -36,11 +36,11 @@ final class MealContextBuilder
             return ['id' => $r['id'], 'title' => $r['title'], 'servings' => $r['servings'], 'minutes' => $r['minutes'], 'category' => $r['category'] ?? null, 'categorySource' => $r['categorySource'] ?? (($r['category'] ?? null) !== null ? (($r['origin'] ?? null) === 'ai' ? 'ai' : 'user') : null), 'ingredients' => $r['ingredients'], 'instructions' => mb_substr($r['instructions'], 0, 3000), 'equipment' => self::requiredEquipment($r), 'timesPlannedRecently' => $frequency[$r['id']] ?? 0];
         }, array_slice($ranked, 0, 16));
         $knownTitles = array_column($state['recipes'], 'title', 'id');
-        $history = array_map(fn ($m) => ['date' => $m['date'], 'slot' => $m['slot'], 'title' => $knownTitles[$m['recipeId']] ?? 'Recette retirée', 'recipeId' => $m['recipeId']], $history);
+        $history = array_map(fn ($m) => ['date' => $m['date'], 'slot' => $m['slot'], 'title' => $knownTitles[$m['recipeId']] ?? 'Recette retirée', 'recipeId' => $m['recipeId'], ...isset($m['extra']) ? ['extra' => [...$m['extra'], 'title' => $knownTitles[$m['extra']['recipeId']] ?? 'Recette retirée']] : []], $history);
         $start = min(array_column($request['slots'], 'date'));
         $end = (new \DateTimeImmutable(max(array_column($request['slots'], 'date'))))->modify('+2 days')->format('Y-m-d');
         $planned = array_values(array_filter($state['meals'], fn ($m) => $m['date'] >= $start && $m['date'] <= $end));
-        $planned = array_map(fn ($m) => [...$m, 'title' => $knownTitles[$m['recipeId']] ?? 'Recette retirée'], $planned);
+        $planned = array_map(fn ($m) => [...$m, 'title' => $knownTitles[$m['recipeId']] ?? 'Recette retirée', ...isset($m['extra']) ? ['extra' => [...$m['extra'], 'title' => $knownTitles[$m['extra']['recipeId']] ?? 'Recette retirée']] : []], $planned);
         return [
             'today' => $today, 'locale' => 'fr-FR', 'currency' => 'EUR',
             'profile' => $profile,

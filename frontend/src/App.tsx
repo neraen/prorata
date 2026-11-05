@@ -1,3 +1,5 @@
+import { MealChoicePage } from './features/household/MealChoicePage'
+import { RecipeEditorPage } from './features/household/RecipeEditorPage'
 import { lazy, Suspense } from 'react'
 import { Routes, Route } from 'react-router-dom'
 import { Providers } from './app/Providers'
@@ -75,6 +77,9 @@ function AppRoutes() {
           </AuthGuard>
         }
       >
+        <Route path="/meals/choose" element={<MealChoicePage />} />
+        <Route path="/meals/recipes/new" element={<RecipeEditorPage />} />
+        <Route path="/meals/recipes/:id/edit" element={<RecipeEditorPage />} />
         <Route path="/expenses/new" element={<ExpenseFormPage />} />
         <Route path="/expenses/:id/edit" element={<ExpenseFormPage />} />
       </Route>

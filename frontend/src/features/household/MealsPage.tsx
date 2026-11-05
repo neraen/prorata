@@ -1,10 +1,10 @@
 import { planningDates, shiftPlanningDate, validPlanningDate } from './planningDates'
 import { useState } from 'react'
-import { Link, useNavigate, useSearchParams } from 'react-router-dom'
+import { Link, Navigate, useNavigate, useSearchParams } from 'react-router-dom'
 import { Button, Card } from '../../components/ui'
 import { ChevronLeftIcon, ChevronRightIcon, PlusIcon } from '../../components/icons'
 import { useAuthStore, useToastStore } from '../../lib/stores'
-import { displayDate, quantityLabel, useHousehold, weekDates, type Recipe, type Meal } from './household'
+import { displayDate, quantityLabel, useHousehold, weekDates, type Recipe } from './household'
 import { MEAL_CATEGORIES } from './assistant'
 import { RecipeCategoryEditor } from './RecipeCategoryEditor'
 import { IngredientIllustration } from './IngredientIllustration'
@@ -12,8 +12,7 @@ import { RecipeIllustration } from './RecipeIllustration'
 import { recipeVisual } from './recipeVisual'
 import { HouseholdDialog } from './HouseholdDialog'
 export { HouseholdDialog } from './HouseholdDialog'
-import { MealRecipePicker } from './MealRecipePicker'
-import { RecipeForm, fieldClass } from './RecipeForm'
+import { fieldClass } from './RecipeForm'
 
 export function HouseholdStatus({ loading, error, retry }: { loading: boolean; error: boolean; retry: () => void }) {
   if (loading) return <p role="status" className="py-8 text-center text-muted">Chargement de votre espace…</p>
@@ -30,7 +29,7 @@ export function MealsPage() {
   const [tab, setTab] = useState<'week' | 'recipes'>(() => searchParams.get('tab') === 'recipes' ? 'recipes' : 'week')
   const requestedDate = searchParams.get('date')
   const requestedSlot = searchParams.get('slot')
-  const directSlot = validPlanningDate(requestedDate) && ['lunch', 'dinner'].includes(requestedSlot ?? '') ? { date: requestedDate, slot: requestedSlot as Meal['slot'] } : null
+  const directSlot = validPlanningDate(requestedDate) && ['lunch', 'dinner'].includes(requestedSlot ?? '') ? { date: requestedDate, slot: requestedSlot as 'lunch' | 'dinner' } : null
   const defaultStart = weekDates(0, data?.planningStart)[0]
   const requestedStart = searchParams.get('week') ?? requestedDate
   const start = validPlanningDate(requestedStart) ? requestedStart : defaultStart
@@ -51,35 +50,23 @@ export function MealsPage() {
   const [categoryFilter, setCategoryFilter] = useState('all')
   const [source, setSource] = useState('all')
   const [search, setSearch] = useState('')
-  const [editing, setEditing] = useState<Recipe | 'new' | null>(null)
   const [recipeToPlan, setRecipeToPlan] = useState<Recipe | null>(null)
   const [viewingId, setViewingId] = useState<string | null>(() => searchParams.get('view'))
   const viewing = data?.recipes.find((recipe) => recipe.id === viewingId) ?? null
   function setViewing(recipe: Recipe | null) { setViewingId(recipe?.id ?? null) }
-  const [slot, setSlot] = useState<{ date: string; slot: Meal['slot'] } | null>(directSlot)
-  const [selected, setSelected] = useState('')
-  const [portions, setPortions] = useState<number | null>(null)
   const [busy, setBusy] = useState(false)
   const days = planningDates(start)
   const recipes = data?.recipes ?? []
-  const effectiveSelected = selected || (slot ? data?.meals[`${slot.date}-${slot.slot}`]?.recipeId : '') || recipes[0]?.id || ''
-  const effectivePortions = portions ?? (slot ? data?.meals[`${slot.date}-${slot.slot}`]?.servings : undefined) ?? data?.foodProfile?.servings ?? 2
-  const selectedRecipe = recipes.find((recipe) => recipe.id === effectiveSelected)
   const filtered = recipes.filter((r) => (categoryFilter === 'all' || r.category === categoryFilter) && r.title.toLocaleLowerCase('fr').includes(search.toLocaleLowerCase('fr')) && (source === 'all' || (source === 'app' ? r.source === 'app' : r.authorId === userId)))
   const count = Object.values(data?.meals ?? {}).filter((m) => days.includes(m.date)).length
-  async function saveMeal(remove = false) {
-    if (!slot) return
-    setBusy(true)
-    try { await send('meal.set', { ...slot, recipeId: remove ? null : effectiveSelected, servings: effectivePortions }); setSlot(null); setRecipeToPlan(null) }
-    catch { /* Error is shown by the shared command handler. */ }
-    finally { setBusy(false) }
-  }
   async function generate() {
     setBusy(true)
     try { await send('shopping.generate', { week: days[0] }); showToast('Liste de courses mise à jour', 'success'); navigate(`/shopping?week=${days[0]}`) }
     catch { /* Error is shown by the shared command handler. */ }
     finally { setBusy(false) }
   }
+  const recipeReturn = `/meals?week=${start}${tab === 'recipes' ? '&tab=recipes' : ''}`
+  if (directSlot) return <Navigate replace to={`/meals/choose?date=${directSlot.date}&slot=${directSlot.slot}&week=${start}`} />
   return <div className="flex flex-col gap-5">
     <header><h1 className="text-[30px] font-extrabold tracking-tight">{tab === 'recipes' ? 'Nos recettes' : 'Nos repas'}</h1><p className="mt-1 text-sm text-muted">{tab === 'recipes' ? 'À chaque envie, son petit plat.' : 'Une semaine à partager.'}</p></header>
     {tab === 'week' && <><Link to={`/meals/assistant?week=${days[0]}`} className="flex min-h-28 items-center justify-between overflow-hidden rounded-[22px] bg-[#EBF0E6] pl-5 text-ink"><span className="py-4"><span className="mb-1 block text-xs font-semibold text-positive">Quelques minutes pour s’organiser</span><span className="block text-lg font-extrabold">Organiser notre semaine</span><span className="mt-2 block text-sm font-semibold text-positive">C’est parti →</span></span><img src="/illustrations/recipe-quick.webp" alt="" aria-hidden="true" width={112} height={112} className="h-28 w-28 shrink-0 object-contain mix-blend-multiply" /></Link>
@@ -98,10 +85,11 @@ export function MealsPage() {
         const meal = data.meals[`${date}-${mealSlot}`]
         const recipe = recipes.find((r) => r.id === meal?.recipeId)
         const category = meal?.category ?? recipe?.category
-        return <button key={mealSlot} type="button" onClick={() => { setSlot({ date, slot: mealSlot }); setSelected(recipeToPlan?.id ?? meal?.recipeId ?? recipes[0]?.id ?? ''); setPortions(recipeToPlan ? (data.foodProfile?.servings ?? recipeToPlan.servings) : (meal?.servings ?? 2)) }} className="flex min-h-[76px] w-full items-center gap-3 py-3 text-left"><span className="w-10 shrink-0 text-xs text-muted">{mealSlot === 'lunch' ? 'Midi' : 'Soir'}</span>{recipe && <RecipeIllustration recipe={recipe} showLabel={false} className="h-14 w-14 shrink-0 rounded-xl" />}<span className="min-w-0 flex-1"><span className={`block text-sm ${recipe ? 'font-bold' : 'text-muted'}`}>{recipe?.title ?? 'Choisir un plat'}</span>{meal && <span className="text-xs text-muted">{meal.servings} portions · {recipe?.minutes} min{category ? ` · ${MEAL_CATEGORIES[category]}` : ''}</span>}</span>{recipe ? <ChevronRightIcon size={18} /> : <PlusIcon size={18} />}</button>
+        const extraRecipe = recipes.find((entry) => entry.id === meal?.extra?.recipeId)
+        return <button key={mealSlot} type="button" onClick={() => navigate(`/meals/choose?date=${date}&slot=${mealSlot}&week=${start}${recipeToPlan ? `&recipe=${encodeURIComponent(recipeToPlan.id)}` : ''}`)} className="flex min-h-[76px] w-full items-center gap-3 py-3 text-left"><span className="w-10 shrink-0 text-xs text-muted">{mealSlot === 'lunch' ? 'Midi' : 'Soir'}</span>{recipe && <RecipeIllustration recipe={recipe} showLabel={false} className="h-14 w-14 shrink-0 rounded-xl" />}<span className="min-w-0 flex-1"><span className={`block text-sm ${recipe ? 'font-bold' : 'text-muted'}`}>{recipe?.title ?? 'Choisir un plat'}</span>{meal && <span className="text-xs text-muted">{meal.servings} portions · {recipe?.minutes} min{category ? ` · ${MEAL_CATEGORIES[category]}` : ''}</span>}{meal?.extra && <span className="mt-1 block text-xs font-semibold text-positive">+ {extraRecipe?.title ?? 'Deuxième plat'} · {meal.extra.servings} portions</span>}</span>{recipe ? <ChevronRightIcon size={18} /> : <PlusIcon size={18} />}</button>
       })}</Card></div>)}
     </> : <>
-      <div className="flex items-center justify-between gap-3"><h2 className="text-lg font-extrabold">À cuisiner</h2><Button variant="secondary" className="h-11! text-sm!" onClick={() => setEditing('new')}><PlusIcon size={16} /> Ma recette</Button></div>
+      <div className="flex items-center justify-between gap-3"><h2 className="text-lg font-extrabold">À cuisiner</h2><Button variant="secondary" className="h-11! text-sm!" onClick={() => navigate(`/meals/recipes/new?returnTo=${encodeURIComponent(recipeReturn)}`)}><PlusIcon size={16} /> Ma recette</Button></div>
       <label className="grid gap-1"><span className="sr-only">Rechercher une recette</span><input type="search" className={fieldClass} placeholder="Rechercher un plat…" value={search} onChange={(e) => setSearch(e.target.value)} /></label>
       <div className="no-scrollbar flex gap-2 overflow-x-auto pb-1" role="group" aria-label="Types de repas">{[['all', 'Tous'], ...Object.entries(MEAL_CATEGORIES)].map(([value, label]) => <button type="button" key={value} onClick={() => setCategoryFilter(value)} aria-pressed={categoryFilter === value} className={`min-h-11 shrink-0 rounded-full px-4 text-sm font-semibold ${categoryFilter === value ? 'bg-ink text-white' : 'border bg-surface text-muted'}`}>{label}</button>)}</div>
       <details><summary className="min-h-11 cursor-pointer py-2 text-sm text-muted">Choisir l’origine des recettes</summary><div className="mt-2 flex flex-wrap gap-2">{[['all', 'Toutes'], ['mine', 'Mes recettes'], ['app', 'Les idées de l’app']].map(([value, label]) => <button type="button" key={value} onClick={() => setSource(value)} aria-pressed={source === value} className={`min-h-11 rounded-full border px-3 text-sm font-semibold ${source === value ? 'bg-ink text-white' : 'bg-surface'}`}>{label}</button>)}</div></details>
@@ -111,8 +99,7 @@ export function MealsPage() {
       <p className="text-xs leading-relaxed text-muted">Le carnet signale une recette personnelle. L’assiette vide signale une recette sans image. Ces visuels génériques ne représentent pas les plats.</p>
     </>)}
     {viewingId && data && !viewing && <Card className="grid gap-3"><p className="text-sm text-muted">Cette recette n’est plus disponible. Tu peux en choisir une autre.</p><Button onClick={() => { setViewingId(null); setTab('recipes') }}>Voir les recettes</Button></Card>}
-    {editing && <HouseholdDialog title={editing === 'new' ? 'Créer une recette' : 'Modifier la recette'} onClose={() => setEditing(null)}><RecipeForm recipe={editing === 'new' ? undefined : editing} onClose={() => setEditing(null)} onSave={async (payload) => { await send('recipe.save', payload); showToast(editing === 'new' ? 'Recette enregistrée' : 'Recette mise à jour', 'success'); if (editing !== 'new') setViewingId(String(payload.id)) }} /></HouseholdDialog>}
-    {viewing && <HouseholdDialog title={viewing.title} onClose={() => setViewing(null)}><RecipeIllustration recipe={viewing} eager className="mb-2 h-48 w-full rounded-2xl" />{recipeVisual(viewing).generic && <p className="mb-4 text-center text-xs text-muted">{recipeVisual(viewing).label} : ne représente pas le plat.</p>}<p className="mb-4 text-sm text-muted">{viewing.minutes} min · Pour {viewing.servings} personnes</p>{viewing.source === 'personal' && <Button variant="secondary" className="mb-4 w-full" onClick={() => { setEditing(viewing); setViewing(null) }}>Modifier cette recette</Button>}<p className="mb-4 text-xs font-semibold text-positive">{viewing.category ? MEAL_CATEGORIES[viewing.category] : 'À classer'}{viewing.categorySource === 'ai' ? ' · Suggestion IA, modifiable' : ''}</p><details className="mb-4 rounded-xl border px-3"><summary className="min-h-11 cursor-pointer py-3 text-sm font-semibold">Modifier le type de ce plat</summary><RecipeCategoryEditor recipe={viewing} onSave={async (payload) => { await send('recipe.category', payload); setViewing(null) }} /></details><h3 className="mb-2 font-bold">Ingrédients</h3><ul className="mb-5 divide-y divide-border">{viewing.ingredients.map((i, index) => <li className="flex justify-between gap-3 py-2 text-sm" key={index}><span className="flex items-center gap-2"><IngredientIllustration name={i.name} className="h-10 w-10" />{i.name}</span><span className="shrink-0 font-semibold">{quantityLabel(i)}</span></li>)}</ul><h3 className="mb-2 font-bold">Préparation</h3><p className="mb-5 whitespace-pre-wrap text-sm leading-relaxed text-muted">{viewing.instructions || 'Préparation non renseignée : cette recette peut être gardée simplement pour ses ingrédients.'}</p><Button className="w-full" onClick={() => { setRecipeToPlan(viewing); setViewing(null); setTab('week'); requestAnimationFrame(() => { window.scrollTo({ top: 0, behavior: 'instant' }); document.getElementById('main-content')?.focus({ preventScroll: true }) }) }}>Planifier dans la semaine</Button></HouseholdDialog>}
-    {slot && <HouseholdDialog fixedLayout title={`${displayDate(slot.date)} · ${slot.slot === 'lunch' ? 'Déjeuner' : 'Dîner'}`} onClose={() => setSlot(null)}><div className="flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto">{recipeToPlan && data?.meals[`${slot.date}-${slot.slot}`] && <p className="rounded-xl bg-positive-bg p-3 text-sm">Ce repas est déjà prévu. Enregistrer remplacera le plat actuel par ta sélection.</p>}{recipes.length ? <><MealRecipePicker recipes={recipes} selected={effectiveSelected} onSelect={setSelected} disabled={busy} /><label className="grid shrink-0 gap-2 text-sm font-semibold">Nombre de portions<input className={fieldClass} type="number" min={1} max={20} step={1} value={effectivePortions || ''} onChange={(e) => setPortions(Number(e.target.value))} /></label><Button className="shrink-0" disabled={!selectedRecipe || !Number.isInteger(effectivePortions) || effectivePortions < 1 || effectivePortions > 20} isLoading={busy} onClick={() => void saveMeal()}>Enregistrer ce repas</Button></> : <><p className="text-sm text-muted">Commence par enregistrer une recette.</p><Button onClick={() => { setSlot(null); setEditing('new') }}>Créer une recette</Button></>}{data?.meals[`${slot.date}-${slot.slot}`] && <Button variant="danger" disabled={busy} onClick={() => void saveMeal(true)}>Retirer ce repas</Button>}</div></HouseholdDialog>}
+    {viewing && <HouseholdDialog title={viewing.title} onClose={() => setViewing(null)}><RecipeIllustration recipe={viewing} eager className="mb-2 h-48 w-full rounded-2xl" />{recipeVisual(viewing).generic && <p className="mb-4 text-center text-xs text-muted">{recipeVisual(viewing).label} : ne représente pas le plat.</p>}<p className="mb-4 text-sm text-muted">{viewing.minutes} min · Pour {viewing.servings} personnes</p>{viewing.source === 'personal' && <Button variant="secondary" className="mb-4 w-full" onClick={() => navigate(`/meals/recipes/${encodeURIComponent(viewing.id)}/edit?returnTo=${encodeURIComponent(`${recipeReturn}&view=${encodeURIComponent(viewing.id)}`)}`)}>Modifier cette recette</Button>}<p className="mb-4 text-xs font-semibold text-positive">{viewing.category ? MEAL_CATEGORIES[viewing.category] : 'À classer'}{viewing.categorySource === 'ai' ? ' · Suggestion IA, modifiable' : ''}</p><details className="mb-4 rounded-xl border px-3"><summary className="min-h-11 cursor-pointer py-3 text-sm font-semibold">Modifier le type de ce plat</summary><RecipeCategoryEditor recipe={viewing} onSave={async (payload) => { await send('recipe.category', payload); setViewing(null) }} /></details><h3 className="mb-2 font-bold">Ingrédients</h3><ul className="mb-5 divide-y divide-border">{viewing.ingredients.map((i, index) => <li className="flex justify-between gap-3 py-2 text-sm" key={index}><span className="flex items-center gap-2"><IngredientIllustration name={i.name} className="h-10 w-10" />{i.name}</span><span className="shrink-0 font-semibold">{quantityLabel(i)}</span></li>)}</ul><h3 className="mb-2 font-bold">Préparation</h3><p className="mb-5 whitespace-pre-wrap text-sm leading-relaxed text-muted">{viewing.instructions || 'Préparation non renseignée : cette recette peut être gardée simplement pour ses ingrédients.'}</p><Button className="w-full" onClick={() => { setRecipeToPlan(viewing); setViewing(null); setTab('week'); requestAnimationFrame(() => { window.scrollTo({ top: 0, behavior: 'instant' }); document.getElementById('main-content')?.focus({ preventScroll: true }) }) }}>Planifier dans la semaine</Button></HouseholdDialog>}
+
   </div>
 }

@@ -34,7 +34,7 @@ export function IngredientPicker({ ingredients, onAdd, onRemove, onClose }: { in
   const needle = nameKey(search)
   const remote = useQuery({ queryKey: ['foodSuggestions', foldFood(remoteQuery)], queryFn: () => apiFetch<{ items: FoodSuggestion[]; available: boolean }>(`/foods/suggestions?q=${encodeURIComponent(remoteQuery)}`), enabled: remoteQuery.length >= 2, staleTime: 604800000, retry: false })
   const unique = new Map<string, FoodSuggestion>()
-  const own = [...sessionFoods, ...ingredients, ...(data?.foodProfile?.pantry ?? []), ...(data?.recipes.filter((recipe) => recipe.source !== 'app' || Object.values(data.meals).some((meal) => meal.recipeId === recipe.id)).slice().reverse().flatMap((recipe) => recipe.ingredients) ?? [])]
+  const own = [...sessionFoods, ...ingredients, ...(data?.foodProfile?.pantry ?? []), ...(data?.recipes.filter((recipe) => recipe.source !== 'app' || Object.values(data.meals).some((meal) => (meal.recipeId === recipe.id || meal.extra?.recipeId === recipe.id))).slice().reverse().flatMap((recipe) => recipe.ingredients) ?? [])]
   for (const item of [...own.map((item): FoodSuggestion => ({ name: item.name, reference: item.reference ?? null, origin: 'personal' })), ...COMMON_FOODS]) {
     const key = nameKey(item.name)
     if ((!needle || key.includes(needle) || item.aliases?.some((alias) => nameKey(alias).includes(needle))) && !unique.has(key)) unique.set(key, item)

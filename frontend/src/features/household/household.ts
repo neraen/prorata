@@ -11,7 +11,8 @@ export const UNITS = { g: 'g', kg: 'kg', ml: 'ml', l: 'l', piece: 'pièce(s)' } 
 export interface FoodReference { source: 'openfoodfacts'; type: 'ingredient' | 'product'; id: string }
 export interface Ingredient { name: string; quantity: number; unit: keyof typeof UNITS; aisle: keyof typeof AISLES; reference?: FoodReference | null }
 export interface Recipe { id: string; title: string; servings: number; minutes: number; instructions: string; estimatedCostCents?: number | null; authorId: number; source: 'personal' | 'app'; ingredients: Ingredient[]; category?: MealCategory | null; categorySource?: 'user' | 'ai' | 'catalog' | null; categoryReason?: string | null; illustration?: string; origin?: 'ai' | null; equipment?: string[] }
-export interface Meal { date: string; slot: 'lunch' | 'dinner'; recipeId: string; servings: number; category?: MealCategory | null }
+export interface MealPart { recipeId: string; servings: number; category?: MealCategory | null }
+export interface Meal extends MealPart { date: string; slot: 'lunch' | 'dinner'; extra?: MealPart | null }
 export interface ShoppingItem extends Ingredient { quantities?: { quantity: number; unit: Ingredient['unit'] }[]; id: string; checked: boolean; week: string | null }
 export interface Household { recipes: Recipe[]; meals: Record<string, Meal>; shopping: ShoppingItem[]; revision: number; planningStart?: string | null; foodProfile?: FoodProfile }
 interface Command { id: string; type: string; payload: Record<string, unknown> }
