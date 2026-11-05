@@ -506,9 +506,13 @@
   {
     "id": "soy-sauce",
     "aliases": [
-      "Sauce soja"
+      "Sauce soja",
+      "Shoyu",
+      "Sauce shoyu",
+      "Sauce soja japonaise"
     ],
-    "aisle": "pantry"
+    "aisle": "pantry",
+    "unit": "ml"
   },
   {
     "id": "tomato-sauce",
@@ -923,8 +927,7 @@
   {
     "id": "smoked-paprika",
     "aliases": [
-      "Paprika fumé",
-      "Paprika"
+      "Paprika fumé"
     ],
     "aisle": "pantry",
     "unit": "g"
@@ -2096,5 +2099,572 @@
     ],
     "aisle": "pantry",
     "unit": "piece"
+  },
+  {
+    "id": "clove",
+    "aliases": [
+      "Clous de girofle",
+      "Clou de girofle",
+      "Girofle"
+    ],
+    "aisle": "pantry",
+    "unit": "g"
+  },
+  {
+    "id": "cardamom",
+    "aliases": [
+      "Cardamome",
+      "Cardamome verte",
+      "Gousses de cardamome"
+    ],
+    "aisle": "pantry",
+    "unit": "g"
+  },
+  {
+    "id": "star-anise",
+    "aliases": [
+      "Badiane",
+      "Anis étoilé"
+    ],
+    "aisle": "pantry",
+    "unit": "g"
+  },
+  {
+    "id": "anise-seed",
+    "aliases": [
+      "Anis vert",
+      "Graines d’anis",
+      "Graines d’anis vert"
+    ],
+    "aisle": "pantry",
+    "unit": "g"
+  },
+  {
+    "id": "fenugreek",
+    "aliases": [
+      "Fenugrec",
+      "Graines de fenugrec"
+    ],
+    "aisle": "pantry",
+    "unit": "g"
+  },
+  {
+    "id": "fennel-seed",
+    "aliases": [
+      "Graines de fenouil",
+      "Fenouil en graines"
+    ],
+    "aisle": "pantry",
+    "unit": "g"
+  },
+  {
+    "id": "caraway",
+    "aliases": [
+      "Carvi",
+      "Graines de carvi"
+    ],
+    "aisle": "pantry",
+    "unit": "g"
+  },
+  {
+    "id": "nigella",
+    "aliases": [
+      "Nigelle",
+      "Graines de nigelle"
+    ],
+    "aisle": "pantry",
+    "unit": "g"
+  },
+  {
+    "id": "mustard-seed",
+    "aliases": [
+      "Graines de moutarde",
+      "Moutarde en graines"
+    ],
+    "aisle": "pantry",
+    "unit": "g"
+  },
+  {
+    "id": "coriander-seed",
+    "aliases": [
+      "Graines de coriandre",
+      "Coriandre en graines"
+    ],
+    "aisle": "pantry",
+    "unit": "g"
+  },
+  {
+    "id": "ground-cumin",
+    "aliases": [
+      "Cumin moulu",
+      "Cumin",
+      "Cumin en poudre"
+    ],
+    "aisle": "pantry",
+    "unit": "g"
+  },
+  {
+    "id": "sweet-paprika",
+    "aliases": [
+      "Paprika doux",
+      "Paprika",
+      "Paprika non fumé"
+    ],
+    "aisle": "pantry",
+    "unit": "g"
+  },
+  {
+    "id": "white-pepper",
+    "aliases": [
+      "Poivre blanc",
+      "Poivre blanc en grains"
+    ],
+    "aisle": "pantry",
+    "unit": "g"
+  },
+  {
+    "id": "green-peppercorn",
+    "aliases": [
+      "Poivre vert",
+      "Poivre vert en grains"
+    ],
+    "aisle": "pantry",
+    "unit": "g"
+  },
+  {
+    "id": "pink-peppercorn",
+    "aliases": [
+      "Baies roses",
+      "Poivre rose",
+      "Baie rose"
+    ],
+    "aisle": "pantry",
+    "unit": "g"
+  },
+  {
+    "id": "sichuan-pepper",
+    "aliases": [
+      "Poivre de Sichuan",
+      "Poivre du Sichuan",
+      "Poivre de Sechuan"
+    ],
+    "aisle": "pantry",
+    "unit": "g"
+  },
+  {
+    "id": "long-pepper",
+    "aliases": [
+      "Poivre long",
+      "Poivre long de Java"
+    ],
+    "aisle": "pantry",
+    "unit": "g"
+  },
+  {
+    "id": "timut-pepper",
+    "aliases": [
+      "Poivre de Timut",
+      "Poivre Timut",
+      "Baies de Timut"
+    ],
+    "aisle": "pantry",
+    "unit": "g"
+  },
+  {
+    "id": "allspice",
+    "aliases": [
+      "Piment de la Jamaïque",
+      "Poivre de la Jamaïque",
+      "Tout-épice",
+      "Allspice"
+    ],
+    "aisle": "pantry",
+    "unit": "g"
+  },
+  {
+    "id": "sumac",
+    "aliases": [
+      "Sumac",
+      "Sumac moulu"
+    ],
+    "aisle": "pantry",
+    "unit": "g"
+  },
+  {
+    "id": "ground-ginger",
+    "aliases": [
+      "Gingembre moulu",
+      "Gingembre en poudre"
+    ],
+    "aisle": "pantry",
+    "unit": "g"
+  },
+  {
+    "id": "garlic-powder",
+    "aliases": [
+      "Ail en poudre",
+      "Ail semoule",
+      "Ail déshydraté"
+    ],
+    "aisle": "pantry",
+    "unit": "g"
+  },
+  {
+    "id": "onion-powder",
+    "aliases": [
+      "Oignon en poudre",
+      "Oignon semoule",
+      "Oignon déshydraté"
+    ],
+    "aisle": "pantry",
+    "unit": "g"
+  },
+  {
+    "id": "celery-seed",
+    "aliases": [
+      "Graines de céleri",
+      "Céleri en graines"
+    ],
+    "aisle": "pantry",
+    "unit": "g"
+  },
+  {
+    "id": "mustard-powder",
+    "aliases": [
+      "Moutarde en poudre",
+      "Poudre de moutarde"
+    ],
+    "aisle": "pantry",
+    "unit": "g"
+  },
+  {
+    "id": "mace",
+    "aliases": [
+      "Macis",
+      "Fleur de muscade"
+    ],
+    "aisle": "pantry",
+    "unit": "g"
+  },
+  {
+    "id": "juniper",
+    "aliases": [
+      "Baies de genièvre",
+      "Genièvre"
+    ],
+    "aisle": "pantry",
+    "unit": "g"
+  },
+  {
+    "id": "annatto",
+    "aliases": [
+      "Roucou",
+      "Graines de roucou",
+      "Annatto"
+    ],
+    "aisle": "pantry",
+    "unit": "g"
+  },
+  {
+    "id": "ajwain",
+    "aliases": [
+      "Ajowan",
+      "Ajwain",
+      "Graines d’ajowan"
+    ],
+    "aisle": "pantry",
+    "unit": "g"
+  },
+  {
+    "id": "asafoetida",
+    "aliases": [
+      "Asafoetida",
+      "Ase fétide",
+      "Hing"
+    ],
+    "aisle": "pantry",
+    "unit": "g"
+  },
+  {
+    "id": "ground-galangal",
+    "aliases": [
+      "Galanga moulu",
+      "Galanga en poudre"
+    ],
+    "aisle": "pantry",
+    "unit": "g"
+  },
+  {
+    "id": "dried-kaffir-lime",
+    "aliases": [
+      "Zeste de combava séché",
+      "Combava en poudre",
+      "Zeste de combava"
+    ],
+    "aisle": "pantry",
+    "unit": "g"
+  },
+  {
+    "id": "dried-lemongrass",
+    "aliases": [
+      "Citronnelle séchée",
+      "Citronnelle en poudre"
+    ],
+    "aisle": "pantry",
+    "unit": "g"
+  },
+  {
+    "id": "espelette-pepper",
+    "aliases": [
+      "Piment d’Espelette",
+      "Piment Espelette"
+    ],
+    "aisle": "pantry",
+    "unit": "g"
+  },
+  {
+    "id": "cayenne-pepper",
+    "aliases": [
+      "Piment de Cayenne",
+      "Poivre de Cayenne",
+      "Cayenne"
+    ],
+    "aisle": "pantry",
+    "unit": "g"
+  },
+  {
+    "id": "gochugaru",
+    "aliases": [
+      "Gochugaru",
+      "Piment coréen",
+      "Piment gochugaru"
+    ],
+    "aisle": "pantry",
+    "unit": "g"
+  },
+  {
+    "id": "four-spice",
+    "aliases": [
+      "Quatre-épices",
+      "Quatre épices",
+      "Mélange quatre épices",
+      "4 épices"
+    ],
+    "aisle": "pantry",
+    "unit": "g"
+  },
+  {
+    "id": "five-spice",
+    "aliases": [
+      "Cinq-épices",
+      "Cinq épices",
+      "Cinq parfums",
+      "5 épices"
+    ],
+    "aisle": "pantry",
+    "unit": "g"
+  },
+  {
+    "id": "herbes-provence",
+    "aliases": [
+      "Herbes de Provence",
+      "Mélange provençal"
+    ],
+    "aisle": "pantry",
+    "unit": "g"
+  },
+  {
+    "id": "zaatar",
+    "aliases": [
+      "Za’atar",
+      "Zaatar",
+      "Zahtar"
+    ],
+    "aisle": "pantry",
+    "unit": "g"
+  },
+  {
+    "id": "dukkah",
+    "aliases": [
+      "Dukkah",
+      "Dukah"
+    ],
+    "aisle": "pantry",
+    "unit": "g"
+  },
+  {
+    "id": "baharat",
+    "aliases": [
+      "Baharat",
+      "Mélange baharat"
+    ],
+    "aisle": "pantry",
+    "unit": "g"
+  },
+  {
+    "id": "berbere",
+    "aliases": [
+      "Berbéré"
+    ],
+    "aisle": "pantry",
+    "unit": "g"
+  },
+  {
+    "id": "tandoori",
+    "aliases": [
+      "Tandoori",
+      "Épices tandoori",
+      "Mélange tandoori"
+    ],
+    "aisle": "pantry",
+    "unit": "g"
+  },
+  {
+    "id": "colombo",
+    "aliases": [
+      "Colombo",
+      "Épices colombo",
+      "Poudre de colombo"
+    ],
+    "aisle": "pantry",
+    "unit": "g"
+  },
+  {
+    "id": "cajun",
+    "aliases": [
+      "Épices cajun",
+      "Mélange cajun",
+      "Cajun"
+    ],
+    "aisle": "pantry",
+    "unit": "g"
+  },
+  {
+    "id": "chili-blend",
+    "aliases": [
+      "Mélange chili",
+      "Épices chili",
+      "Chili en mélange"
+    ],
+    "aisle": "pantry",
+    "unit": "g"
+  },
+  {
+    "id": "gingerbread-spice",
+    "aliases": [
+      "Épices à pain d’épices",
+      "Mélange pain d’épices"
+    ],
+    "aisle": "pantry",
+    "unit": "g"
+  },
+  {
+    "id": "speculoos-spice",
+    "aliases": [
+      "Épices à spéculoos",
+      "Mélange spéculoos"
+    ],
+    "aisle": "pantry",
+    "unit": "g"
+  },
+  {
+    "id": "shichimi",
+    "aliases": [
+      "Shichimi togarashi",
+      "Shichimi",
+      "Mélange sept épices japonais"
+    ],
+    "aisle": "pantry",
+    "unit": "g"
+  },
+  {
+    "id": "panch-phoron",
+    "aliases": [
+      "Panch phoron",
+      "Panch phoran"
+    ],
+    "aisle": "pantry",
+    "unit": "g"
+  },
+  {
+    "id": "vadouvan",
+    "aliases": [
+      "Vadouvan",
+      "Mélange vadouvan"
+    ],
+    "aisle": "pantry",
+    "unit": "g"
+  },
+  {
+    "id": "oregano",
+    "aliases": [
+      "Origan",
+      "Origan séché"
+    ],
+    "aisle": "pantry",
+    "unit": "g"
+  },
+  {
+    "id": "marjoram",
+    "aliases": [
+      "Marjolaine",
+      "Marjolaine séchée"
+    ],
+    "aisle": "pantry",
+    "unit": "g"
+  },
+  {
+    "id": "savory",
+    "aliases": [
+      "Sarriette",
+      "Sarriette séchée"
+    ],
+    "aisle": "pantry",
+    "unit": "g"
+  },
+  {
+    "id": "tarragon",
+    "aliases": [
+      "Estragon",
+      "Estragon séché"
+    ],
+    "aisle": "pantry",
+    "unit": "g"
+  },
+  {
+    "id": "chervil",
+    "aliases": [
+      "Cerfeuil",
+      "Cerfeuil séché"
+    ],
+    "aisle": "pantry",
+    "unit": "g"
+  },
+  {
+    "id": "chives",
+    "aliases": [
+      "Ciboulette",
+      "Ciboulette séchée"
+    ],
+    "aisle": "pantry",
+    "unit": "g"
+  },
+  {
+    "id": "dried-mint",
+    "aliases": [
+      "Menthe séchée",
+      "Menthe en feuilles séchées"
+    ],
+    "aisle": "pantry",
+    "unit": "g"
+  },
+  {
+    "id": "sage",
+    "aliases": [
+      "Sauge",
+      "Sauge séchée"
+    ],
+    "aisle": "pantry",
+    "unit": "g"
   }
 ]

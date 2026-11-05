@@ -1,0 +1,813 @@
+{
+  "tool": "image_gen built-in",
+  "style": "Match the existing premium Prorata ingredient library: soft hand-painted gouache and colored pencil, muted natural pastel colors, fine paper grain, delicate soft shadow, warm ivory background #F8F7F2. Square centered isolated composition, subject occupies about 65%, generous margins, recognizable at 48px. No text, letters, labels, logos, border or collage. One ingredient, no unrelated foods or props.",
+  "assets": [
+    {
+      "id": "clove",
+      "name": "Clous de girofle",
+      "subject": "a small mound of whole dark brown cloves with recognizable nail-shaped heads",
+      "aliases": [
+        "Clous de girofle",
+        "Clou de girofle",
+        "Girofle"
+      ],
+      "aisle": "pantry",
+      "unit": "g",
+      "path": "frontend/public/illustrations/ingredients/clove.webp",
+      "prompt": "Use case: stylized-concept. Asset type: ingredient thumbnail for a French grocery and recipe app. Subject: a small mound of whole dark brown cloves with recognizable nail-shaped heads. Match the existing premium Prorata ingredient library: soft hand-painted gouache and colored pencil, muted natural pastel colors, fine paper grain, delicate soft shadow, warm ivory background #F8F7F2. Square centered isolated composition, subject occupies about 65%, generous margins, recognizable at 48px. No text, letters, labels, logos, border or collage. One ingredient, no unrelated foods or props."
+    },
+    {
+      "id": "cardamom",
+      "name": "Cardamome",
+      "subject": "several pale green cardamom pods with one open showing dark seeds",
+      "aliases": [
+        "Cardamome",
+        "Cardamome verte",
+        "Gousses de cardamome"
+      ],
+      "aisle": "pantry",
+      "unit": "g",
+      "path": "frontend/public/illustrations/ingredients/cardamom.webp",
+      "prompt": "Use case: stylized-concept. Asset type: ingredient thumbnail for a French grocery and recipe app. Subject: several pale green cardamom pods with one open showing dark seeds. Match the existing premium Prorata ingredient library: soft hand-painted gouache and colored pencil, muted natural pastel colors, fine paper grain, delicate soft shadow, warm ivory background #F8F7F2. Square centered isolated composition, subject occupies about 65%, generous margins, recognizable at 48px. No text, letters, labels, logos, border or collage. One ingredient, no unrelated foods or props."
+    },
+    {
+      "id": "star-anise",
+      "name": "Badiane",
+      "subject": "three dark reddish brown star anise pods",
+      "aliases": [
+        "Badiane",
+        "Anis étoilé"
+      ],
+      "aisle": "pantry",
+      "unit": "g",
+      "path": "frontend/public/illustrations/ingredients/star-anise.webp",
+      "prompt": "Use case: stylized-concept. Asset type: ingredient thumbnail for a French grocery and recipe app. Subject: three dark reddish brown star anise pods. Match the existing premium Prorata ingredient library: soft hand-painted gouache and colored pencil, muted natural pastel colors, fine paper grain, delicate soft shadow, warm ivory background #F8F7F2. Square centered isolated composition, subject occupies about 65%, generous margins, recognizable at 48px. No text, letters, labels, logos, border or collage. One ingredient, no unrelated foods or props."
+    },
+    {
+      "id": "anise-seed",
+      "name": "Anis vert",
+      "subject": "a shallow ivory ceramic dish of small greenish brown anise seeds",
+      "aliases": [
+        "Anis vert",
+        "Graines d’anis",
+        "Graines d’anis vert"
+      ],
+      "aisle": "pantry",
+      "unit": "g",
+      "path": "frontend/public/illustrations/ingredients/anise-seed.webp",
+      "prompt": "Use case: stylized-concept. Asset type: ingredient thumbnail for a French grocery and recipe app. Subject: a shallow ivory ceramic dish of small greenish brown anise seeds. Match the existing premium Prorata ingredient library: soft hand-painted gouache and colored pencil, muted natural pastel colors, fine paper grain, delicate soft shadow, warm ivory background #F8F7F2. Square centered isolated composition, subject occupies about 65%, generous margins, recognizable at 48px. No text, letters, labels, logos, border or collage. One ingredient, no unrelated foods or props."
+    },
+    {
+      "id": "fenugreek",
+      "name": "Fenugrec",
+      "subject": "a shallow ivory ceramic dish of angular golden fenugreek seeds",
+      "aliases": [
+        "Fenugrec",
+        "Graines de fenugrec"
+      ],
+      "aisle": "pantry",
+      "unit": "g",
+      "path": "frontend/public/illustrations/ingredients/fenugreek.webp",
+      "prompt": "Use case: stylized-concept. Asset type: ingredient thumbnail for a French grocery and recipe app. Subject: a shallow ivory ceramic dish of angular golden fenugreek seeds. Match the existing premium Prorata ingredient library: soft hand-painted gouache and colored pencil, muted natural pastel colors, fine paper grain, delicate soft shadow, warm ivory background #F8F7F2. Square centered isolated composition, subject occupies about 65%, generous margins, recognizable at 48px. No text, letters, labels, logos, border or collage. One ingredient, no unrelated foods or props."
+    },
+    {
+      "id": "fennel-seed",
+      "name": "Graines de fenouil",
+      "subject": "a shallow ivory ceramic dish of long ridged pale green fennel seeds",
+      "aliases": [
+        "Graines de fenouil",
+        "Fenouil en graines"
+      ],
+      "aisle": "pantry",
+      "unit": "g",
+      "path": "frontend/public/illustrations/ingredients/fennel-seed.webp",
+      "prompt": "Use case: stylized-concept. Asset type: ingredient thumbnail for a French grocery and recipe app. Subject: a shallow ivory ceramic dish of long ridged pale green fennel seeds. Match the existing premium Prorata ingredient library: soft hand-painted gouache and colored pencil, muted natural pastel colors, fine paper grain, delicate soft shadow, warm ivory background #F8F7F2. Square centered isolated composition, subject occupies about 65%, generous margins, recognizable at 48px. No text, letters, labels, logos, border or collage. One ingredient, no unrelated foods or props."
+    },
+    {
+      "id": "caraway",
+      "name": "Carvi",
+      "subject": "a shallow ivory ceramic dish of curved ridged brown caraway seeds",
+      "aliases": [
+        "Carvi",
+        "Graines de carvi"
+      ],
+      "aisle": "pantry",
+      "unit": "g",
+      "path": "frontend/public/illustrations/ingredients/caraway.webp",
+      "prompt": "Use case: stylized-concept. Asset type: ingredient thumbnail for a French grocery and recipe app. Subject: a shallow ivory ceramic dish of curved ridged brown caraway seeds. Match the existing premium Prorata ingredient library: soft hand-painted gouache and colored pencil, muted natural pastel colors, fine paper grain, delicate soft shadow, warm ivory background #F8F7F2. Square centered isolated composition, subject occupies about 65%, generous margins, recognizable at 48px. No text, letters, labels, logos, border or collage. One ingredient, no unrelated foods or props."
+    },
+    {
+      "id": "nigella",
+      "name": "Nigelle",
+      "subject": "a shallow ivory ceramic dish of small matte black triangular nigella seeds",
+      "aliases": [
+        "Nigelle",
+        "Graines de nigelle"
+      ],
+      "aisle": "pantry",
+      "unit": "g",
+      "path": "frontend/public/illustrations/ingredients/nigella.webp",
+      "prompt": "Use case: stylized-concept. Asset type: ingredient thumbnail for a French grocery and recipe app. Subject: a shallow ivory ceramic dish of small matte black triangular nigella seeds. Match the existing premium Prorata ingredient library: soft hand-painted gouache and colored pencil, muted natural pastel colors, fine paper grain, delicate soft shadow, warm ivory background #F8F7F2. Square centered isolated composition, subject occupies about 65%, generous margins, recognizable at 48px. No text, letters, labels, logos, border or collage. One ingredient, no unrelated foods or props."
+    },
+    {
+      "id": "mustard-seed",
+      "name": "Graines de moutarde",
+      "subject": "a shallow ivory ceramic dish of round yellow and brown mustard seeds",
+      "aliases": [
+        "Graines de moutarde",
+        "Moutarde en graines"
+      ],
+      "aisle": "pantry",
+      "unit": "g",
+      "path": "frontend/public/illustrations/ingredients/mustard-seed.webp",
+      "prompt": "Use case: stylized-concept. Asset type: ingredient thumbnail for a French grocery and recipe app. Subject: a shallow ivory ceramic dish of round yellow and brown mustard seeds. Match the existing premium Prorata ingredient library: soft hand-painted gouache and colored pencil, muted natural pastel colors, fine paper grain, delicate soft shadow, warm ivory background #F8F7F2. Square centered isolated composition, subject occupies about 65%, generous margins, recognizable at 48px. No text, letters, labels, logos, border or collage. One ingredient, no unrelated foods or props."
+    },
+    {
+      "id": "coriander-seed",
+      "name": "Graines de coriandre",
+      "subject": "a shallow ivory ceramic dish of round golden coriander seeds",
+      "aliases": [
+        "Graines de coriandre",
+        "Coriandre en graines"
+      ],
+      "aisle": "pantry",
+      "unit": "g",
+      "path": "frontend/public/illustrations/ingredients/coriander-seed.webp",
+      "prompt": "Use case: stylized-concept. Asset type: ingredient thumbnail for a French grocery and recipe app. Subject: a shallow ivory ceramic dish of round golden coriander seeds. Match the existing premium Prorata ingredient library: soft hand-painted gouache and colored pencil, muted natural pastel colors, fine paper grain, delicate soft shadow, warm ivory background #F8F7F2. Square centered isolated composition, subject occupies about 65%, generous margins, recognizable at 48px. No text, letters, labels, logos, border or collage. One ingredient, no unrelated foods or props."
+    },
+    {
+      "id": "ground-cumin",
+      "name": "Cumin moulu",
+      "subject": "a shallow ivory ceramic dish of fine warm brown ground cumin powder",
+      "aliases": [
+        "Cumin moulu",
+        "Cumin",
+        "Cumin en poudre"
+      ],
+      "aisle": "pantry",
+      "unit": "g",
+      "path": "frontend/public/illustrations/ingredients/ground-cumin.webp",
+      "prompt": "Use case: stylized-concept. Asset type: ingredient thumbnail for a French grocery and recipe app. Subject: a shallow ivory ceramic dish of fine warm brown ground cumin powder. Match the existing premium Prorata ingredient library: soft hand-painted gouache and colored pencil, muted natural pastel colors, fine paper grain, delicate soft shadow, warm ivory background #F8F7F2. Square centered isolated composition, subject occupies about 65%, generous margins, recognizable at 48px. No text, letters, labels, logos, border or collage. One ingredient, no unrelated foods or props."
+    },
+    {
+      "id": "sweet-paprika",
+      "name": "Paprika doux",
+      "subject": "a shallow ivory ceramic dish of vivid muted brick-red sweet paprika powder",
+      "aliases": [
+        "Paprika doux",
+        "Paprika",
+        "Paprika non fumé"
+      ],
+      "aisle": "pantry",
+      "unit": "g",
+      "path": "frontend/public/illustrations/ingredients/sweet-paprika.webp",
+      "prompt": "Use case: stylized-concept. Asset type: ingredient thumbnail for a French grocery and recipe app. Subject: a shallow ivory ceramic dish of vivid muted brick-red sweet paprika powder. Match the existing premium Prorata ingredient library: soft hand-painted gouache and colored pencil, muted natural pastel colors, fine paper grain, delicate soft shadow, warm ivory background #F8F7F2. Square centered isolated composition, subject occupies about 65%, generous margins, recognizable at 48px. No text, letters, labels, logos, border or collage. One ingredient, no unrelated foods or props."
+    },
+    {
+      "id": "white-pepper",
+      "name": "Poivre blanc",
+      "subject": "a shallow ivory ceramic dish of round ivory white peppercorns",
+      "aliases": [
+        "Poivre blanc",
+        "Poivre blanc en grains"
+      ],
+      "aisle": "pantry",
+      "unit": "g",
+      "path": "frontend/public/illustrations/ingredients/white-pepper.webp",
+      "prompt": "Use case: stylized-concept. Asset type: ingredient thumbnail for a French grocery and recipe app. Subject: a shallow ivory ceramic dish of round ivory white peppercorns. Match the existing premium Prorata ingredient library: soft hand-painted gouache and colored pencil, muted natural pastel colors, fine paper grain, delicate soft shadow, warm ivory background #F8F7F2. Square centered isolated composition, subject occupies about 65%, generous margins, recognizable at 48px. No text, letters, labels, logos, border or collage. One ingredient, no unrelated foods or props."
+    },
+    {
+      "id": "green-peppercorn",
+      "name": "Poivre vert",
+      "subject": "a shallow ivory ceramic dish of green peppercorns",
+      "aliases": [
+        "Poivre vert",
+        "Poivre vert en grains"
+      ],
+      "aisle": "pantry",
+      "unit": "g",
+      "path": "frontend/public/illustrations/ingredients/green-peppercorn.webp",
+      "prompt": "Use case: stylized-concept. Asset type: ingredient thumbnail for a French grocery and recipe app. Subject: a shallow ivory ceramic dish of green peppercorns. Match the existing premium Prorata ingredient library: soft hand-painted gouache and colored pencil, muted natural pastel colors, fine paper grain, delicate soft shadow, warm ivory background #F8F7F2. Square centered isolated composition, subject occupies about 65%, generous margins, recognizable at 48px. No text, letters, labels, logos, border or collage. One ingredient, no unrelated foods or props."
+    },
+    {
+      "id": "pink-peppercorn",
+      "name": "Baies roses",
+      "subject": "a shallow ivory ceramic dish of rosy pink peppercorn berries",
+      "aliases": [
+        "Baies roses",
+        "Poivre rose",
+        "Baie rose"
+      ],
+      "aisle": "pantry",
+      "unit": "g",
+      "path": "frontend/public/illustrations/ingredients/pink-peppercorn.webp",
+      "prompt": "Use case: stylized-concept. Asset type: ingredient thumbnail for a French grocery and recipe app. Subject: a shallow ivory ceramic dish of rosy pink peppercorn berries. Match the existing premium Prorata ingredient library: soft hand-painted gouache and colored pencil, muted natural pastel colors, fine paper grain, delicate soft shadow, warm ivory background #F8F7F2. Square centered isolated composition, subject occupies about 65%, generous margins, recognizable at 48px. No text, letters, labels, logos, border or collage. One ingredient, no unrelated foods or props."
+    },
+    {
+      "id": "sichuan-pepper",
+      "name": "Poivre de Sichuan",
+      "subject": "a shallow ivory ceramic dish of split reddish brown Sichuan pepper husks",
+      "aliases": [
+        "Poivre de Sichuan",
+        "Poivre du Sichuan",
+        "Poivre de Sechuan"
+      ],
+      "aisle": "pantry",
+      "unit": "g",
+      "path": "frontend/public/illustrations/ingredients/sichuan-pepper.webp",
+      "prompt": "Use case: stylized-concept. Asset type: ingredient thumbnail for a French grocery and recipe app. Subject: a shallow ivory ceramic dish of split reddish brown Sichuan pepper husks. Match the existing premium Prorata ingredient library: soft hand-painted gouache and colored pencil, muted natural pastel colors, fine paper grain, delicate soft shadow, warm ivory background #F8F7F2. Square centered isolated composition, subject occupies about 65%, generous margins, recognizable at 48px. No text, letters, labels, logos, border or collage. One ingredient, no unrelated foods or props."
+    },
+    {
+      "id": "long-pepper",
+      "name": "Poivre long",
+      "subject": "five short dark brown elongated long pepper spikes",
+      "aliases": [
+        "Poivre long",
+        "Poivre long de Java"
+      ],
+      "aisle": "pantry",
+      "unit": "g",
+      "path": "frontend/public/illustrations/ingredients/long-pepper.webp",
+      "prompt": "Use case: stylized-concept. Asset type: ingredient thumbnail for a French grocery and recipe app. Subject: five short dark brown elongated long pepper spikes. Match the existing premium Prorata ingredient library: soft hand-painted gouache and colored pencil, muted natural pastel colors, fine paper grain, delicate soft shadow, warm ivory background #F8F7F2. Square centered isolated composition, subject occupies about 65%, generous margins, recognizable at 48px. No text, letters, labels, logos, border or collage. One ingredient, no unrelated foods or props."
+    },
+    {
+      "id": "timut-pepper",
+      "name": "Poivre de Timut",
+      "subject": "a shallow ivory ceramic dish of dark brown opened Timut pepper husks",
+      "aliases": [
+        "Poivre de Timut",
+        "Poivre Timut",
+        "Baies de Timut"
+      ],
+      "aisle": "pantry",
+      "unit": "g",
+      "path": "frontend/public/illustrations/ingredients/timut-pepper.webp",
+      "prompt": "Use case: stylized-concept. Asset type: ingredient thumbnail for a French grocery and recipe app. Subject: a shallow ivory ceramic dish of dark brown opened Timut pepper husks. Match the existing premium Prorata ingredient library: soft hand-painted gouache and colored pencil, muted natural pastel colors, fine paper grain, delicate soft shadow, warm ivory background #F8F7F2. Square centered isolated composition, subject occupies about 65%, generous margins, recognizable at 48px. No text, letters, labels, logos, border or collage. One ingredient, no unrelated foods or props."
+    },
+    {
+      "id": "allspice",
+      "name": "Piment de la Jamaïque",
+      "subject": "a shallow ivory ceramic dish of round dark brown allspice berries",
+      "aliases": [
+        "Piment de la Jamaïque",
+        "Poivre de la Jamaïque",
+        "Tout-épice",
+        "Allspice"
+      ],
+      "aisle": "pantry",
+      "unit": "g",
+      "path": "frontend/public/illustrations/ingredients/allspice.webp",
+      "prompt": "Use case: stylized-concept. Asset type: ingredient thumbnail for a French grocery and recipe app. Subject: a shallow ivory ceramic dish of round dark brown allspice berries. Match the existing premium Prorata ingredient library: soft hand-painted gouache and colored pencil, muted natural pastel colors, fine paper grain, delicate soft shadow, warm ivory background #F8F7F2. Square centered isolated composition, subject occupies about 65%, generous margins, recognizable at 48px. No text, letters, labels, logos, border or collage. One ingredient, no unrelated foods or props."
+    },
+    {
+      "id": "sumac",
+      "name": "Sumac",
+      "subject": "a shallow ivory ceramic dish of deep muted burgundy sumac powder",
+      "aliases": [
+        "Sumac",
+        "Sumac moulu"
+      ],
+      "aisle": "pantry",
+      "unit": "g",
+      "path": "frontend/public/illustrations/ingredients/sumac.webp",
+      "prompt": "Use case: stylized-concept. Asset type: ingredient thumbnail for a French grocery and recipe app. Subject: a shallow ivory ceramic dish of deep muted burgundy sumac powder. Match the existing premium Prorata ingredient library: soft hand-painted gouache and colored pencil, muted natural pastel colors, fine paper grain, delicate soft shadow, warm ivory background #F8F7F2. Square centered isolated composition, subject occupies about 65%, generous margins, recognizable at 48px. No text, letters, labels, logos, border or collage. One ingredient, no unrelated foods or props."
+    },
+    {
+      "id": "ground-ginger",
+      "name": "Gingembre moulu",
+      "subject": "a shallow ivory ceramic dish of fine pale beige ginger powder",
+      "aliases": [
+        "Gingembre moulu",
+        "Gingembre en poudre"
+      ],
+      "aisle": "pantry",
+      "unit": "g",
+      "path": "frontend/public/illustrations/ingredients/ground-ginger.webp",
+      "prompt": "Use case: stylized-concept. Asset type: ingredient thumbnail for a French grocery and recipe app. Subject: a shallow ivory ceramic dish of fine pale beige ginger powder. Match the existing premium Prorata ingredient library: soft hand-painted gouache and colored pencil, muted natural pastel colors, fine paper grain, delicate soft shadow, warm ivory background #F8F7F2. Square centered isolated composition, subject occupies about 65%, generous margins, recognizable at 48px. No text, letters, labels, logos, border or collage. One ingredient, no unrelated foods or props."
+    },
+    {
+      "id": "garlic-powder",
+      "name": "Ail en poudre",
+      "subject": "a shallow ivory ceramic dish of pale ivory garlic powder",
+      "aliases": [
+        "Ail en poudre",
+        "Ail semoule",
+        "Ail déshydraté"
+      ],
+      "aisle": "pantry",
+      "unit": "g",
+      "path": "frontend/public/illustrations/ingredients/garlic-powder.webp",
+      "prompt": "Use case: stylized-concept. Asset type: ingredient thumbnail for a French grocery and recipe app. Subject: a shallow ivory ceramic dish of pale ivory garlic powder. Match the existing premium Prorata ingredient library: soft hand-painted gouache and colored pencil, muted natural pastel colors, fine paper grain, delicate soft shadow, warm ivory background #F8F7F2. Square centered isolated composition, subject occupies about 65%, generous margins, recognizable at 48px. No text, letters, labels, logos, border or collage. One ingredient, no unrelated foods or props."
+    },
+    {
+      "id": "onion-powder",
+      "name": "Oignon en poudre",
+      "subject": "a shallow ivory ceramic dish of light beige dried onion powder",
+      "aliases": [
+        "Oignon en poudre",
+        "Oignon semoule",
+        "Oignon déshydraté"
+      ],
+      "aisle": "pantry",
+      "unit": "g",
+      "path": "frontend/public/illustrations/ingredients/onion-powder.webp",
+      "prompt": "Use case: stylized-concept. Asset type: ingredient thumbnail for a French grocery and recipe app. Subject: a shallow ivory ceramic dish of light beige dried onion powder. Match the existing premium Prorata ingredient library: soft hand-painted gouache and colored pencil, muted natural pastel colors, fine paper grain, delicate soft shadow, warm ivory background #F8F7F2. Square centered isolated composition, subject occupies about 65%, generous margins, recognizable at 48px. No text, letters, labels, logos, border or collage. One ingredient, no unrelated foods or props."
+    },
+    {
+      "id": "celery-seed",
+      "name": "Graines de céleri",
+      "subject": "a shallow ivory ceramic dish of tiny brown celery seeds",
+      "aliases": [
+        "Graines de céleri",
+        "Céleri en graines"
+      ],
+      "aisle": "pantry",
+      "unit": "g",
+      "path": "frontend/public/illustrations/ingredients/celery-seed.webp",
+      "prompt": "Use case: stylized-concept. Asset type: ingredient thumbnail for a French grocery and recipe app. Subject: a shallow ivory ceramic dish of tiny brown celery seeds. Match the existing premium Prorata ingredient library: soft hand-painted gouache and colored pencil, muted natural pastel colors, fine paper grain, delicate soft shadow, warm ivory background #F8F7F2. Square centered isolated composition, subject occupies about 65%, generous margins, recognizable at 48px. No text, letters, labels, logos, border or collage. One ingredient, no unrelated foods or props."
+    },
+    {
+      "id": "mustard-powder",
+      "name": "Moutarde en poudre",
+      "subject": "a shallow ivory ceramic dish of fine muted ochre mustard powder",
+      "aliases": [
+        "Moutarde en poudre",
+        "Poudre de moutarde"
+      ],
+      "aisle": "pantry",
+      "unit": "g",
+      "path": "frontend/public/illustrations/ingredients/mustard-powder.webp",
+      "prompt": "Use case: stylized-concept. Asset type: ingredient thumbnail for a French grocery and recipe app. Subject: a shallow ivory ceramic dish of fine muted ochre mustard powder. Match the existing premium Prorata ingredient library: soft hand-painted gouache and colored pencil, muted natural pastel colors, fine paper grain, delicate soft shadow, warm ivory background #F8F7F2. Square centered isolated composition, subject occupies about 65%, generous margins, recognizable at 48px. No text, letters, labels, logos, border or collage. One ingredient, no unrelated foods or props."
+    },
+    {
+      "id": "mace",
+      "name": "Macis",
+      "subject": "three delicate orange-red lace-like mace arils",
+      "aliases": [
+        "Macis",
+        "Fleur de muscade"
+      ],
+      "aisle": "pantry",
+      "unit": "g",
+      "path": "frontend/public/illustrations/ingredients/mace.webp",
+      "prompt": "Use case: stylized-concept. Asset type: ingredient thumbnail for a French grocery and recipe app. Subject: three delicate orange-red lace-like mace arils. Match the existing premium Prorata ingredient library: soft hand-painted gouache and colored pencil, muted natural pastel colors, fine paper grain, delicate soft shadow, warm ivory background #F8F7F2. Square centered isolated composition, subject occupies about 65%, generous margins, recognizable at 48px. No text, letters, labels, logos, border or collage. One ingredient, no unrelated foods or props."
+    },
+    {
+      "id": "juniper",
+      "name": "Baies de genièvre",
+      "subject": "a small cluster of dusty dark blue juniper berries with one tiny green sprig",
+      "aliases": [
+        "Baies de genièvre",
+        "Genièvre"
+      ],
+      "aisle": "pantry",
+      "unit": "g",
+      "path": "frontend/public/illustrations/ingredients/juniper.webp",
+      "prompt": "Use case: stylized-concept. Asset type: ingredient thumbnail for a French grocery and recipe app. Subject: a small cluster of dusty dark blue juniper berries with one tiny green sprig. Match the existing premium Prorata ingredient library: soft hand-painted gouache and colored pencil, muted natural pastel colors, fine paper grain, delicate soft shadow, warm ivory background #F8F7F2. Square centered isolated composition, subject occupies about 65%, generous margins, recognizable at 48px. No text, letters, labels, logos, border or collage. One ingredient, no unrelated foods or props."
+    },
+    {
+      "id": "annatto",
+      "name": "Roucou",
+      "subject": "a shallow ivory ceramic dish of small triangular red annatto seeds",
+      "aliases": [
+        "Roucou",
+        "Graines de roucou",
+        "Annatto"
+      ],
+      "aisle": "pantry",
+      "unit": "g",
+      "path": "frontend/public/illustrations/ingredients/annatto.webp",
+      "prompt": "Use case: stylized-concept. Asset type: ingredient thumbnail for a French grocery and recipe app. Subject: a shallow ivory ceramic dish of small triangular red annatto seeds. Match the existing premium Prorata ingredient library: soft hand-painted gouache and colored pencil, muted natural pastel colors, fine paper grain, delicate soft shadow, warm ivory background #F8F7F2. Square centered isolated composition, subject occupies about 65%, generous margins, recognizable at 48px. No text, letters, labels, logos, border or collage. One ingredient, no unrelated foods or props."
+    },
+    {
+      "id": "ajwain",
+      "name": "Ajowan",
+      "subject": "a shallow ivory ceramic dish of tiny ridged grey-brown ajwain seeds",
+      "aliases": [
+        "Ajowan",
+        "Ajwain",
+        "Graines d’ajowan"
+      ],
+      "aisle": "pantry",
+      "unit": "g",
+      "path": "frontend/public/illustrations/ingredients/ajwain.webp",
+      "prompt": "Use case: stylized-concept. Asset type: ingredient thumbnail for a French grocery and recipe app. Subject: a shallow ivory ceramic dish of tiny ridged grey-brown ajwain seeds. Match the existing premium Prorata ingredient library: soft hand-painted gouache and colored pencil, muted natural pastel colors, fine paper grain, delicate soft shadow, warm ivory background #F8F7F2. Square centered isolated composition, subject occupies about 65%, generous margins, recognizable at 48px. No text, letters, labels, logos, border or collage. One ingredient, no unrelated foods or props."
+    },
+    {
+      "id": "asafoetida",
+      "name": "Asafoetida",
+      "subject": "a shallow ivory ceramic dish of warm yellow-beige asafoetida spice powder",
+      "aliases": [
+        "Asafoetida",
+        "Ase fétide",
+        "Hing"
+      ],
+      "aisle": "pantry",
+      "unit": "g",
+      "path": "frontend/public/illustrations/ingredients/asafoetida.webp",
+      "prompt": "Use case: stylized-concept. Asset type: ingredient thumbnail for a French grocery and recipe app. Subject: a shallow ivory ceramic dish of warm yellow-beige asafoetida spice powder. Match the existing premium Prorata ingredient library: soft hand-painted gouache and colored pencil, muted natural pastel colors, fine paper grain, delicate soft shadow, warm ivory background #F8F7F2. Square centered isolated composition, subject occupies about 65%, generous margins, recognizable at 48px. No text, letters, labels, logos, border or collage. One ingredient, no unrelated foods or props."
+    },
+    {
+      "id": "ground-galangal",
+      "name": "Galanga moulu",
+      "subject": "a shallow ivory ceramic dish of pale reddish beige galangal powder",
+      "aliases": [
+        "Galanga moulu",
+        "Galanga en poudre"
+      ],
+      "aisle": "pantry",
+      "unit": "g",
+      "path": "frontend/public/illustrations/ingredients/ground-galangal.webp",
+      "prompt": "Use case: stylized-concept. Asset type: ingredient thumbnail for a French grocery and recipe app. Subject: a shallow ivory ceramic dish of pale reddish beige galangal powder. Match the existing premium Prorata ingredient library: soft hand-painted gouache and colored pencil, muted natural pastel colors, fine paper grain, delicate soft shadow, warm ivory background #F8F7F2. Square centered isolated composition, subject occupies about 65%, generous margins, recognizable at 48px. No text, letters, labels, logos, border or collage. One ingredient, no unrelated foods or props."
+    },
+    {
+      "id": "dried-kaffir-lime",
+      "name": "Zeste de combava séché",
+      "subject": "a small pile of thin dried green kaffir lime zest curls",
+      "aliases": [
+        "Zeste de combava séché",
+        "Combava en poudre",
+        "Zeste de combava"
+      ],
+      "aisle": "pantry",
+      "unit": "g",
+      "path": "frontend/public/illustrations/ingredients/dried-kaffir-lime.webp",
+      "prompt": "Use case: stylized-concept. Asset type: ingredient thumbnail for a French grocery and recipe app. Subject: a small pile of thin dried green kaffir lime zest curls. Match the existing premium Prorata ingredient library: soft hand-painted gouache and colored pencil, muted natural pastel colors, fine paper grain, delicate soft shadow, warm ivory background #F8F7F2. Square centered isolated composition, subject occupies about 65%, generous margins, recognizable at 48px. No text, letters, labels, logos, border or collage. One ingredient, no unrelated foods or props."
+    },
+    {
+      "id": "dried-lemongrass",
+      "name": "Citronnelle séchée",
+      "subject": "a small pile of short pale straw-green dried lemongrass rings",
+      "aliases": [
+        "Citronnelle séchée",
+        "Citronnelle en poudre"
+      ],
+      "aisle": "pantry",
+      "unit": "g",
+      "path": "frontend/public/illustrations/ingredients/dried-lemongrass.webp",
+      "prompt": "Use case: stylized-concept. Asset type: ingredient thumbnail for a French grocery and recipe app. Subject: a small pile of short pale straw-green dried lemongrass rings. Match the existing premium Prorata ingredient library: soft hand-painted gouache and colored pencil, muted natural pastel colors, fine paper grain, delicate soft shadow, warm ivory background #F8F7F2. Square centered isolated composition, subject occupies about 65%, generous margins, recognizable at 48px. No text, letters, labels, logos, border or collage. One ingredient, no unrelated foods or props."
+    },
+    {
+      "id": "espelette-pepper",
+      "name": "Piment d’Espelette",
+      "subject": "a shallow ivory ceramic dish of coarse muted red Espelette pepper flakes",
+      "aliases": [
+        "Piment d’Espelette",
+        "Piment Espelette"
+      ],
+      "aisle": "pantry",
+      "unit": "g",
+      "path": "frontend/public/illustrations/ingredients/espelette-pepper.webp",
+      "prompt": "Use case: stylized-concept. Asset type: ingredient thumbnail for a French grocery and recipe app. Subject: a shallow ivory ceramic dish of coarse muted red Espelette pepper flakes. Match the existing premium Prorata ingredient library: soft hand-painted gouache and colored pencil, muted natural pastel colors, fine paper grain, delicate soft shadow, warm ivory background #F8F7F2. Square centered isolated composition, subject occupies about 65%, generous margins, recognizable at 48px. No text, letters, labels, logos, border or collage. One ingredient, no unrelated foods or props."
+    },
+    {
+      "id": "cayenne-pepper",
+      "name": "Piment de Cayenne",
+      "subject": "a shallow ivory ceramic dish of fine deep orange-red cayenne powder",
+      "aliases": [
+        "Piment de Cayenne",
+        "Poivre de Cayenne",
+        "Cayenne"
+      ],
+      "aisle": "pantry",
+      "unit": "g",
+      "path": "frontend/public/illustrations/ingredients/cayenne-pepper.webp",
+      "prompt": "Use case: stylized-concept. Asset type: ingredient thumbnail for a French grocery and recipe app. Subject: a shallow ivory ceramic dish of fine deep orange-red cayenne powder. Match the existing premium Prorata ingredient library: soft hand-painted gouache and colored pencil, muted natural pastel colors, fine paper grain, delicate soft shadow, warm ivory background #F8F7F2. Square centered isolated composition, subject occupies about 65%, generous margins, recognizable at 48px. No text, letters, labels, logos, border or collage. One ingredient, no unrelated foods or props."
+    },
+    {
+      "id": "gochugaru",
+      "name": "Gochugaru",
+      "subject": "a shallow ivory ceramic dish of coarse vibrant red Korean gochugaru chili flakes",
+      "aliases": [
+        "Gochugaru",
+        "Piment coréen",
+        "Piment gochugaru"
+      ],
+      "aisle": "pantry",
+      "unit": "g",
+      "path": "frontend/public/illustrations/ingredients/gochugaru.webp",
+      "prompt": "Use case: stylized-concept. Asset type: ingredient thumbnail for a French grocery and recipe app. Subject: a shallow ivory ceramic dish of coarse vibrant red Korean gochugaru chili flakes. Match the existing premium Prorata ingredient library: soft hand-painted gouache and colored pencil, muted natural pastel colors, fine paper grain, delicate soft shadow, warm ivory background #F8F7F2. Square centered isolated composition, subject occupies about 65%, generous margins, recognizable at 48px. No text, letters, labels, logos, border or collage. One ingredient, no unrelated foods or props."
+    },
+    {
+      "id": "four-spice",
+      "name": "Quatre-épices",
+      "subject": "a shallow ivory ceramic dish of fine warm brown French quatre epices spice blend",
+      "aliases": [
+        "Quatre-épices",
+        "Quatre épices",
+        "Mélange quatre épices",
+        "4 épices"
+      ],
+      "aisle": "pantry",
+      "unit": "g",
+      "path": "frontend/public/illustrations/ingredients/four-spice.webp",
+      "prompt": "Use case: stylized-concept. Asset type: ingredient thumbnail for a French grocery and recipe app. Subject: a shallow ivory ceramic dish of fine warm brown French quatre epices spice blend. Match the existing premium Prorata ingredient library: soft hand-painted gouache and colored pencil, muted natural pastel colors, fine paper grain, delicate soft shadow, warm ivory background #F8F7F2. Square centered isolated composition, subject occupies about 65%, generous margins, recognizable at 48px. No text, letters, labels, logos, border or collage. One ingredient, no unrelated foods or props."
+    },
+    {
+      "id": "five-spice",
+      "name": "Cinq-épices",
+      "subject": "a shallow ivory ceramic dish of warm reddish brown Chinese five spice powder",
+      "aliases": [
+        "Cinq-épices",
+        "Cinq épices",
+        "Cinq parfums",
+        "5 épices"
+      ],
+      "aisle": "pantry",
+      "unit": "g",
+      "path": "frontend/public/illustrations/ingredients/five-spice.webp",
+      "prompt": "Use case: stylized-concept. Asset type: ingredient thumbnail for a French grocery and recipe app. Subject: a shallow ivory ceramic dish of warm reddish brown Chinese five spice powder. Match the existing premium Prorata ingredient library: soft hand-painted gouache and colored pencil, muted natural pastel colors, fine paper grain, delicate soft shadow, warm ivory background #F8F7F2. Square centered isolated composition, subject occupies about 65%, generous margins, recognizable at 48px. No text, letters, labels, logos, border or collage. One ingredient, no unrelated foods or props."
+    },
+    {
+      "id": "herbes-provence",
+      "name": "Herbes de Provence",
+      "subject": "a shallow ivory ceramic dish of finely dried mixed green Mediterranean herbs",
+      "aliases": [
+        "Herbes de Provence",
+        "Mélange provençal"
+      ],
+      "aisle": "pantry",
+      "unit": "g",
+      "path": "frontend/public/illustrations/ingredients/herbes-provence.webp",
+      "prompt": "Use case: stylized-concept. Asset type: ingredient thumbnail for a French grocery and recipe app. Subject: a shallow ivory ceramic dish of finely dried mixed green Mediterranean herbs. Match the existing premium Prorata ingredient library: soft hand-painted gouache and colored pencil, muted natural pastel colors, fine paper grain, delicate soft shadow, warm ivory background #F8F7F2. Square centered isolated composition, subject occupies about 65%, generous margins, recognizable at 48px. No text, letters, labels, logos, border or collage. One ingredient, no unrelated foods or props."
+    },
+    {
+      "id": "zaatar",
+      "name": "Za’atar",
+      "subject": "a shallow ivory ceramic dish of green-brown zaatar blend flecked with sesame seeds",
+      "aliases": [
+        "Za’atar",
+        "Zaatar",
+        "Zahtar"
+      ],
+      "aisle": "pantry",
+      "unit": "g",
+      "path": "frontend/public/illustrations/ingredients/zaatar.webp",
+      "prompt": "Use case: stylized-concept. Asset type: ingredient thumbnail for a French grocery and recipe app. Subject: a shallow ivory ceramic dish of green-brown zaatar blend flecked with sesame seeds. Match the existing premium Prorata ingredient library: soft hand-painted gouache and colored pencil, muted natural pastel colors, fine paper grain, delicate soft shadow, warm ivory background #F8F7F2. Square centered isolated composition, subject occupies about 65%, generous margins, recognizable at 48px. No text, letters, labels, logos, border or collage. One ingredient, no unrelated foods or props."
+    },
+    {
+      "id": "dukkah",
+      "name": "Dukkah",
+      "subject": "a shallow ivory ceramic dish of coarse golden brown dukkah with chopped nuts and sesame",
+      "aliases": [
+        "Dukkah",
+        "Dukah"
+      ],
+      "aisle": "pantry",
+      "unit": "g",
+      "path": "frontend/public/illustrations/ingredients/dukkah.webp",
+      "prompt": "Use case: stylized-concept. Asset type: ingredient thumbnail for a French grocery and recipe app. Subject: a shallow ivory ceramic dish of coarse golden brown dukkah with chopped nuts and sesame. Match the existing premium Prorata ingredient library: soft hand-painted gouache and colored pencil, muted natural pastel colors, fine paper grain, delicate soft shadow, warm ivory background #F8F7F2. Square centered isolated composition, subject occupies about 65%, generous margins, recognizable at 48px. No text, letters, labels, logos, border or collage. One ingredient, no unrelated foods or props."
+    },
+    {
+      "id": "baharat",
+      "name": "Baharat",
+      "subject": "a shallow ivory ceramic dish of fine warm red-brown baharat spice blend",
+      "aliases": [
+        "Baharat",
+        "Mélange baharat"
+      ],
+      "aisle": "pantry",
+      "unit": "g",
+      "path": "frontend/public/illustrations/ingredients/baharat.webp",
+      "prompt": "Use case: stylized-concept. Asset type: ingredient thumbnail for a French grocery and recipe app. Subject: a shallow ivory ceramic dish of fine warm red-brown baharat spice blend. Match the existing premium Prorata ingredient library: soft hand-painted gouache and colored pencil, muted natural pastel colors, fine paper grain, delicate soft shadow, warm ivory background #F8F7F2. Square centered isolated composition, subject occupies about 65%, generous margins, recognizable at 48px. No text, letters, labels, logos, border or collage. One ingredient, no unrelated foods or props."
+    },
+    {
+      "id": "berbere",
+      "name": "Berbéré",
+      "subject": "a shallow ivory ceramic dish of deep brick-red Ethiopian berbere spice blend",
+      "aliases": [
+        "Berbéré"
+      ],
+      "aisle": "pantry",
+      "unit": "g",
+      "path": "frontend/public/illustrations/ingredients/berbere.webp",
+      "prompt": "Use case: stylized-concept. Asset type: ingredient thumbnail for a French grocery and recipe app. Subject: a shallow ivory ceramic dish of deep brick-red Ethiopian berbere spice blend. Match the existing premium Prorata ingredient library: soft hand-painted gouache and colored pencil, muted natural pastel colors, fine paper grain, delicate soft shadow, warm ivory background #F8F7F2. Square centered isolated composition, subject occupies about 65%, generous margins, recognizable at 48px. No text, letters, labels, logos, border or collage. One ingredient, no unrelated foods or props."
+    },
+    {
+      "id": "tandoori",
+      "name": "Tandoori",
+      "subject": "a shallow ivory ceramic dish of deep warm red tandoori spice powder",
+      "aliases": [
+        "Tandoori",
+        "Épices tandoori",
+        "Mélange tandoori"
+      ],
+      "aisle": "pantry",
+      "unit": "g",
+      "path": "frontend/public/illustrations/ingredients/tandoori.webp",
+      "prompt": "Use case: stylized-concept. Asset type: ingredient thumbnail for a French grocery and recipe app. Subject: a shallow ivory ceramic dish of deep warm red tandoori spice powder. Match the existing premium Prorata ingredient library: soft hand-painted gouache and colored pencil, muted natural pastel colors, fine paper grain, delicate soft shadow, warm ivory background #F8F7F2. Square centered isolated composition, subject occupies about 65%, generous margins, recognizable at 48px. No text, letters, labels, logos, border or collage. One ingredient, no unrelated foods or props."
+    },
+    {
+      "id": "colombo",
+      "name": "Colombo",
+      "subject": "a shallow ivory ceramic dish of golden yellow Colombo spice powder",
+      "aliases": [
+        "Colombo",
+        "Épices colombo",
+        "Poudre de colombo"
+      ],
+      "aisle": "pantry",
+      "unit": "g",
+      "path": "frontend/public/illustrations/ingredients/colombo.webp",
+      "prompt": "Use case: stylized-concept. Asset type: ingredient thumbnail for a French grocery and recipe app. Subject: a shallow ivory ceramic dish of golden yellow Colombo spice powder. Match the existing premium Prorata ingredient library: soft hand-painted gouache and colored pencil, muted natural pastel colors, fine paper grain, delicate soft shadow, warm ivory background #F8F7F2. Square centered isolated composition, subject occupies about 65%, generous margins, recognizable at 48px. No text, letters, labels, logos, border or collage. One ingredient, no unrelated foods or props."
+    },
+    {
+      "id": "cajun",
+      "name": "Épices cajun",
+      "subject": "a shallow ivory ceramic dish of reddish brown Cajun spice blend with dark green herb specks",
+      "aliases": [
+        "Épices cajun",
+        "Mélange cajun",
+        "Cajun"
+      ],
+      "aisle": "pantry",
+      "unit": "g",
+      "path": "frontend/public/illustrations/ingredients/cajun.webp",
+      "prompt": "Use case: stylized-concept. Asset type: ingredient thumbnail for a French grocery and recipe app. Subject: a shallow ivory ceramic dish of reddish brown Cajun spice blend with dark green herb specks. Match the existing premium Prorata ingredient library: soft hand-painted gouache and colored pencil, muted natural pastel colors, fine paper grain, delicate soft shadow, warm ivory background #F8F7F2. Square centered isolated composition, subject occupies about 65%, generous margins, recognizable at 48px. No text, letters, labels, logos, border or collage. One ingredient, no unrelated foods or props."
+    },
+    {
+      "id": "chili-blend",
+      "name": "Mélange chili",
+      "subject": "a shallow ivory ceramic dish of dark red-brown chili seasoning blend with cumin and herb flecks",
+      "aliases": [
+        "Mélange chili",
+        "Épices chili",
+        "Chili en mélange"
+      ],
+      "aisle": "pantry",
+      "unit": "g",
+      "path": "frontend/public/illustrations/ingredients/chili-blend.webp",
+      "prompt": "Use case: stylized-concept. Asset type: ingredient thumbnail for a French grocery and recipe app. Subject: a shallow ivory ceramic dish of dark red-brown chili seasoning blend with cumin and herb flecks. Match the existing premium Prorata ingredient library: soft hand-painted gouache and colored pencil, muted natural pastel colors, fine paper grain, delicate soft shadow, warm ivory background #F8F7F2. Square centered isolated composition, subject occupies about 65%, generous margins, recognizable at 48px. No text, letters, labels, logos, border or collage. One ingredient, no unrelated foods or props."
+    },
+    {
+      "id": "gingerbread-spice",
+      "name": "Épices à pain d’épices",
+      "subject": "a shallow ivory ceramic dish of fine warm cinnamon-brown gingerbread spice blend",
+      "aliases": [
+        "Épices à pain d’épices",
+        "Mélange pain d’épices"
+      ],
+      "aisle": "pantry",
+      "unit": "g",
+      "path": "frontend/public/illustrations/ingredients/gingerbread-spice.webp",
+      "prompt": "Use case: stylized-concept. Asset type: ingredient thumbnail for a French grocery and recipe app. Subject: a shallow ivory ceramic dish of fine warm cinnamon-brown gingerbread spice blend. Match the existing premium Prorata ingredient library: soft hand-painted gouache and colored pencil, muted natural pastel colors, fine paper grain, delicate soft shadow, warm ivory background #F8F7F2. Square centered isolated composition, subject occupies about 65%, generous margins, recognizable at 48px. No text, letters, labels, logos, border or collage. One ingredient, no unrelated foods or props."
+    },
+    {
+      "id": "speculoos-spice",
+      "name": "Épices à spéculoos",
+      "subject": "a shallow ivory ceramic dish of fine muted caramel-brown speculoos spice blend",
+      "aliases": [
+        "Épices à spéculoos",
+        "Mélange spéculoos"
+      ],
+      "aisle": "pantry",
+      "unit": "g",
+      "path": "frontend/public/illustrations/ingredients/speculoos-spice.webp",
+      "prompt": "Use case: stylized-concept. Asset type: ingredient thumbnail for a French grocery and recipe app. Subject: a shallow ivory ceramic dish of fine muted caramel-brown speculoos spice blend. Match the existing premium Prorata ingredient library: soft hand-painted gouache and colored pencil, muted natural pastel colors, fine paper grain, delicate soft shadow, warm ivory background #F8F7F2. Square centered isolated composition, subject occupies about 65%, generous margins, recognizable at 48px. No text, letters, labels, logos, border or collage. One ingredient, no unrelated foods or props."
+    },
+    {
+      "id": "shichimi",
+      "name": "Shichimi togarashi",
+      "subject": "a shallow ivory ceramic dish of Japanese seven spice blend with red chili flakes black sesame and green seaweed flecks",
+      "aliases": [
+        "Shichimi togarashi",
+        "Shichimi",
+        "Mélange sept épices japonais"
+      ],
+      "aisle": "pantry",
+      "unit": "g",
+      "path": "frontend/public/illustrations/ingredients/shichimi.webp",
+      "prompt": "Use case: stylized-concept. Asset type: ingredient thumbnail for a French grocery and recipe app. Subject: a shallow ivory ceramic dish of Japanese seven spice blend with red chili flakes black sesame and green seaweed flecks. Match the existing premium Prorata ingredient library: soft hand-painted gouache and colored pencil, muted natural pastel colors, fine paper grain, delicate soft shadow, warm ivory background #F8F7F2. Square centered isolated composition, subject occupies about 65%, generous margins, recognizable at 48px. No text, letters, labels, logos, border or collage. One ingredient, no unrelated foods or props."
+    },
+    {
+      "id": "panch-phoron",
+      "name": "Panch phoron",
+      "subject": "a shallow ivory ceramic dish of mixed whole Bengali five spice seeds in yellow green black and brown",
+      "aliases": [
+        "Panch phoron",
+        "Panch phoran"
+      ],
+      "aisle": "pantry",
+      "unit": "g",
+      "path": "frontend/public/illustrations/ingredients/panch-phoron.webp",
+      "prompt": "Use case: stylized-concept. Asset type: ingredient thumbnail for a French grocery and recipe app. Subject: a shallow ivory ceramic dish of mixed whole Bengali five spice seeds in yellow green black and brown. Match the existing premium Prorata ingredient library: soft hand-painted gouache and colored pencil, muted natural pastel colors, fine paper grain, delicate soft shadow, warm ivory background #F8F7F2. Square centered isolated composition, subject occupies about 65%, generous margins, recognizable at 48px. No text, letters, labels, logos, border or collage. One ingredient, no unrelated foods or props."
+    },
+    {
+      "id": "vadouvan",
+      "name": "Vadouvan",
+      "subject": "a shallow ivory ceramic dish of coarse golden brown vadouvan with dried onion flakes and spice seeds",
+      "aliases": [
+        "Vadouvan",
+        "Mélange vadouvan"
+      ],
+      "aisle": "pantry",
+      "unit": "g",
+      "path": "frontend/public/illustrations/ingredients/vadouvan.webp",
+      "prompt": "Use case: stylized-concept. Asset type: ingredient thumbnail for a French grocery and recipe app. Subject: a shallow ivory ceramic dish of coarse golden brown vadouvan with dried onion flakes and spice seeds. Match the existing premium Prorata ingredient library: soft hand-painted gouache and colored pencil, muted natural pastel colors, fine paper grain, delicate soft shadow, warm ivory background #F8F7F2. Square centered isolated composition, subject occupies about 65%, generous margins, recognizable at 48px. No text, letters, labels, logos, border or collage. One ingredient, no unrelated foods or props."
+    },
+    {
+      "id": "oregano",
+      "name": "Origan",
+      "subject": "a shallow ivory ceramic dish of dried muted green oregano leaves",
+      "aliases": [
+        "Origan",
+        "Origan séché"
+      ],
+      "aisle": "pantry",
+      "unit": "g",
+      "path": "frontend/public/illustrations/ingredients/oregano.webp",
+      "prompt": "Use case: stylized-concept. Asset type: ingredient thumbnail for a French grocery and recipe app. Subject: a shallow ivory ceramic dish of dried muted green oregano leaves. Match the existing premium Prorata ingredient library: soft hand-painted gouache and colored pencil, muted natural pastel colors, fine paper grain, delicate soft shadow, warm ivory background #F8F7F2. Square centered isolated composition, subject occupies about 65%, generous margins, recognizable at 48px. No text, letters, labels, logos, border or collage. One ingredient, no unrelated foods or props."
+    },
+    {
+      "id": "marjoram",
+      "name": "Marjolaine",
+      "subject": "a shallow ivory ceramic dish of small dried grey-green marjoram leaves",
+      "aliases": [
+        "Marjolaine",
+        "Marjolaine séchée"
+      ],
+      "aisle": "pantry",
+      "unit": "g",
+      "path": "frontend/public/illustrations/ingredients/marjoram.webp",
+      "prompt": "Use case: stylized-concept. Asset type: ingredient thumbnail for a French grocery and recipe app. Subject: a shallow ivory ceramic dish of small dried grey-green marjoram leaves. Match the existing premium Prorata ingredient library: soft hand-painted gouache and colored pencil, muted natural pastel colors, fine paper grain, delicate soft shadow, warm ivory background #F8F7F2. Square centered isolated composition, subject occupies about 65%, generous margins, recognizable at 48px. No text, letters, labels, logos, border or collage. One ingredient, no unrelated foods or props."
+    },
+    {
+      "id": "savory",
+      "name": "Sarriette",
+      "subject": "a shallow ivory ceramic dish of thin dried muted green savory leaves",
+      "aliases": [
+        "Sarriette",
+        "Sarriette séchée"
+      ],
+      "aisle": "pantry",
+      "unit": "g",
+      "path": "frontend/public/illustrations/ingredients/savory.webp",
+      "prompt": "Use case: stylized-concept. Asset type: ingredient thumbnail for a French grocery and recipe app. Subject: a shallow ivory ceramic dish of thin dried muted green savory leaves. Match the existing premium Prorata ingredient library: soft hand-painted gouache and colored pencil, muted natural pastel colors, fine paper grain, delicate soft shadow, warm ivory background #F8F7F2. Square centered isolated composition, subject occupies about 65%, generous margins, recognizable at 48px. No text, letters, labels, logos, border or collage. One ingredient, no unrelated foods or props."
+    },
+    {
+      "id": "tarragon",
+      "name": "Estragon",
+      "subject": "a shallow ivory ceramic dish of slender dried pale green tarragon leaves",
+      "aliases": [
+        "Estragon",
+        "Estragon séché"
+      ],
+      "aisle": "pantry",
+      "unit": "g",
+      "path": "frontend/public/illustrations/ingredients/tarragon.webp",
+      "prompt": "Use case: stylized-concept. Asset type: ingredient thumbnail for a French grocery and recipe app. Subject: a shallow ivory ceramic dish of slender dried pale green tarragon leaves. Match the existing premium Prorata ingredient library: soft hand-painted gouache and colored pencil, muted natural pastel colors, fine paper grain, delicate soft shadow, warm ivory background #F8F7F2. Square centered isolated composition, subject occupies about 65%, generous margins, recognizable at 48px. No text, letters, labels, logos, border or collage. One ingredient, no unrelated foods or props."
+    },
+    {
+      "id": "chervil",
+      "name": "Cerfeuil",
+      "subject": "a shallow ivory ceramic dish of delicate small dried green chervil leaf fragments",
+      "aliases": [
+        "Cerfeuil",
+        "Cerfeuil séché"
+      ],
+      "aisle": "pantry",
+      "unit": "g",
+      "path": "frontend/public/illustrations/ingredients/chervil.webp",
+      "prompt": "Use case: stylized-concept. Asset type: ingredient thumbnail for a French grocery and recipe app. Subject: a shallow ivory ceramic dish of delicate small dried green chervil leaf fragments. Match the existing premium Prorata ingredient library: soft hand-painted gouache and colored pencil, muted natural pastel colors, fine paper grain, delicate soft shadow, warm ivory background #F8F7F2. Square centered isolated composition, subject occupies about 65%, generous margins, recognizable at 48px. No text, letters, labels, logos, border or collage. One ingredient, no unrelated foods or props."
+    },
+    {
+      "id": "chives",
+      "name": "Ciboulette",
+      "subject": "a shallow ivory ceramic dish of short dried green chive rings",
+      "aliases": [
+        "Ciboulette",
+        "Ciboulette séchée"
+      ],
+      "aisle": "pantry",
+      "unit": "g",
+      "path": "frontend/public/illustrations/ingredients/chives.webp",
+      "prompt": "Use case: stylized-concept. Asset type: ingredient thumbnail for a French grocery and recipe app. Subject: a shallow ivory ceramic dish of short dried green chive rings. Match the existing premium Prorata ingredient library: soft hand-painted gouache and colored pencil, muted natural pastel colors, fine paper grain, delicate soft shadow, warm ivory background #F8F7F2. Square centered isolated composition, subject occupies about 65%, generous margins, recognizable at 48px. No text, letters, labels, logos, border or collage. One ingredient, no unrelated foods or props."
+    },
+    {
+      "id": "dried-mint",
+      "name": "Menthe séchée",
+      "subject": "a shallow ivory ceramic dish of crumbled muted green dried mint leaves",
+      "aliases": [
+        "Menthe séchée",
+        "Menthe en feuilles séchées"
+      ],
+      "aisle": "pantry",
+      "unit": "g",
+      "path": "frontend/public/illustrations/ingredients/dried-mint.webp",
+      "prompt": "Use case: stylized-concept. Asset type: ingredient thumbnail for a French grocery and recipe app. Subject: a shallow ivory ceramic dish of crumbled muted green dried mint leaves. Match the existing premium Prorata ingredient library: soft hand-painted gouache and colored pencil, muted natural pastel colors, fine paper grain, delicate soft shadow, warm ivory background #F8F7F2. Square centered isolated composition, subject occupies about 65%, generous margins, recognizable at 48px. No text, letters, labels, logos, border or collage. One ingredient, no unrelated foods or props."
+    },
+    {
+      "id": "sage",
+      "name": "Sauge",
+      "subject": "three soft grey-green dried sage leaves with visible veins",
+      "aliases": [
+        "Sauge",
+        "Sauge séchée"
+      ],
+      "aisle": "pantry",
+      "unit": "g",
+      "path": "frontend/public/illustrations/ingredients/sage.webp",
+      "prompt": "Use case: stylized-concept. Asset type: ingredient thumbnail for a French grocery and recipe app. Subject: three soft grey-green dried sage leaves with visible veins. Match the existing premium Prorata ingredient library: soft hand-painted gouache and colored pencil, muted natural pastel colors, fine paper grain, delicate soft shadow, warm ivory background #F8F7F2. Square centered isolated composition, subject occupies about 65%, generous margins, recognizable at 48px. No text, letters, labels, logos, border or collage. One ingredient, no unrelated foods or props."
+    }
+  ]
+}
